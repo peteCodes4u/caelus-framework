@@ -2,29 +2,36 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const mongoose = require("mongoose");
+const db = require("./config/connection");
 const typeDefs = require("./schemas/schema");
 const resolvers = require("./resolvers/resolvers");
 
 // Necessary Middleware for Express and Apollo Server
 const app = express();
-const server = new ApolloServer({ typeDefs, resolvers });
-
-// This will connect the Apollo Server to the Express App
-server.applyMiddleware({ app });
-
 const PORT = process.env.PORT || 3001;
 
-// This is where will connect to our Mongoose Database - we might be able to do this through a connections file instead
-mongoose.connect("mongodb://27017/caelus", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Middleware to parse incoming JSON and URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-mongoose.connection.once("open", () => {
-  console.log("Connected to Caelus Database");
+// Conditional statement that checks the environment in which the Node app is running
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+}
+
+// Set up the Apollo Server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+server.applyMiddleware({ app });
+
+// Start the server
+db.once("open", () => {
   app.listen(PORT, () => {
+    console.log(`🛸 Now listening on localhost:${PORT}`);
     console.log(
-      `Server is running on http://localhost:${PORT}${server.graphqlPath}`
+      `🚀 GraphQL server ready at http://localhost:${PORT}${server.graphqlPath}`
     );
   });
 });
