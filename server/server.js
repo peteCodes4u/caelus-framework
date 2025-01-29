@@ -14,6 +14,7 @@ server.applyMiddleware({ app });
 
 const PORT = process.env.PORT || 3001;
 
+// This is where will connect to our Mongoose Database - we might be able to do this through a connections file instead
 mongoose.connect("mongodb://27017/caelus", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
