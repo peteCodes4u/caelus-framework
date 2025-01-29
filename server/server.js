@@ -1,9 +1,8 @@
 // Include necessary packages/dependencies
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
-const mongoose = require("mongoose");
 const db = require("./config/connection");
-const typeDefs = require("./schemas/schema");
+const typeDefs = require("./schemas/typeDefs");
 const resolvers = require("./resolvers/resolvers");
 
 // Necessary Middleware for Express and Apollo Server
