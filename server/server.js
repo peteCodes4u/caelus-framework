@@ -3,7 +3,7 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const db = require("./config/connection");
 const typeDefs = require("./schemas/typeDefs");
-const resolvers = require("./resolvers/resolvers");
+const resolvers = require("./schemas/resolvers");
 
 // Necessary Middleware for Express and Apollo Server
 const app = express();
