@@ -1,6 +1,7 @@
 // Include necessary packages/dependencies
 const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require("@apollo/server");
+const path = require("path");
 const db = require("./config/connection");
 const typeDefs = require("./schemas/typeDefs");
 const resolvers = require("./schemas/resolvers");
@@ -23,10 +24,12 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+// await server.start();
 server.applyMiddleware({ app });
 
-// Start the server
-db.once("open", () => {
+db.once("open", async () => {
+  await server.start();
+  server.applyMiddleware({ app });
   app.listen(PORT, () => {
     console.log(`🛸 Now listening on localhost:${PORT}`);
     console.log(
