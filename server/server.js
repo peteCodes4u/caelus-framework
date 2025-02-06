@@ -1,6 +1,7 @@
 // Include necessary packages/dependencies
 const express = require("express");
 const { ApolloServer } = require("@apollo/server");
+const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
 const db = require("./config/connection");
 const typeDefs = require("./schemas/typeDefs");
@@ -24,16 +25,12 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
-// await server.start();
-server.applyMiddleware({ app });
 
 db.once("open", async () => {
   await server.start();
-  server.applyMiddleware({ app });
+  app.use("/graphql", expressMiddleware(server));
   app.listen(PORT, () => {
     console.log(`🛸 Now listening on localhost:${PORT}`);
-    console.log(
-      `🚀 GraphQL server ready at http://localhost:${PORT}${server.graphqlPath}`
-    );
+    console.log(`🚀 GraphQL server ready at http://localhost:${PORT}/graphql`);
   });
 });
