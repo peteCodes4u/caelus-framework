@@ -1,0 +1,33 @@
+{
+  "name": "caelus-framework",
+  "version": "1.0.0",
+  "description": "MERN Stack Framework with GraphQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peteCodes4u/caelus-framework.git"
+  },
+  "keywords": [
+    "Mongo",
+    "Node",
+    "React",
+    "Express",
+    "GraphQL",
+    "JavaScript"
+  ],
+  "author": "peteCodes4u",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peteCodes4u/caelus-framework/issues"
+  },
+  "homepage": "https://github.com/peteCodes4u/caelus-framework#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
