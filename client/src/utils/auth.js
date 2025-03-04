@@ -1,7 +1,4 @@
-// this is the file that will contain the logic for the authentication of the user
-
-// this imports the decode function from the jwt-decode package which is used to decode the jwt token
-import { decode } from 'jwt-decode';
+import decode from 'jwt-decode';
 
 // this is the AuthService class that will contain the logic for the authentication of the user as a class which will be exported for oop use
 class AuthService {
