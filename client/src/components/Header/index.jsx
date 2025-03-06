@@ -15,12 +15,9 @@ const Header = ()  => {
         <section className="container">
         <Link className='' to='/'>
         <h1>
-            <span className='text-primary'>Caleus Framework</span> Framework
+            <span className='text-primary'>Caleus Framework</span>
         </h1>
         </Link>
-        <p>
-            MERN Stack Application with GraphQL.
-        </p>
         <section>
             {Auth.loggedIn() ? (
                 <>
@@ -36,6 +33,7 @@ const Header = ()  => {
                 <Link className='button-link' to='/login'>
                 Login
                 </Link>
+                <br></br>
                 <Link className='button-link' to='/signup'>
                 Signup
                 </Link>
