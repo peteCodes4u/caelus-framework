@@ -4,7 +4,7 @@
 import { useState } from 'react';
 
 // this enables link from react-router-dom which is used to navigate between pages in the application
-import { link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // this enables the useMutation hook from apollo client which is used to make mutations to the server
 import { useMutation } from '@apollo/client';

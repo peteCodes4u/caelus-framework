@@ -15,7 +15,7 @@ export const QUERY_ME = gql`
 `;
 
 // this is the query that will be used to get a user's profile information
-export const QUERY_PROFILE = gql`
+export const QUERY_USER = gql`
     query profile($username: String!) {
         profile(username: $username) {
             _id
