@@ -11,4 +11,55 @@ import { QUERY_USER, QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
-export default function Profile() { };
+export default function Profile() {
+    const { profileId } = useParams();
+    const { loading, data } = useQuery(
+        profileId ? QUERY_USER : QUERY_ME,
+        {
+            variables: { username: profileId },
+        }
+    );
+
+    const profile = data?.me || data?.user || {};
+
+    if (Auth.loggedIn() && Auth.getProfile().data.username === profileId) {
+        return <Navigate to="/me" />;
+    }
+
+    if (loading) {
+        return <section>Loading...</section>;
+    }
+
+    if (!profile?.username) {
+        return (
+            <section>
+                <h4>Sorry, You need to login to access this feature, please login or signup</h4>
+            </section>
+        );
+    }
+
+    return (
+        <section>
+            <section>
+                <h2>
+                    {profileId ? `${profile.username}'s` : 'Your'} Profile
+                </h2>
+            </section>
+            <section>
+                <p>
+                    Username: {profile.username}
+                </p>
+                <p>
+                    Email: {profile.email}
+                </p>
+                <p>
+                    Password: {profile.password.replace(/./g, '*')} (hidden for security)
+                </p>
+                <p>
+                    Member Since: {new Date(profile.createdAt).toLocaleDateString()}
+                </p>
+            </section>
+        </section>
+    )
+
+};
