@@ -6,11 +6,11 @@ const { Schema, model } = require('mongoose');
 // leverage the bcrypt library to hash the password
 const bcrypt = require('bcrypt');
 
-// define the profile schema
-const profileSchema = new Schema({ });
+// define the user schema
+const userSchema = new Schema({ });
 
 // this object is used to define the Profile schema as a model
-const Profile = model('Profile', profileSchema);
+const User = model('User', userSchema);
 
 // export the Profile model for use in the express server
-module.exports = Profile;
+module.exports = User;
