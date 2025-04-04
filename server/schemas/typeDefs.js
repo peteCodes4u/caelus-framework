@@ -1,33 +1,27 @@
-// this file defines the typeDefs for the GraphQL schema
-// typeDefs are the types of data that can be queried or mutated. Note that the typeDefs are written in the GraphQL schema language which uses string interpolation to define the types of data that can be queried or mutated.
-
 const typeDefs = `
-    type Query {
-        me: User
-        users: [User]!
-        user(userId: ID!): User
-    }
+  type Profile {
+    _id: ID
+    name: String
+    email: String
+    password: String
+  }
 
-    type User {
-        _id: ID
-        username: String
-        email: String
-        password: String
-    }
-    
-    type Auth {
-        token: ID!
-        user: User
-    }
-    
-    type Mutation {
-        login(email: String!, password: String!): Auth
-        addUser(name: String!, email: String!, password: String!): Auth
-        updateUser(name: String, email: String, password: String): User
-        deleteUser: User
-    }
+  type Auth {
+    token: ID!
+    profile: Profile
+  }
 
+  type Query {
+    profiles: [Profile]!
+    profile(profileId: ID!): Profile
+    me: Profile
+  }
+
+  type Mutation {
+    addProfile(name: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    removeProfile: Profile
+  }
 `;
-// export the typeDefs
-module.exports = typeDefs;
 
+module.exports = typeDefs;

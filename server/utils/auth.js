@@ -13,7 +13,7 @@ const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
 // create a secret for the token
-const secret = process.env.JWT_SECRET;
+const secret = process.env.JWTSECRET;
 
 // establish the token longevity
 const expiration = '2h';
