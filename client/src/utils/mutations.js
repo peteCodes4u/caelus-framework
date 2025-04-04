@@ -8,12 +8,12 @@ import { gql } from '@apollo/client';
 // the mutation takes in the user's information as parameters and returns the user's information. Mutations utilize string interpolation to pass in the user's information as parameters.
 // NOTE - as the mutations with gql leverages string interpolation, careful attention must be made to the mutations configuration as intellisense will not be available to catch errors.
 export const ADD_USER = gql`
-    mutation addUser($username: String!, $email: String!, $password: String!) {
-        addUser(username: $username, email: $email, password: $password) {
+    mutation addUser($name: String!, $email: String!, $password: String!) {
+        addUser(name: $name, email: $email, password: $password) {
             token
             user {
                 _id
-                username
+                name
             }
         }
     }
@@ -27,7 +27,7 @@ export const LOGIN_USER = gql`
             token
             user {
                 _id
-                username
+                name
             }
         }
     }

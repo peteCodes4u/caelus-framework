@@ -11,30 +11,30 @@ const Header = ()  => {
     };
     
     return (
-        <header className="">
-        <section className="container">
+        <header className="framework-header">
+        <section className="container header-container">
         <Link className='' to='/'>
         <h1>
-            <span className='text-primary'>Caleus Framework</span>
+            <span className='text-primary header-title'>Caleus Framework</span>
         </h1>
         </Link>
         <section>
             {Auth.loggedIn() ? (
                 <>
-                <Link className='button-link' to ='/me'>
+                <Link className='button-link secondary' to ='/me'>
                 My Profile
                 </Link>
-                <button className='button-link' onClick={logout}>
+                <button className='button-link alert' onClick={logout}>
                 Logout
                 </button>
                 </>
             ) : (
                 <>
-                <Link className='button-link' to='/login'>
+                <Link className='button-link primary' to='/login'>
                 Login
                 </Link>
                 <br></br>
-                <Link className='button-link' to='/signup'>
+                <Link className='button-link secondary' to='/signup'>
                 Signup
                 </Link>
                 </>

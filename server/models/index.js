@@ -2,7 +2,6 @@
 
 // import necessary models
 const User = require('./User'); 
-const Profile = require('./Profile');
 
 // export the models as an object for use in the express server
-module.exports = { User, Profile }; 
+module.exports = { User }; 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "develop": "concurrently \"npm run server\" \"npm run client\"",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd client && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build"
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/peteCodes4u/caelus-framework#readme",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "dotenv": "^16.4.7"
   },
   "devDependencies": {

@@ -3,28 +3,28 @@
 
 const typeDefs = `
     type Query {
-        me: Profile
-        profiles: [Profile]!
-        profile(profileId: ID!): Profile
+        me: User
+        users: [User]!
+        user(userId: ID!): User
     }
 
-    type Profile {
+    type User {
         _id: ID
-        username: String
+        name: String
         email: String
         password: String
     }
     
     type Auth {
         token: ID!
-        profile: Profile
+        user: User
     }
     
     type Mutation {
         login(email: String!, password: String!): Auth
-        addUser(username: String!, email: String!, password: String!): Auth
-        updateUser(username: String, email: String, password: String): Profile
-        deleteUser: Profile
+        addUser(name: String!, email: String!, password: String!): Auth
+        updateUser(name: String, email: String, password: String): User
+        deleteUser: User
     }
 
 `;
