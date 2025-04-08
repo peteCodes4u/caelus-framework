@@ -18,7 +18,7 @@ import Auth from '../utils/auth';
 const Login = (props) => {
 
     // this enables the useMutation hook from apollo client which is used to make mutations to the server
-    const [login, { error }] = useMutation(LOGIN_USER);
+    const [login, { error, data }] = useMutation(LOGIN_USER);
     const [formState, setFormState] = useState({ email: '', password: '' });
 
     // this is the function that is used to handle the form submission. The function is used to login the user
@@ -31,7 +31,9 @@ const Login = (props) => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { data } = await login({ variables: { ...formState } });
+            const { data } = await login({
+                 variables: { ...formState } 
+                });
             Auth.login(data.login.token);
         } catch (e) {
             console.error(e);
@@ -65,7 +67,7 @@ const Login = (props) => {
                                     onChange={handleChange}
                                 />
                                 <input
-                                    classname="form-input"
+                                    className="form-input"
                                     placeholder="*******"
                                     name='password'
                                     type='password'
@@ -73,7 +75,7 @@ const Login = (props) => {
                                     onChange={handleChange}
                                 />
                                     <button
-                                        classname=""
+                                        className=""
                                         style={{ cursor: 'pointer' }}
                                         type='submit'
                                     >
