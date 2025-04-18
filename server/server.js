@@ -23,7 +23,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 // establish the port for the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 // create the app using express
 const app = express();
