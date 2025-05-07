@@ -1,22 +1,50 @@
-body {
-  font-family: 'Rubik', sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Rubik Mono One', sans-serif;
-}
-
-.small {
-  font-weight: 300;
-  font-style: italic;
-}
-
-.navbar {
-background-color: #0a0a0a;
-
-}
+.framework-header {
+    display: flex;
+    background-color: aqua;
+  }
+  
+  .header-container {
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  }
+  
+  .header-title {
+    padding: 2vh;
+    font-family: "Fredericka the Great", serif;
+  }
+  
+  .header-text-content {
+    padding: 2vh;
+  }
+  
+  .primary {
+    background-color: #1deb57;
+  }
+  
+  .secondary {
+    background-color: #1d70eb;
+  }
+  
+  .alert{
+    background-color: #eb1d54;
+  }
+  
+  .button-link {
+    text-align: center;
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    margin: 0;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid transparent;
+    outline: none;
+    color: #1a1a1a;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  
+  }
+  

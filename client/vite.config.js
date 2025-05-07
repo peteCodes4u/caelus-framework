@@ -7,18 +7,14 @@ import { defineConfig } from 'vite'
 // import react from '@vitejs/plugin-react' to use the react plugin for vite. react is a plugin that is used to enable react support in vite. react will be used for our UI components.
 import react from '@vitejs/plugin-react'
 
-import dotenv from 'dotenv';
-dotenv.config();
-const vPort = parseInt(process.env.VITE_PORT);
-
 export default defineConfig({
     plugins: [react()],
     server: {
-        port: vPort,
+        port: 3000,
         open: true,
         proxy: {
             '/graphql': {
-                target: `http://localhost:${vPort + 1}`,
+                target: 'http://localhost:3001',
                 changeOrigin: true,
                 secure: false,
             }
