@@ -2,19 +2,27 @@
 // https://vitejs.dev/config/
 
 // import { defineConfig } from 'vite' to define the configuration of the vite build process.
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
-// import react from '@vitejs/plugin-react' to use the react plugin for vite. react is a plugin that is used to enable react support in vite. react will be used for our UI components.
-import react from '@vitejs/plugin-react'
+// import dotenv for environment variables. dotenv is a module that is used to load environment variables from a .env file into process.env. dotenv will be used to load the environment variables for the client side of the application.
+import dotenv from 'dotenv';
+// initialize dotenv to load the environment variables.
+dotenv.config();
+const vPort = parseInt(process.env.VITE_PORT);
+
+// import react from '@vitejs/plugin-react' to use the react plugin for vite. react will be used for our UI components.
+import react from '@vitejs/plugin-react';
+
+
 
 export default defineConfig({
     plugins: [react()],
     server: {
-        port: 3000,
+        port: vPort,
         open: true,
         proxy: {
             '/graphql': {
-                target: 'http://localhost:3001',
+                target: `http://localhost:${vPort + 1}`,
                 changeOrigin: true,
                 secure: false,
             }
