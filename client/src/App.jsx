@@ -1,6 +1,13 @@
 // the app.jsx file is the main file that renders the app.
 
-import './App.css';
+// Import Styling
+import './AppStyle1.css';
+import './AppStyle2.css';
+
+// Import useEffect and useState for state management
+import { useEffect, useState } from 'react';
+
+// import appolo client for making requests to the server
 import { 
     ApolloClient,
     InMemoryCache,
@@ -8,8 +15,13 @@ import {
     createHttpLink
 } from '@apollo/client';
 
+// import setContext for setting the context of the request
 import { setContext } from '@apollo/client/link/context';
+
+// import Outlet for rendering the child components (rendiring nested routes)
 import { Outlet } from 'react-router-dom';  
+
+import NavigationBar from './components/NavigationBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -33,17 +45,32 @@ const authLink = setContext((_, { headers }) => {
         cache: new InMemoryCache(),
     });
 
-    function App() {
-        return (
+    export default function App() {
+
+        // Styling State for local storage
+        const [ isStyle1Active, setIsStyle1Active ] = useState(() => {
+            const savedStyle = localStorage.getItem('selectedStyle');
+            return savedStyle ? savedStyle === 'app-style1' : true;
+        }) 
+
+        //apply the styling classes to the body element via useEffect. 
+        useEffect(() => {
+            const selectedStyle = isStyle1Active ? "app-style1" : "app-style2"
+            document.body.className = selectedStyle;
+            localStorage.setItem('selectedStyle', selectedStyle);
+        }, [isStyle1Active]); 
+
+        // function to toggle the active stylesheet
+        const toggleStyleSheet = () => {
+            setIsStyle1Active(!isStyle1Active);
+        };
+
+                return (
             <ApolloProvider client={client}>
-                <div className='flex-column justify-flex-start min-100-vh'>
                     <Header />
-                    <div className='container'>
-                        <Outlet />
-                    </div>
+                    <NavigationBar toggleStyleSheet={toggleStyleSheet} />
+                    <Outlet />
                     <Footer />
-                </div>
             </ApolloProvider>
         );
-    }
-export default App;
+    };

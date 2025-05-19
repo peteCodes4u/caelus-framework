@@ -10,17 +10,29 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import app and pages for the application
 import App from './App.jsx';
 import Page1 from './pages/Page1.jsx';
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 import ErrorPage from './pages/ErrorPage';
 
+// create the router
 const router = createBrowserRouter([
         {
             path: '/',
-            element: <App />,
+            element:  (
+                <>
+                <App />
+                </>
+            ),
+
             errorElement:   <ErrorPage />,
+            // definethe routes for page1
             children: [
                 {
                     index: true,
-                    element: <Home />
+                    element: <Page1 />
+                }, {   
+                    path: '/page1',
+                    element: <Page1 />
                 }, {   
                     path: '/login',
                     element: <Login />

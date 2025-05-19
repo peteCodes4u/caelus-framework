@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 // this enables the LOGIN_USER mutation from the mutations folder which is used to login the user
-import { LOGIN_USER } from '../utils/mutations';
+import { LOGIN_USER } from '../../utils/mutations';
 
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 
 // this is the login page of the application changes to the login page can be made here
 const Login = (props) => {
