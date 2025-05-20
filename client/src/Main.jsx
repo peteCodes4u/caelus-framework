@@ -7,6 +7,9 @@ import ReactDom from 'react-dom/client';
 // import createBrowserRouter and RouterProvider for routing
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+// import bootstrap for styling
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // import app and pages for the application
 import App from './App.jsx';
 import Page1 from './pages/Page1.jsx';
