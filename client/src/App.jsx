@@ -3,9 +3,11 @@
 // Import Styling
 import './AppStyle1.css';
 import './AppStyle2.css';
+// import the context for managing the styles
+import { StyleContext } from './StyleContext';
 
 // Import useEffect and useState for state management
-import { useEffect, useState } from 'react';
+import { act, useEffect, useState } from 'react';
 
 // import appolo client for making requests to the server
 import { 
@@ -21,7 +23,6 @@ import { setContext } from '@apollo/client/link/context';
 // import Outlet for rendering the child components (rendiring nested routes)
 import { Outlet } from 'react-router-dom';  
 
-import NavigationBar from './components/NavigationBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -48,29 +49,26 @@ const authLink = setContext((_, { headers }) => {
     export default function App() {
 
         // Styling State for local storage
-        const [ isStyle1Active, setIsStyle1Active ] = useState(() => {
-            const savedStyle = localStorage.getItem('selectedStyle');
-            return savedStyle ? savedStyle === 'app-style1' : true;
-        }) 
+        const [activeStyle, setActiveStyle] = useState(() => localStorage.getItem('selectedStyle') || 'app-style1');
 
         //apply the styling classes to the body element via useEffect. 
         useEffect(() => {
-            const selectedStyle = isStyle1Active ? "app-style1" : "app-style2"
-            document.body.className = selectedStyle;
-            localStorage.setItem('selectedStyle', selectedStyle);
-        }, [isStyle1Active]); 
-
-        // function to toggle the active stylesheet
-        const toggleStyleSheet = () => {
-            setIsStyle1Active(!isStyle1Active);
-        };
+            document.body.className = activeStyle;
+            localStorage.setItem('selectedStyle', activeStyle);
+        }, [activeStyle]); 
 
                 return (
             <ApolloProvider client={client}>
-                    <Header />
-                    <NavigationBar toggleStyleSheet={toggleStyleSheet} />
+            <StyleContext.Provider value={{ activeStyle, setActiveStyle }}>
+                    <Header 
+                        activeStyle={activeStyle}
+                        setActiveStyle={setActiveStyle}
+                    />
                     <Outlet />
-                    <Footer />
+                    <Footer 
+                        activeStyle={activeStyle}
+                    />
+            </StyleContext.Provider>        
             </ApolloProvider>
         );
     };
