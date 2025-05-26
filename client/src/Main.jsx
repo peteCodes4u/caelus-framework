@@ -16,6 +16,7 @@ import Page1 from './pages/Page1.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import ErrorPage from './pages/ErrorPage';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 // create the router
 const router = createBrowserRouter([
@@ -33,15 +34,36 @@ const router = createBrowserRouter([
                 {
                     index: true,
                     element: <Page1 />
-                }, {   
+                }, 
+                // page1
+                {   
                     path: '/page1',
                     element: <Page1 />
-                }, {   
+                }, 
+                // login and signup pages
+                {   
                     path: '/login',
-                    element: <Login />
+                    element: <Page1 />,
+                    children: [
+                        {
+                            index: true,
+                            element: <Login />
+                        }
+                    ]
                 }, {   
                     path: '/signup',
-                    element: <Signup />
+                    element: <Page1 />,
+                    children: [
+                        {
+                            index: true,
+                            element: <Signup />
+                        }
+                    ]
+                }, 
+                // profile page
+                {
+                    path: '/profile/:id',
+                    element: <ProfilePage />
                 }, 
             ]
         },
