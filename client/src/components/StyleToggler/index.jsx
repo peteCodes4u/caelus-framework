@@ -4,7 +4,6 @@ export default function StyleToggler({ activeStyle, setActiveStyle }) {
     const avaialableStyles = [
         {label: 'Style 1', value: 'app-style1'},
         {label: 'Style 2', value: 'app-style2'},
-        {label: 'Style 3', value: 'app-style3'},
     ];
 
     return (

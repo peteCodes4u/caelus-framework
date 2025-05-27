@@ -47,7 +47,4 @@
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   
   }
-
-  body.app-style2 .app-style2-header {
-    background-color: #1d43eb;
-  }
+  

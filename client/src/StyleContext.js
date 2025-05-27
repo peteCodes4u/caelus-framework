@@ -5,5 +5,5 @@ import { createContext, useContext } from "react";
 // export the StyleContext function to be used in the app
 export const StyleContext = createContext();
 
-// export the useStyle function to consume the StyleContext function (context) 
-export const useStyle = () => useContext(StyleContext);
+// export the StyleProvider function to consume the StyleContext function (context) 
+export const StyleProvider = () => useContext(StyleContext);
