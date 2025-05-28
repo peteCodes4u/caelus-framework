@@ -1,104 +1,102 @@
-// this is the login page of the application changes to the login page can be made here
-
-// this enables useState from react which is used to store the state of the application. The state of the application is used to store the user input from the login form
 import { useState } from 'react';
-
-// this enables link from react-router-dom which is used to navigate between pages in the application
+import { Form, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-// this enables the useMutation hook from apollo client which is used to make mutations to the server
 import { useMutation } from '@apollo/client';
-
-// this enables the LOGIN_USER mutation from the mutations folder which is used to login the user
 import { LOGIN_USER } from '../../utils/mutations';
-
 import Auth from '../../utils/auth';
 
-// this is the login page of the application changes to the login page can be made here
-const Login = (props) => {
+export default function LoginForm({ activeStyle = 'app-style2', handleModalClose }) {
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [validated, setValidated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [login, { error, data }] = useMutation(LOGIN_USER);
 
-    // this enables the useMutation hook from apollo client which is used to make mutations to the server
-    const [login, { error, data }] = useMutation(LOGIN_USER);
-    const [formState, setFormState] = useState({ email: '', password: '' });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
 
-    // this is the function that is used to handle the form submission. The function is used to login the user
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({ ...formState, [name]: value });
-    };
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    try {
+      const { data } = await login({ variables: { ...userFormData } });
+      Auth.login(data.login.token);
+    } catch (e) {
+      setShowAlert(true);
+    }
+    setValidated(true);
+  };
 
-    // this is the function that is used to handle the form submission. The function is used to login the user
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const { data } = await login({
-                 variables: { ...formState } 
-                });
-            Auth.login(data.login.token);
-        } catch (e) {
-            console.error(e);
-        }
-        // clear form values
-        setFormState({
-            email: '',
-            password: '',
-        });
-    };
-
-    return (
-        <main>
-            <section className="container">
-                <h4>🌌 Login 🌌</h4>
-                <section>
-                    {data ? (
-                        <p>
-                            Success! You may now head <Link to="/">back to the homepage.</Link>
-                        </p>
-                    ) : (
-                        <form onSubmit={handleFormSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="email">Email address:</label>
-                                <input
-                                    className="form-input"
-                                    placeholder="your email"
-                                    name='email'
-                                    type='email'
-                                    value={formState.email}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    className="form-input"
-                                    placeholder="*******"
-                                    name='password'
-                                    type='password'
-                                    value={formState.password}
-                                    onChange={handleChange}
-                                />
-                                    <button
-                                        className=""
-                                        style={{ cursor: 'pointer' }}
-                                        type='submit'
-                                    >
-                                        🚀 Submit
-                                    </button>
-                                </div>
-                        </form>
-                    )}
-                    
-                    {error && (
-                        <div>
-                            {error.message}
-                        </div>
-                    )}
-                    <div>
-                        <Link to="/signup">← Go to Signup</Link>
-                    </div>
-                </section>
-            </section>
-        </main>
-
-    );
-
-};
-
-export default Login;
+  return (
+    <div className={`${activeStyle}-popup-window`}>
+      <div className={`${activeStyle}-popup-header d-flex align-items-center justify-content-between mb-3`}>
+        <h4 className="mb-0">Login</h4>
+        {typeof handleModalClose === "function" && (
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={handleModalClose}
+          ></button>
+        )}
+      </div>
+      <div className={`${activeStyle}-popup-body`}>
+        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+          <Alert
+            dismissible
+            onClose={() => setShowAlert(false)}
+            show={showAlert || !!error}
+            variant="danger"
+          >
+            Something went wrong with your login credentials!
+          </Alert>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="email">Email</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Your email"
+              name="email"
+              onChange={handleInputChange}
+              value={userFormData.email}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Email is required!
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="password">Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Your password"
+              name="password"
+              onChange={handleInputChange}
+              value={userFormData.password}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Password is required!
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Button
+            className="mb-0"
+            disabled={!(userFormData.email && userFormData.password)}
+            type="submit"
+            variant="success"
+          >
+            Submit
+          </Button>
+        </Form>
+        <div className="mt-3">
+          <Link to="/signup">← Go to Signup</Link>
+        </div>
+      </div>
+    </div>
+  );
+}

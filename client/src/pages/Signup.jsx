@@ -1,9 +1,18 @@
 import SignupForm from "../components/SignupForm";
+import { useStyle } from "../StyleContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+    const { activeStyle } = useStyle();
+    const navigate = useNavigate();
     return (
-        <>
-            <SignupForm />
-        </>
+        <div className={`${activeStyle}-popup-overlay`}>
+            <div className={`${activeStyle}-popup-window`}>
+                <SignupForm 
+                    activeStyle={activeStyle}
+                    handleModalClose={() => navigate('/')}
+                />
+            </div>
+        </div>
     );
 };
