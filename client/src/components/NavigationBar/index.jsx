@@ -37,9 +37,9 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                             ) : (
                                 <>
                                     <NavDropdown.Item as={Link} to={`/profile/${userId}`}>Profile</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} onCLick={Auth.logout}>Logout</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} onClick={Auth.logout}>Logout</NavDropdown.Item>
                                 </>
-                            )};
+                            )}
                         </NavDropdown>
                         {isProfilePage && (
                             <StyleToggler

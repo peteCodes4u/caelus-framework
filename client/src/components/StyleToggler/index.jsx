@@ -11,7 +11,7 @@ export default function StyleToggler({ activeStyle, setActiveStyle }) {
             title="Styles"
             id="style-dropdown"
             className={`ms-2 ${activeStyle}-style-dropdown`}
-            menueVariant={activeStyle === 'app-style1' ? 'dark' : 'light'}
+            menuVariant={activeStyle === 'app-style1' ? 'dark' : 'light'}
         >
             {avaialableStyles.map((style) => (
                 <NavDropdown.Item
