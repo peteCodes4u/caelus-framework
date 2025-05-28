@@ -8,10 +8,10 @@ export default function Login() {
     return (
         <div className={`${activeStyle}-popup-overlay`}>
             <div className={`${activeStyle}-popup-window`}>
-            <LoginForm 
-            activeStyle={activeStyle}
-            handleModalClose={() => navigate('/')}
-            />
+                <LoginForm
+                    activeStyle={activeStyle}
+                    handleModalClose={() => navigate('/')}
+                />
             </div>
         </div>
     );

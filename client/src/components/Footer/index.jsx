@@ -7,63 +7,51 @@ import {
     Nav,
     Form,
     FormControl,
-    Row,
-    Col,
     Button,
 } from 'react-bootstrap'
 
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 
-export default function Footer() {
+export default function Footer({ activeStyle }) {
     const location = useLocation();
     const navigate = useNavigate();
 
     return (
-        <Navbar bg='dark' variant='dark' className='mt-4'>
+        <Navbar className={`${activeStyle}-footer`}>
             <Container fluid>
-                <Row className='w-100 alighn-items-center'>
-                    <Col xs={12} md={4} className='mb-3 mb-md-0'>
-                        <Form className ='d-flex'>
+                <div className="footer-content">
+                    <div className="footer-left">
+                        <Form className="footer-search d-flex">
                             <FormControl
-                                type='search'
-                                placeholder='Search'
-                                className='mr-2'
-                                aria-activedescendant='Search'
+                                type="search"
+                                placeholder="Search"
+                                className="mr-2"
+                                aria-label="Search"
                             />
-                            <Button variant='outline-success' type='submit'>
+                            <Button variant="outline-success" type="submit">
                                 Search
                             </Button>
                         </Form>
-                    </Col>
-                    <Col xs={12} md={4} className="text-center text-md-right text-light">
-                        <div className="mb-2">
-                            <Nav className='d-flex justify-content-center justify-content-md-end'>
-                                <Nav.Link href="https://www.facebook.com" target="_blank">
-                                    <FaFacebook />
-                                </Nav.Link>
-                                <Nav.Link href="https://www.twitter.com" target="_blank">
-                                    <FaTwitter />
-                                </Nav.Link>
-                                <Nav.Link href="https://www.instagram.com" target="_blank">
-                                    <FaInstagram />
-                                </Nav.Link>
-                            </Nav>
-
-                        </div>
-                        <div>
+                    </div>
+                    <div className="footer-center">
+                        <div className="footer-copyright">
                             &copy; {new Date().getFullYear()} - Caleus GraphQL Framework by Quartzion Technology Solutions Corp. All rights reserved.
                         </div>
-                        <div>
-                            {location.pathname !== '/' && (
-                                <button className="btn btn-primary"
-                                    onClick={() => navigate(-1)}
-                                >
-                                    &larr; Go Back
-                                </button>
-                            )}
-                        </div>
-                    </Col>
-                </Row>
+                    </div>
+                    <div className="footer-right">
+                        <Nav className="footer-social">
+                            <Nav.Link href="https://www.facebook.com" target="_blank">
+                                <FaFacebook />
+                            </Nav.Link>
+                            <Nav.Link href="https://www.twitter.com" target="_blank">
+                                <FaTwitter />
+                            </Nav.Link>
+                            <Nav.Link href="https://www.instagram.com" target="_blank">
+                                <FaInstagram />
+                            </Nav.Link>
+                        </Nav>
+                    </div>
+                </div>
             </Container>
         </Navbar>
     );

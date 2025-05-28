@@ -97,19 +97,49 @@ body.app-style1 .footer-navbar {
   align-items: center;
 }
 
-body.app-style1 .footer-search .form-control {
-  margin-right: 0.5rem;
+body.app-style1 .app-style1-footer .footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+body.app-style1 .footer-left {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 200px;
+}
+
+body.app-style1 .footer-center {
+  text-align: center;
+  flex: 2 1 0;
+  min-width: 200px;
 }
 
 body.app-style1 .footer-right {
-  display: flex !important;
+  display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex: 1 1 0;
+  min-width: 200px;
+}
+
+body.app-style1 .footer-search {
+  display: flex;
+  align-items: center;
+}
+
+body.app-style1 .footer-search .form-control {
+  margin-right: 0.5rem;
 }
 
 body.app-style1 .footer-social {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 body.app-style1 .footer-social .nav-link {
@@ -122,8 +152,7 @@ body.app-style1 .footer-social .nav-link:hover {
   color: #f714be;
 }
 
-body.app-style1 .footer-copyright {
-  margin-left: 1rem;
+body.app-style1 .footer-center {
   white-space: nowrap;
   font-size: 1rem;
   color: #f714be;
@@ -188,6 +217,14 @@ body.app-style1 .app-style1-popup-body .btn:last-child {
 /* Login / Signup Form settings END */
 /* Login / Signup form settings END */
 /* Page1 styles - START */
+.app-style1-page1 .card img {
+  width: 100%;
+  height: 200px;         
+  object-fit: contain;
+  border-radius: 0.5rem;
+  display: block;
+}
+
 body.app-style1 .app-style1-page1 {
   background: #c795c3;
   min-height: 25vh;
