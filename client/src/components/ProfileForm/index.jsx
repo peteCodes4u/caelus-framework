@@ -43,7 +43,7 @@ export default function ProfileForm({ activeStyle = 'app-style2', handleModalClo
         if (userData && userData.me) {
             setUserFormData((prev) => ({
                 ...prev,
-                username: userData.me.username || '',
+                name: userData.me.name || '',
                 email: userData.me.email || '',
             }));
         }
@@ -70,7 +70,7 @@ export default function ProfileForm({ activeStyle = 'app-style2', handleModalClo
                                 placeholder="Your username"
                                 name="username"
                                 id="username"
-                                value={userFormData.username}
+                                value={userFormData.name}
                                 onChange={handleInputChange}
                                 required
                             />
