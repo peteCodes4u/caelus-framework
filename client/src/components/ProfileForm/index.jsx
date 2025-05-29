@@ -5,10 +5,10 @@ import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import Auth from '../../utils/auth';
 
-export default function ProfileForm({ activeStyle = 'app-style2', handleModalClose }) {
+export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
     const [userFormData, setUserFormData] = useState({
-        username: '',
+        name: '',
         email: '',
         password: '',
     });
@@ -31,7 +31,9 @@ export default function ProfileForm({ activeStyle = 'app-style2', handleModalClo
         }
         try {
             const { data } = await updateUser({ variables: { ...userFormData } });
-            Auth.login(data.updateUser.token);
+            if (data && data.updateUser && data.updateUser.token) {
+                Auth.login(data.updateUser.token);
+            }
         } catch (e) {
             setShowAlert(true);
         }
@@ -68,8 +70,8 @@ export default function ProfileForm({ activeStyle = 'app-style2', handleModalClo
                             <Form.Control
                                 type="text"
                                 placeholder="Your username"
-                                name="username"
-                                id="username"
+                                name="name"
+                                id="name"
                                 value={userFormData.name}
                                 onChange={handleInputChange}
                                 required
