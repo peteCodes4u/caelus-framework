@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 
 export default function SignUpForm({ activeStyle = 'app-style2', handleModalClose }) {
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ name: '', email: '', password: '' });
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [addUser, { error, data }] = useMutation(ADD_USER);
@@ -55,9 +55,9 @@ export default function SignUpForm({ activeStyle = 'app-style2', handleModalClos
             <Form.Control
               type='text'
               placeholder='Your username'
-              name='username'
+              name='name'
               onChange={handleInputChange}
-              value={userFormData.username}
+              value={userFormData.name}
               required
             />
             <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
@@ -87,7 +87,7 @@ export default function SignUpForm({ activeStyle = 'app-style2', handleModalClos
             <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
           </Form.Group>
           <Button
-            disabled={!(userFormData.username && userFormData.email && userFormData.password)}
+            disabled={!(userFormData.name && userFormData.email && userFormData.password)}
             type='submit'
             variant='success'>
             Submit
