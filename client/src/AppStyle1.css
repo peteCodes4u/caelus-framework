@@ -233,6 +233,23 @@ body.app-style1 .app-style1-page1 {
 body.app-style1 .app-style1-page1 h1 {
   color: #0d6efd;
 }
+
+/* body.app-style1-page1 .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  padding: 1rem;
+} */
+
+
+body.app-style1 .card-text {
+  width: 100%;
+  text-align: left;      
+  object-fit: contain;
+  border-radius: 0.5rem;
+  display: block;
+  padding-left: 5%;
+}
 /* Page1 styles - END */
 /* Profile Page styles - START */
 body.app-style1 .app-style1-profile-page {
