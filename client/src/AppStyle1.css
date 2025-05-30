@@ -264,9 +264,9 @@ body.app-style1 .app-style1-profile-page p {
 body.app-style1 .app-style1-profile-form {
   display: flex;
   flex-direction: column;
-  align-items: center;      /* horizontal centering */
-  justify-content: center;  /* vertical centering */
-  min-height: 60vh;         /* adjust as needed for vertical space */
+  align-items: center;      
+  justify-content: center;  
+  min-height: 60vh;         
 }
 
 /* Left-align form labels */
