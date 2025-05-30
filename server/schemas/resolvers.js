@@ -67,13 +67,21 @@ const resolvers = {
         // update a user
         updateUser: async (parent, { name, email, password }, context) => {
             if (!context.user) throw new AuthenticationError('Not logged in');
-            const updatedUser = await User.findByIdAndUpdate(
-                context.user._id,
-                { name, email, password },
-                { new: true }
-            );
-            const token = signToken(updatedUser);
-            return { token, user: updatedUser };
+
+            // Find the user by ID
+            const user = await User.findById(context.user._id);
+            if (!user) throw new AuthenticationError('User not found');
+
+            // Update fields if provided
+            if (name) user.name = name;
+            if (email) user.email = email;
+            if (password) user.password = password; // Will be hashed by pre('save')
+
+            // Save the user (triggers pre-save middleware)
+            await user.save();
+
+            const token = signToken(user);
+            return { token, user };
         },
         // delete a user
         deleteUser: async (parent, args, context) => {
