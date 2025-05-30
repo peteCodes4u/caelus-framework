@@ -5,7 +5,8 @@
 const { User } = require('../models');
 
 // pull in the signToken function from auth
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
 
 // define the resolvers
 const resolvers = {
@@ -26,7 +27,7 @@ const resolvers = {
                 return User.findOne({ _id: context.user._id });
             }
             console.error('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
-            throw AuthenticationError;                        
+            throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');                        
         },
     },
     // define the mutations
@@ -48,14 +49,14 @@ const resolvers = {
             // logic for checking if the user exists and if the password is correct
             if (!user) {
                 console.error('😲 Sorry, we could not find any records that match that user please check your input and try again, thank you 🤭!');
-                throw new AuthenticationError;
+                throw new AuthenticationError('😲 Sorry, we could not find any records that match that user please check your input and try again, thank you 🤭!');
             }
 
             const correctPw = await user.isCorrectPassword(password);
             // logic for if the password is incorrect
             if (!correctPw) {
                 console.error('😟 Sorry, the password you entered is not correct, please try again or reset your password, thank you 🤭!');
-                throw new AuthenticationError;
+                throw new AuthenticationError('😟 Sorry, the password you entered is not correct, please try again or reset your password, thank you 🤭!');
             }
 
             // if the password is correct then a token is created and returned along with the user
@@ -69,7 +70,7 @@ const resolvers = {
                 return User.findByIdAndUpdate(context.user._id, { name, email, password }, { new: true });
             }
             console.error('👽 Authentication Error Encountered when Attempting user UPDATE 👽!');
-            throw new AuthenticationError;
+            throw new AuthenticationError('👽 Authentication Error Encountered when Attempting user UPDATE 👽!');
         },
         // delete a user
         deleteUser: async (parent, args, context) => {
@@ -77,7 +78,7 @@ const resolvers = {
                 return User.findByIdAndDelete(context.user._id);
             }
             console.error('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
-            throw new AuthenticationError;
+            throw new AuthenticationError('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
         },
     },
 };
