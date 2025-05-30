@@ -66,13 +66,14 @@ const resolvers = {
 
         // update a user
         updateUser: async (parent, { name, email, password }, context) => {
-            if (context.user) {
-                const user = await User.findByIdAndUpdate(context.user._id, { name, email, password }, { new: true });
-                const token = signToken(user);
-                return { token, user };
-            }
-            console.error('👽 Authentication Error Encountered when Attempting user UPDATE 👽!');
-            throw new AuthenticationError('👽 Authentication Error Encountered when Attempting user UPDATE 👽!');
+            if (!context.user) throw new AuthenticationError('Not logged in');
+            const updatedUser = await User.findByIdAndUpdate(
+                context.user._id,
+                { name, email, password },
+                { new: true }
+            );
+            const token = signToken(updatedUser);
+            return { token, user: updatedUser };
         },
         // delete a user
         deleteUser: async (parent, args, context) => {
