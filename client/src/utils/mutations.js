@@ -47,14 +47,10 @@ export const UPDATE_USER = gql`
 `;
 
 export const UPDATE_PASSWORD = gql`
-  mutation updatePassword($password: String!) {
-    updatePassword(password: $password) {
-      token
-      user {
-        _id
-        name
-        email
-      }
+  mutation updatePassword($oldPassword: String!, $password: String!) {
+    updatePassword(oldPassword: $oldPassword, password: $password) {
+      success
+      message
     }
   }
 `;

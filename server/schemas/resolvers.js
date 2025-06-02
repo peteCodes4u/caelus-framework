@@ -7,6 +7,7 @@ const { User } = require('../models');
 // pull in the signToken function from auth
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const bcrypt = require('bcrypt');
 
 // define the resolvers
 const resolvers = {
@@ -84,21 +85,22 @@ const resolvers = {
         },
         
         // update a password
-        updatePassword: async (parent, { password }, context) => {
+        updatePassword: async (parent, { oldPassword, password }, context) => {
             if (!context.user) throw new AuthenticationError('Not logged in');
-
-            // Find the user by ID
             const user = await User.findById(context.user._id);
             if (!user) throw new AuthenticationError('User not found');
 
-            // Update fields if provided
-            if (password) user.password = password;
+            // Check old password
+            const valid = await bcrypt.compare(oldPassword, user.password);
+            if (!valid) {
+                return { success: false, message: 'Old password is incorrect.' };
+            }
 
-            // Save the user (triggers pre-save middleware)
+            // Update to new password (will be hashed by pre-save middleware)
+            user.password = password;
             await user.save();
 
-            const token = signToken(user);
-            return { token, user };
+            return { success: true, message: 'Password updated successfully.' };
         },
         // delete a user
         deleteUser: async (parent, args, context) => {

@@ -24,10 +24,14 @@ const typeDefs = `
         login(email: String!, password: String!): Auth
         addUser(name: String!, email: String!, password: String!): Auth
         updateUser(name: String, email: String ): Auth
-        updatePassword(password: String!): Auth
+        updatePassword(oldPassword: String!, password: String!): UpdatePasswordResponse
         deleteUser: User
     }
 
+    type UpdatePasswordResponse {
+        success: Boolean!
+        message: String
+    }
 `;
 // export the typeDefs
 module.exports = typeDefs;

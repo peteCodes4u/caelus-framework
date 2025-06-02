@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { UPDATE_PASSWORD } from '../../utils/mutations';
-import Auth from '../../utils/auth';
 
 export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
     const [formData, setFormData] = useState({
@@ -10,8 +9,11 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
         password: '',
         confirmPassword: ''
     });
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
-    // Check if new password and confirm password match
+    const [updatePassword, { loading }] = useMutation(UPDATE_PASSWORD);
+
     const passwordsMatch =
         formData.password &&
         formData.confirmPassword &&
@@ -22,17 +24,41 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSuccessMsg('');
+        setErrorMsg('');
+        if (!passwordsMatch) return;
+        try {
+            const { data } = await updatePassword({
+                variables: {
+                    oldPassword: formData.oldPassword,
+                    password: formData.password
+                }
+            });
+            if (data?.updatePassword?.success) {
+                setSuccessMsg('Password updated successfully!');
+                setFormData({ oldPassword: '', password: '', confirmPassword: '' });
+            } else {
+                setErrorMsg(data?.updatePassword?.message || 'Failed to update password.');
+            }
+        } catch (err) {
+            setErrorMsg('Failed to update password.');
+        }
+    };
+
     return (
         <div className={`${activeStyle}-update-password-form`}>
             <div className={`${activeStyle}-update-password-form-header d-flex align-items-center justify-content-between mb-3`}>
                 <div className={`${activeStyle}-update-password-form-body`}>
                     <Card className={`${activeStyle}-update-password-form-card`}>
-                        <Form noValidate>
+                        <Form noValidate onSubmit={handleSubmit}>
                             <Alert variant="info">
                                 Please enter your new password below.
                             </Alert>
+                            {successMsg && <Alert variant="success">{successMsg}</Alert>}
+                            {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
                             <Form.Group controlId="formBasicPassword">
-                                {/* Old Password */}
                                 <Form.Label>Old Password</Form.Label>
                                 <Form.Control 
                                     type='password'
@@ -42,7 +68,6 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
                                     onChange={handleInputChange}
                                     required
                                 />
-                                {/* Show New Password only if Old Password is entered */}
                                 {formData.oldPassword && (
                                     <>
                                         <Form.Label>New Password</Form.Label>
@@ -56,7 +81,6 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
                                         />
                                     </>
                                 )}
-                                {/* Show Confirm Password only if New Password is entered */}
                                 {formData.oldPassword && formData.password && (
                                     <>
                                         <Form.Label>Confirm New Password</Form.Label>
@@ -70,7 +94,6 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
                                         />
                                     </>
                                 )}
-                                {/* Show error if passwords do not match */}
                                 {formData.password && formData.confirmPassword && !passwordsMatch && (
                                     <Alert variant="danger" className="mt-2">
                                         New password and confirmation do not match.
@@ -84,7 +107,8 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
                                     !formData.oldPassword ||
                                     !formData.password ||
                                     !formData.confirmPassword ||
-                                    !passwordsMatch
+                                    !passwordsMatch ||
+                                    loading
                                 }
                             >
                                🔐 Update Password 🔐
