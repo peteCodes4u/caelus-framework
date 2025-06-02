@@ -1,49 +1,37 @@
 /* Root */
 :root {
+  --display: flex;
   --main-app-font: 'Permanent Marker', sans-serif;
-  --primary-bg: #0a0a0a;
-  --primary-color: #f8f9fa;
-  --accent-color: #f714be;
-  --footer-bg: #0b0b0b;
-  --profile-bg: #faafec;
-  --profile-title: #0d6efd;
-  --profile-text: #ef0c0c;
-  --navbar-bg: #0a0a0a;
+  --const-gradient: radial-gradient(circle, #5c0ce7 0%, #14f742 100%);
+  --title-text-primary-color: #fff;
   --navbar-border: #343a40;
-  
-  --card-bg: #fff;
-  --card-radius: 0.5rem;
-  --card-padding: 1.5rem;
-  --input-radius: 0.5rem;
-  --input-margin-bottom: 1rem;
-  /* Add more as needed */
+  --hover-accent-color: #f714be;
+  --general-bg: #222;
+  --higlight-content-bg: #14f742;
+  --dim-background: rgba(0, 0, 0, 0.7);
+  --alt-primary-color2: #0d6efd;
+  --radius: 0.5rem;
+  --alignment: center;
 }
 
 /* MAIN APP STYLE - START */
 body.app-style1 {
   font-family: var(--main-app-font);
 }
-
-body.app-style1 h1,
-body.app-style1 h2,
-body.app-style1 h3 {
-  font-family: 'Rubik Mono One', sans-serif;
-}
-
-body.app-style1 .navbar {
-  background: radial-gradient(circle, #5c0ce7 0%, #14f742 100%);
-}
 /* MAIN APP STYLE - END */
 /* Header Style - Start */
+body.app-style1 .navbar {
+  background: var(--const-gradient);
+}
+
 body.app-style1 .app-style1-header {
-  text-align: center;
+  text-align: var(--alignment);
   font-size: 1rem;
 }
 /* Header Style - END */
 /* NavigationBar Style - START */
 body.app-style1 .app-style1-navbar {
-  background-color: var(--navbar-bg);
-  color: var(--primary-color);
+  color: var(--title-text-primary-color);
   border-bottom: 1px solid var(--navbar-border);
   min-height: 56px;
   padding-left: 1rem;
@@ -51,74 +39,63 @@ body.app-style1 .app-style1-navbar {
 }
 
 body.app-style1 .app-style1-navbar .navbar-brand {
-  color: var(--primary-color) !important;
-  font-family: var(--navbar-brand-font);
-  font-size: 1.25rem;
+  color: var(--title-text-primary-color) !important;
 }
 
 body.app-style1 .app-style1-navbar .app-style1-nav {
   margin-left: auto;
-  display: flex;
+  display: var(--display);
   justify-content: flex-end;
   width: 100%;
 }
 
 body.app-style1 .app-style1-navbar .app-style1-nav .nav-link,
 body.app-style1 .app-style1-navbar .navbar-nav .nav-link {
-  color: #f8f9fa !important;
+  color: var(--title-text-primary-color) !important;
   font-size: 1rem;
 }
 
 body.app-style1 .app-style1-navbar .navbar-brand:hover,
 body.app-style1 .app-style1-navbar .app-style1-nav .nav-link:hover,
 body.app-style1 .app-style1-navbar .navbar-nav .nav-link:hover {
-  color: #f714be !important;
+  color: var(--hover-accent-color) !important;
 }
 
 body.app-style1 .app-style1-navbar .dropdown-menu {
-  background-color: #222;
-  color: #f8f9fa;
+  background-color: var(--general-bg);
+  color: var(--title-text-primary-color);
 }
 
 body.app-style1 .app-style1-navbar .dropdown-item {
-  color: #f8f9fa;
+  color: var(--title-text-primary-color);
 }
 
 body.app-style1 .app-style1-navbar .dropdown-item:hover,
 body.app-style1 .app-style1-navbar .dropdown-item:focus {
-  background-color: #14f742;
-  color: #222;
+  background-color: var(--higlight-content-bg);
+  color: var(--general-bg);
 }
 
 body.app-style1 .app-style1-toggle-theme-btn {
-  margin-left: 0.5rem;
-  color: #14f742;
+  margin-left: var(--radius);
+  color: var(--higlight-content-bg);
   background: transparent;
-  border: 1px solid #14f742;
+  border: 1px solid var(--higlight-content-bg);
   transition: background 0.2s, color 0.2s;
-}
-body.app-style1 .app-style1-toggle-theme-btn:hover {
-  background: #14f742;
-  color: #0a0a0a;
 }
 /* NavigationBar Styling - END */
 /* Footer style - START */
-body.app-style1 .app-style1-footer {
-  background-color: var(--footer-bg);
-  color: var(--primary-color);
-}
-
 body.app-style1 .footer-navbar {
   min-height: 56px;
   padding-top: 0;
   padding-bottom: 0;
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
 }
 
 body.app-style1 .app-style1-footer .footer-content {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
@@ -126,72 +103,72 @@ body.app-style1 .app-style1-footer .footer-content {
 }
 
 body.app-style1 .footer-left {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   flex: 1 1 0;
   min-width: 200px;
 }
 
 body.app-style1 .footer-center {
-  text-align: center;
+  text-align: var(--alignment);
   flex: 2 1 0;
   min-width: 200px;
 }
 
 body.app-style1 .footer-right {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   justify-content: flex-end;
   flex: 1 1 0;
   min-width: 200px;
 }
 
 body.app-style1 .footer-search {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
 }
 
 body.app-style1 .footer-search .form-control {
-  margin-right: 0.5rem;
+  margin-right: var(--radius);
 }
 
 body.app-style1 .footer-social {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: var(--display);
+  align-items: var(--alignment);
+  gap: var(--radius);
 }
 
 body.app-style1 .footer-social .nav-link {
-  color: #f8f9fa;
+  color: var(--title-text-primary-color);
   font-size: 1.5rem;
   margin: 0 0.25rem;
 }
 
 body.app-style1 .footer-social .nav-link:hover {
-  color: #f714be;
+  color: var(--hover-accent-color);
 }
 
 body.app-style1 .footer-center {
   white-space: nowrap;
   font-size: 1rem;
-  color: #f714be;
+  color: var(--hover-accent-color);
 }
 /* Footer style - END */
 /* Login / Signup form settings START */
 body.app-style1 .app-style1-popup-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
+  background: var(--dim-background);
   z-index: 1050;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: var(--display);
+  align-items: var(--alignment);
+  justify-content: var(--alignment);
 }
 
 body.app-style1 .app-style1-popup-window {
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25);
+  background: var(--title-text-primary-color);
+  border-radius: var(--radius);
+  box-shadow: 0 var(--radius) 1rem var(--dim-background);
   width: 100%;
   max-width: 400px;
   min-width: 300px;
@@ -200,7 +177,7 @@ body.app-style1 .app-style1-popup-window {
   overflow-y: auto;
   position: relative;
   animation: fadeInScale 0.2s;
-  display: flex;
+  display: var(--display);
   flex-direction: column;
 }
 
@@ -210,19 +187,16 @@ body.app-style1 .app-style1-popup-close {
   right: 1.25rem;
   z-index: 10;
 }
-body.app-style1 .app-style1-popup-close:hover {
-  color: #f714be;
-}
 
 body.app-style1 .app-style1-popup-header {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid var(--title-text-primary-color);
   padding: 0.75rem 1.5rem;
   margin-bottom: 1.5rem;
   min-height: 2.5rem;
-  color: #f714be;
-  background-color: #fff;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  color: var(--hover-accent-color);
+  background-color: var(--alt-primary-color2);
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
 }
 
 body.app-style1 .app-style1-popup-body {
@@ -234,57 +208,56 @@ body.app-style1 .app-style1-popup-body .btn:last-child {
   margin-bottom: 0;
 }
 /* Login / Signup Form settings END */
-/* Login / Signup form settings END */
 /* Page1 styles - START */
 .app-style1-page1 .card img {
   width: 100%;
   height: 200px;         
   object-fit: contain;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   display: block;
 }
 
 body.app-style1 .app-style1-page1 {
-  background: #c795c3;
+  background: var(--general-bg);
   min-height: 25vh;
 }
 
 body.app-style1 .app-style1-page1 h1 {
-  color: #0d6efd;
+  color: var(--alt-primary-color2);
 }
 
 body.app-style1 .card-text {
   width: 100%;
   text-align: left;      
   object-fit: contain;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   display: block;
   padding-left: 5%;
 }
 /* Page1 styles - END */
 /* Profile Page styles - START */
 body.app-style1 .app-style1-profile-page {
-  background: var(--profile-bg);
-  text-align: center;
+  background: var(--general-bg);
+  text-align: var(--alignment);
   min-height: 25vh;
   padding: 2rem 0;
 }
 
 body.app-style1 .app-style1-profile-page h1 {
-  color: var(--profile-title);
+  color: var(--alt-primary-color2);
   margin-bottom: 1rem;
 }
 
 body.app-style1 .app-style1-profile-page p {
-  color: var(--profile-text);
+  color: var(--hover-accent-color);
   font-size: 1.2rem;
 }
 
 body.app-style1 .app-style1-profile-form {
-  display: flex;
+  display: var(--display);
   flex-direction: column;
-  align-items: center;      
-  justify-content: center;  
+  align-items: var(--alignment);      
+  justify-content: var(--alignment);  
   min-height: 60vh;         
 }
 
@@ -296,19 +269,18 @@ body.app-style1 .app-style1-profile-form .form-label {
   margin-bottom: 0.25rem;
 }
 
-/* Optional: ensure form controls fill the width and have spacing */
 body.app-style1 .app-style1-profile-form .form-control {
   width: 100%;
   margin-bottom: 1rem;
-  border-radius: var(--input-radius);
+  border-radius: var(--radius);
 }
 
 body.app-style1 .app-style1-profile-form .card {
   width: 100%;
   max-width: 500px;
   margin: auto;     
-  padding: var(--card-padding);
-  background-color: var(--card-bg);
-  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  background-color: var(--title-text-primary-color);
+  border-radius: var(--radius);
 }
 /* Profile Page styles - END */
