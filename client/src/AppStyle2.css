@@ -1,7 +1,7 @@
 /* AppStyle2.css */
 /* MAIN APP STYLE - START */
 body.app-style2 {
-  --main-app-font: 'Permanent Marker', sans-serif;
+  --main-app-font: 'Rubik Mono One';
   font-family: var(--main-app-font);
   --display: flex;
   --const-gradient: radial-gradient(circle, #5c0ce7 0%, #14f742 100%);
@@ -109,7 +109,8 @@ body.app-style2 .footer-left {
 
 body.app-style2 .footer-center {
   text-align: var(--alignment);
-  flex: 2 1 0;
+  flex: 2 1 1;
+  padding-left: 5%;
   min-width: 200px;
 }
 

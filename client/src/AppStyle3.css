@@ -1,7 +1,7 @@
 /* AppStyle3.css */
 /* MAIN APP STYLE - START */
 body.app-style3 {
-  --main-app-font: 'Permanent Marker', sans-serif;
+  --main-app-font: sans-serif;
   font-family: var(--main-app-font);
   --display: flex;
   --const-gradient: radial-gradient(circle, #080808 0%, #f714af 100%);
