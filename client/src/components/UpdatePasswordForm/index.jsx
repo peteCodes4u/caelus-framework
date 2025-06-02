@@ -52,68 +52,67 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
             <div className={`${activeStyle}-update-password-form-header d-flex align-items-center justify-content-between mb-3`}>
                 <div className={`${activeStyle}-update-password-form-body`}>
                     <Card className={`${activeStyle}-update-password-form-card`}>
-                        <Form noValidate onSubmit={handleSubmit}>
-                            <Alert variant="info">
-                                Please enter your new password below.
-                            </Alert>
-                            {successMsg && <Alert variant="success">{successMsg}</Alert>}
-                            {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Old Password</Form.Label>
-                                <Form.Control 
-                                    type='password'
-                                    placeholder='Old Password'
-                                    name="oldPassword"
-                                    value={formData.oldPassword}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                                {formData.oldPassword && (
-                                    <>
-                                        <Form.Label>New Password</Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="Enter new password"
-                                            name="password"
-                                            value={formData.password}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </>
-                                )}
-                                {formData.oldPassword && formData.password && (
-                                    <>
-                                        <Form.Label>Confirm New Password</Form.Label>
-                                        <Form.Control 
-                                            type='password'
-                                            placeholder='Confirm New Password'
-                                            name="confirmPassword"
-                                            value={formData.confirmPassword}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </>
-                                )}
-                                {formData.password && formData.confirmPassword && !passwordsMatch && (
-                                    <Alert variant="danger" className="mt-2">
-                                        New password and confirmation do not match.
-                                    </Alert>
-                                )}
-                            </Form.Group>
-                            <Button 
-                                variant="primary" 
-                                type="submit"
-                                disabled={
-                                    !formData.oldPassword ||
-                                    !formData.password ||
-                                    !formData.confirmPassword ||
-                                    !passwordsMatch ||
-                                    loading
-                                }
-                            >
-                               🔐 Update Password 🔐
-                            </Button>
-                        </Form>
+                        <Alert variant="info">
+                            Please enter your new password below.
+                        </Alert>
+                        {successMsg && <Alert variant="success">{successMsg}</Alert>}
+                        {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Old Password</Form.Label>
+                            <Form.Control 
+                                type='password'
+                                placeholder='Old Password'
+                                name="oldPassword"
+                                value={formData.oldPassword}
+                                onChange={handleInputChange}
+                                required
+                            />
+                            {formData.oldPassword && (
+                                <>
+                                    <Form.Label>New Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Enter new password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </>
+                            )}
+                            {formData.oldPassword && formData.password && (
+                                <>
+                                    <Form.Label>Confirm New Password</Form.Label>
+                                    <Form.Control 
+                                        type='password'
+                                        placeholder='Confirm New Password'
+                                        name="confirmPassword"
+                                        value={formData.confirmPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </>
+                            )}
+                            {formData.password && formData.confirmPassword && !passwordsMatch && (
+                                <Alert variant="danger" className="mt-2">
+                                    New password and confirmation do not match.
+                                </Alert>
+                            )}
+                        </Form.Group>
+                        <Button 
+                            variant="primary" 
+                            type="button" // <-- Use type="button" to avoid submitting the parent form
+                            onClick={handleSubmit}
+                            disabled={
+                                !formData.oldPassword ||
+                                !formData.password ||
+                                !formData.confirmPassword ||
+                                !passwordsMatch ||
+                                loading
+                            }
+                        >
+                           🔐 Update Password 🔐
+                        </Button>
                     </Card>
                 </div>
             </div>
