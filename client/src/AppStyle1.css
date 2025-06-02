@@ -1,6 +1,27 @@
+/* Root */
+:root {
+  --main-app-font: 'Permanent Marker', sans-serif;
+  --primary-bg: #0a0a0a;
+  --primary-color: #f8f9fa;
+  --accent-color: #f714be;
+  --footer-bg: #0b0b0b;
+  --profile-bg: #faafec;
+  --profile-title: #0d6efd;
+  --profile-text: #ef0c0c;
+  --navbar-bg: #0a0a0a;
+  --navbar-border: #343a40;
+  
+  --card-bg: #fff;
+  --card-radius: 0.5rem;
+  --card-padding: 1.5rem;
+  --input-radius: 0.5rem;
+  --input-margin-bottom: 1rem;
+  /* Add more as needed */
+}
+
 /* MAIN APP STYLE - START */
 body.app-style1 {
-  font-family: 'Rubik', sans-serif;
+  font-family: var(--main-app-font);
 }
 
 body.app-style1 h1,
@@ -21,17 +42,17 @@ body.app-style1 .app-style1-header {
 /* Header Style - END */
 /* NavigationBar Style - START */
 body.app-style1 .app-style1-navbar {
-  background-color: #0a0a0a;
-  color: #f8f9fa;
-  border-bottom: 1px solid #343a40;
+  background-color: var(--navbar-bg);
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--navbar-border);
   min-height: 56px;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
 body.app-style1 .app-style1-navbar .navbar-brand {
-  color: #f8f9fa !important;
-  font-family:  sans-serif, 'Rubik Mono One';
+  color: var(--primary-color) !important;
+  font-family: var(--navbar-brand-font);
   font-size: 1.25rem;
 }
 
@@ -83,10 +104,8 @@ body.app-style1 .app-style1-toggle-theme-btn:hover {
 /* NavigationBar Styling - END */
 /* Footer style - START */
 body.app-style1 .app-style1-footer {
-  background-color: #0b0b0b;   
-  color: #f8f9fa;              
-  text-align: center;
-  font-size: 1rem;
+  background-color: var(--footer-bg);
+  color: var(--primary-color);
 }
 
 body.app-style1 .footer-navbar {
@@ -245,19 +264,19 @@ body.app-style1 .card-text {
 /* Page1 styles - END */
 /* Profile Page styles - START */
 body.app-style1 .app-style1-profile-page {
-  background: #faafec;
+  background: var(--profile-bg);
   text-align: center;
   min-height: 25vh;
   padding: 2rem 0;
 }
 
 body.app-style1 .app-style1-profile-page h1 {
-  color: #0d6efd;
+  color: var(--profile-title);
   margin-bottom: 1rem;
 }
 
 body.app-style1 .app-style1-profile-page p {
-  color: #ef0c0c;
+  color: var(--profile-text);
   font-size: 1.2rem;
 }
 
@@ -281,14 +300,15 @@ body.app-style1 .app-style1-profile-form .form-label {
 body.app-style1 .app-style1-profile-form .form-control {
   width: 100%;
   margin-bottom: 1rem;
+  border-radius: var(--input-radius);
 }
 
 body.app-style1 .app-style1-profile-form .card {
   width: 100%;
   max-width: 500px;
   margin: auto;     
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 0.5rem;
+  padding: var(--card-padding);
+  background-color: var(--card-bg);
+  border-radius: var(--card-radius);
 }
 /* Profile Page styles - END */
