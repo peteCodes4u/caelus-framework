@@ -90,13 +90,31 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
-                                <Form.Label htmlFor="password">Password</Form.Label>
+                                <Form.Label htmlFor="password">change your password</Form.Label>
                                 <Form.Control
                                     type="password"
-                                    placeholder="Your password"
+                                    placeholder="old password"
                                     name="password"
                                     id="password"
                                     value={userFormData.password}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <Form.Control 
+                                    type='password'
+                                    placeholder="New password"
+                                    name="newPassword"
+                                    id="newPassword"
+                                    value={userFormData.newPassword || ''}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <Form.Control 
+                                    type="password"
+                                    placeholder="Confirm password"
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    value={userFormData.confirmPassword}
                                     onChange={handleInputChange}
                                     required
                                 />
