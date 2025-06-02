@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_USER } from '../../utils/mutations';
+import { UPDATE_USER, UPDATE_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import Auth from '../../utils/auth';
 

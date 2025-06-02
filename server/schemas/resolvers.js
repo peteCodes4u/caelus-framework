@@ -65,7 +65,7 @@ const resolvers = {
         },
 
         // update a user
-        updateUser: async (parent, { name, email, password }, context) => {
+        updateUser: async (parent, { name, email }, context) => {
             if (!context.user) throw new AuthenticationError('Not logged in');
 
             // Find the user by ID
@@ -75,7 +75,24 @@ const resolvers = {
             // Update fields if provided
             if (name) user.name = name;
             if (email) user.email = email;
-            if (password) user.password = password; // Will be hashed by pre('save')
+
+            // Save the user (triggers pre-save middleware)
+            await user.save();
+
+            const token = signToken(user);
+            return { token, user };
+        },
+        
+        // update a password
+        updatePassword: async (parent, { password }, context) => {
+            if (!context.user) throw new AuthenticationError('Not logged in');
+
+            // Find the user by ID
+            const user = await User.findById(context.user._id);
+            if (!user) throw new AuthenticationError('User not found');
+
+            // Update fields if provided
+            if (password) user.password = password;
 
             // Save the user (triggers pre-save middleware)
             await user.save();
