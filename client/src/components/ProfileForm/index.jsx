@@ -55,7 +55,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
         <div className={`${activeStyle}-profile-form`}>
             <div className={`${activeStyle}-prfile-form-header d-flex align-items-center justify-content-between mb-3`}>
                 <div className={`${activeStyle}-profile-form-body`}>
-                    <Card className ={`${activeStyle}-profile-form-card`}>
+                    <Card className={`${activeStyle}-profile-form-card`}>
                         <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
                             <Alert
                                 dismissible
@@ -89,6 +89,11 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     required
                                 />
                             </Form.Group>
+                            <Button type="submit" id="name-email-update-button" variant="primary">
+                                📧 Update username or email 📧
+                            </Button>
+                            <br></br>
+                            <br></br>
                             <Form.Group className="mb-3">
                                 <Form.Label htmlFor="password">change your password</Form.Label>
                                 <Form.Control
@@ -98,25 +103,22 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     id="password"
                                     value={userFormData.password}
                                     onChange={handleInputChange}
-                                    required
                                 />
-                                <Form.Control 
+                                <Form.Control
                                     type='password'
                                     placeholder="New password"
                                     name="newPassword"
                                     id="newPassword"
                                     value={userFormData.newPassword || ''}
                                     onChange={handleInputChange}
-                                    required
                                 />
-                                <Form.Control 
+                                <Form.Control
                                     type="password"
                                     placeholder="Confirm password"
                                     name="confirmPassword"
                                     id="confirmPassword"
                                     value={userFormData.confirmPassword}
                                     onChange={handleInputChange}
-                                    required
                                 />
                             </Form.Group>
                             {data ? (
@@ -124,8 +126,8 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     Profile updated successfully!
                                 </Alert>
                             ) : null}
-                            <Button type="submit" variant="primary">
-                                Update Profile
+                            <Button type="submit" id='update-password-button' variant="primary">
+                                🔐 Update password 🔐
                             </Button>
                         </Form>
                     </Card>
