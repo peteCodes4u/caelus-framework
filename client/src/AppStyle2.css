@@ -1,108 +1,99 @@
+/* AppStyle2.css */
 /* MAIN APP STYLE - START */
 body.app-style2 {
-  font-family: 'Rubik', sans-serif;
-}
-
-body.app-style2 h1,
-body.app-style2 h2,
-body.app-style2 h3 {
-  font-family: 'Rubik Mono One', sans-serif;
-}
-
-body.app-style2 .navbar {
-  background-color:#0a0a0a;
+  --main-app-font: 'Permanent Marker', sans-serif;
+  font-family: var(--main-app-font);
+  --display: flex;
+  --const-gradient: radial-gradient(circle, #5c0ce7 0%, #14f742 100%);
+  --dark-mode-black: #080808;
+  --dark-mode-grey: #9bacbe;
+  --title-text-primary-color: #fff;
+  --hover-accent-color: #f714be;
+  --general-bg: #222;
+  --higlight-content-bg: #14f742;
+  --dim-background: rgba(0, 0, 0, 0.7);
+  --alt-primary-color2: #0d6efd;
+  --radius: 0.5rem;
+  --alignment: center;
 }
 /* MAIN APP STYLE - END */
-
 /* Header Style - Start */
+body.app-style2 .navbar {
+  background: var(--dark-mode-black);
+}
+
 body.app-style2 .app-style2-header {
-  text-align: center;
+  text-align: var(--alignment);
   font-size: 1rem;
 }
 /* Header Style - END */
-
 /* NavigationBar Style - START */
 body.app-style2 .app-style2-navbar {
-  background-color: #0a0a0a;
-  color: #f8f9fa;
-  border-bottom: 1px solid #343a40;
+  color: var(--title-text-primary-color);
+  border-bottom: 1px solid var(--dark-mode-grey);
   min-height: 56px;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
 body.app-style2 .app-style2-navbar .navbar-brand {
-  color: #f8f9fa !important;
-  font-family:  sans-serif, 'Rubik Mono One';
-  font-size: 1.25rem;
+  color: var(--title-text-primary-color) !important;
 }
 
 body.app-style2 .app-style2-navbar .app-style2-nav {
   margin-left: auto;
-  display: flex;
+  display: var(--display);
   justify-content: flex-end;
   width: 100%;
 }
 
 body.app-style2 .app-style2-navbar .app-style2-nav .nav-link,
 body.app-style2 .app-style2-navbar .navbar-nav .nav-link {
-  color: #f8f9fa !important;
+  color: var(--title-text-primary-color) !important;
   font-size: 1rem;
 }
 
 body.app-style2 .app-style2-navbar .navbar-brand:hover,
 body.app-style2 .app-style2-navbar .app-style2-nav .nav-link:hover,
 body.app-style2 .app-style2-navbar .navbar-nav .nav-link:hover {
-  color: #f714be !important;
+  color: var(--hover-accent-color) !important;
 }
 
 body.app-style2 .app-style2-navbar .dropdown-menu {
-  background-color: #222;
-  color: #f8f9fa;
+  background-color: var(--general-bg);
+  color: var(--title-text-primary-color);
 }
 
 body.app-style2 .app-style2-navbar .dropdown-item {
-  color: #f8f9fa;
+  color: var(--title-text-primary-color);
 }
 
 body.app-style2 .app-style2-navbar .dropdown-item:hover,
 body.app-style2 .app-style2-navbar .dropdown-item:focus {
-  background-color: #14f742;
-  color: #222;
+  background-color: var(--higlight-content-bg);
+  color: var(--general-bg);
 }
 
 body.app-style2 .app-style2-toggle-theme-btn {
-  margin-left: 0.5rem;
-  color: #14f742;
+  margin-left: var(--radius);
+  color: var(--higlight-content-bg);
   background: transparent;
-  border: 1px solid #14f742;
+  border: 1px solid var(--higlight-content-bg);
   transition: background 0.2s, color 0.2s;
 }
-body.app-style2 .app-style2-toggle-theme-btn:hover {
-  background: #14f742;
-  color: #0a0a0a;
-}
 /* NavigationBar Styling - END */
-
 /* Footer style - START */
-body.app-style2 .app-style2-footer {
-  background-color: #0b0b0b;   
-  color: #f8f9fa;              
-  text-align: center;
-  font-size: 1rem;
-}
-
 body.app-style2 .footer-navbar {
   min-height: 56px;
   padding-top: 0;
   padding-bottom: 0;
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
 }
 
 body.app-style2 .app-style2-footer .footer-content {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
@@ -110,73 +101,72 @@ body.app-style2 .app-style2-footer .footer-content {
 }
 
 body.app-style2 .footer-left {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   flex: 1 1 0;
   min-width: 200px;
 }
 
 body.app-style2 .footer-center {
-  text-align: center;
+  text-align: var(--alignment);
   flex: 2 1 0;
   min-width: 200px;
 }
 
 body.app-style2 .footer-right {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
   justify-content: flex-end;
   flex: 1 1 0;
   min-width: 200px;
 }
 
 body.app-style2 .footer-search {
-  display: flex;
-  align-items: center;
+  display: var(--display);
+  align-items: var(--alignment);
 }
 
 body.app-style2 .footer-search .form-control {
-  margin-right: 0.5rem;
+  margin-right: var(--radius);
 }
 
 body.app-style2 .footer-social {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: var(--display);
+  align-items: var(--alignment);
+  gap: var(--radius);
 }
 
 body.app-style2 .footer-social .nav-link {
-  color: #f8f9fa;
+  color: var(--title-text-primary-color);
   font-size: 1.5rem;
   margin: 0 0.25rem;
 }
 
 body.app-style2 .footer-social .nav-link:hover {
-  color: #f714be;
+  color: var(--hover-accent-color);
 }
 
 body.app-style2 .footer-center {
   white-space: nowrap;
   font-size: 1rem;
-  color: #f714be;
+  color: var(--hover-accent-color);
 }
 /* Footer style - END */
-
 /* Login / Signup form settings START */
 body.app-style2 .app-style2-popup-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
+  background: var(--dim-background);
   z-index: 1050;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: var(--display);
+  align-items: var(--alignment);
+  justify-content: var(--alignment);
 }
 
 body.app-style2 .app-style2-popup-window {
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25);
+  background: var(--title-text-primary-color);
+  border-radius: var(--radius);
+  box-shadow: 0 var(--radius) 1rem var(--dim-background);
   width: 100%;
   max-width: 400px;
   min-width: 300px;
@@ -185,7 +175,7 @@ body.app-style2 .app-style2-popup-window {
   overflow-y: auto;
   position: relative;
   animation: fadeInScale 0.2s;
-  display: flex;
+  display: var(--display);
   flex-direction: column;
 }
 
@@ -195,19 +185,16 @@ body.app-style2 .app-style2-popup-close {
   right: 1.25rem;
   z-index: 10;
 }
-body.app-style2 .app-style2-popup-close:hover {
-  color: #f714be;
-}
 
 body.app-style2 .app-style2-popup-header {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid var(--title-text-primary-color);
   padding: 0.75rem 1.5rem;
   margin-bottom: 1.5rem;
   min-height: 2.5rem;
-  color: #f714be;
-  background-color: #fff;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  color: var(--hover-accent-color);
+  background-color: var(--alt-primary-color2);
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
 }
 
 body.app-style2 .app-style2-popup-body {
@@ -221,51 +208,58 @@ body.app-style2 .app-style2-popup-body .btn:last-child {
 /* Login / Signup Form settings END */
 /* Page1 styles - START */
 .app-style2-page1 .card {
-  background-color: #f714be;
+background-color: var(--dark-mode-grey);
 }
 
 .app-style2-page1 .card img {
   width: 100%;
   height: 200px;         
   object-fit: contain;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   display: block;
-  background-color: aqua;
 }
 
 body.app-style2 .app-style2-page1 {
-  background: #ffffff;
+  background: var(--general-bg);
   min-height: 25vh;
 }
 
 body.app-style2 .app-style2-page1 h1 {
-  color: #0d6efd;
+  color: var(--alt-primary-color2);
+}
+
+body.app-style2 .card-text {
+  width: 100%;
+  text-align: left;      
+  object-fit: contain;
+  border-radius: var(--radius);
+  display: block;
+  padding-left: 5%;
 }
 /* Page1 styles - END */
-
 /* Profile Page styles - START */
 body.app-style2 .app-style2-profile-page {
-  background: #faafec;
-  text-align: center;
+  background: var(--general-bg);
+  text-align: var(--alignment);
   min-height: 25vh;
   padding: 2rem 0;
 }
 
 body.app-style2 .app-style2-profile-page h1 {
-  color: #0d6efd;
+  color: var(--alt-primary-color2);
   margin-bottom: 1rem;
 }
 
 body.app-style2 .app-style2-profile-page p {
-  color: #ef0c0c;
+  color: var(--hover-accent-color);
   font-size: 1.2rem;
 }
 
 body.app-style2 .app-style2-profile-form {
-  display: flex;
+  display: var(--display);
   flex-direction: column;
-  align-items: center;      
-  justify-content: center;  
+  align-items: var(--alignment);      
+  justify-content: var(--alignment);  
   min-height: 60vh;         
 }
 
@@ -275,13 +269,12 @@ body.app-style2 .app-style2-profile-form .form-label {
   display: block;
   width: 100%;
   margin-bottom: 0.25rem;
-  color: #f714be;
 }
 
-/* Optional: ensure form controls fill the width and have spacing */
 body.app-style2 .app-style2-profile-form .form-control {
   width: 100%;
   margin-bottom: 1rem;
+  border-radius: var(--radius);
 }
 
 body.app-style2 .app-style2-profile-form .card {
@@ -289,7 +282,7 @@ body.app-style2 .app-style2-profile-form .card {
   max-width: 500px;
   margin: auto;     
   padding: 1.5rem;
-  background-color: #080808;
-  border-radius: 0.5rem;
+  background-color: var(--dark-mode-grey);
+  border-radius: var(--radius);
 }
 /* Profile Page styles - END */

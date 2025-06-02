@@ -3,6 +3,7 @@
 // Import Styling
 import './AppStyle1.css';
 import './AppStyle2.css';
+import './AppStyle3.css';
 // import the context for managing the styles
 import { StyleContext } from './StyleContext';
 
