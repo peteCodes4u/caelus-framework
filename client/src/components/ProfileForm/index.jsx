@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_USER, UPDATE_PASSWORD } from '../../utils/mutations';
+import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
+import UpdatePasswordForm from '../UpdatePasswordForm';
 import Auth from '../../utils/auth';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
@@ -15,6 +16,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [updateUser, { error, data }] = useMutation(UPDATE_USER);
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -95,40 +97,19 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             <br></br>
                             <br></br>
                             <Form.Group className="mb-3">
-                                <Form.Label htmlFor="password">change your password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="old password"
-                                    name="password"
-                                    id="password"
-                                    value={userFormData.password}
-                                    onChange={handleInputChange}
-                                />
-                                <Form.Control
-                                    type='password'
-                                    placeholder="New password"
-                                    name="newPassword"
-                                    id="newPassword"
-                                    value={userFormData.newPassword || ''}
-                                    onChange={handleInputChange}
-                                />
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Confirm password"
-                                    name="confirmPassword"
-                                    id="confirmPassword"
-                                    value={userFormData.confirmPassword}
-                                    onChange={handleInputChange}
-                                />
+                                <Button
+                                    type="button"
+                                    onClick={() => setShowPasswordForm((prev) => !prev)}
+                                >
+                                    {showPasswordForm ? "Hide Password Form" : "Update your Password"}
+                                </Button>
+                                {showPasswordForm && < UpdatePasswordForm activeStyle={activeStyle} />}
                             </Form.Group>
                             {data ? (
                                 <Alert variant="success">
                                     Profile updated successfully!
                                 </Alert>
                             ) : null}
-                            <Button type="submit" id='update-password-button' variant="primary">
-                                🔐 Update password 🔐
-                            </Button>
                         </Form>
                     </Card>
 
