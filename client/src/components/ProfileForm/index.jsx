@@ -117,7 +117,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 {showForgotPasswordConfirm && (
                                     <ForgotPasswordConfirm
                                         activeStyle={activeStyle}
-                                        // handleFormSubmit={yourHandleForgotPasswordFunction}
+                                        email={userFormData.email}
                                         handleModalClose={() => setShowForgotPasswordConfirm(false)}
                                     />
                                 )}

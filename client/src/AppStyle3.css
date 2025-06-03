@@ -7,11 +7,11 @@ body.app-style3 {
   --const-gradient: radial-gradient(circle, #080808 0%, #f714af 100%);
   --title-text-primary-color: #fff;
   --navbar-border: #343a40;
-  --hover-accent-color: #14f741;
+  --hover-accent-color: #14f742;
   --general-bg: #050505;
-  --higlight-content-bg: #14f742;
+  --higlight-content-bg: #d41dec;
   --dim-background: rgba(0, 0, 0, 0.7);
-  --alt-primary-color2: #0d6efd;
+  --alt-primary-color2: #fdc10d;
   --radius: 0.5rem;
   --alignment: center;
 }
@@ -190,7 +190,7 @@ body.app-style3 .app-style3-popup-header {
   padding: 0.75rem 1.5rem;
   margin-bottom: 1.5rem;
   min-height: 2.5rem;
-  color: var(--hover-accent-color);
+  color: var(--higlight-content-bg);
   background-color: var(--alt-primary-color2);
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);

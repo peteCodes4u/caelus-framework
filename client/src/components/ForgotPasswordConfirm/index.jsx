@@ -1,6 +1,29 @@
+import { useMutation } from '@apollo/client';
+import { FORGOT_PASSWORD } from '../../utils/mutations';
+import { useState } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 
-export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', handleFormSubmit, handleModalClose }) { 
+export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', handleFormSubmit, handleModalClose, email }) {
+    const [forgotPassword, { data, loading, error }] = useMutation(FORGOT_PASSWORD);
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const handleSendPassword = async (e) => {
+        e.preventDefault();
+        setSuccessMsg('');
+        setErrorMsg('');
+        try {
+            const { data } = await forgotPassword({ variables: { email } });
+            if (data?.forgotPassword?.success) {
+                setSuccessMsg(data.forgotPassword.message);
+            } else {
+                setErrorMsg(data?.forgotPassword?.message || 'Failed to send new password.');
+            }
+        } catch (err) {
+            setErrorMsg('Failed to send new password.');
+        }
+    };
+
     return (
         <div className={`${activeStyle}-forgot-pw-confrim-window`}>
             <div className={`${activeStyle}-forgot-pw-confrim-header d-flex align-items-center justify-content-between mb-3`}>
@@ -15,16 +38,19 @@ export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', hand
                 )}
             </div>
             <div className={`${activeStyle}-forgot-pw-confrim-body`}>
-                <Form onSubmit={handleFormSubmit}>
+                <Card>
                     <Button
                         className="mb-0"
-                        type="submit"
+                        type="button"
                         variant="success"
+                        disabled={loading}
+                        onClick={handleSendPassword}
                     >
                         Send New Password
                     </Button>
-                </Form>
-                <div className="mt-3"></div>
+                </Card>
+                {successMsg && <Alert variant="success" className="mt-3">{successMsg}</Alert>}
+                {errorMsg && <Alert variant="danger" className="mt-3">{errorMsg}</Alert>}
             </div>
         </div>
     );

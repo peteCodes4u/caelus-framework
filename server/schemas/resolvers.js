@@ -1,5 +1,6 @@
 // this file is used to define the resolver functions for the GraphQL queries and mutations.
 // resolvers are functions that are responsible for returning the data for a specific field in a query or mutation.
+require('dotenv').config();
 
 // import the models
 const { User } = require('../models');
@@ -8,6 +9,9 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+
 
 // define the resolvers
 const resolvers = {
@@ -102,6 +106,48 @@ const resolvers = {
 
             return { success: true, message: 'Password updated successfully.' };
         },
+
+        // forgot password
+        forgotPassword: async (parent, { email }) => {
+            try {
+                const user = await User.findOne({ email });
+                if (!user) return { success: false, message: "User not found" };
+
+                // Generate random password
+                const newPassword = crypto.randomBytes(8).toString('hex');
+                user.password = newPassword;
+                await user.save();
+
+                // Send email using Sendinblue (Brevo) SMTP
+                const transporter = nodemailer.createTransport({
+                    host: process.env.SMTP_HOST,
+                    port: parseInt(process.env.SMTP_PORT, 10),
+                    secure: false, // true for port 465, false for 587
+                    auth: {
+                        user: process.env.SMTP_USER,
+                        pass: process.env.SMTP_PASS,
+                    },
+                });
+
+                try {
+                    await transporter.sendMail({
+                        from: `${process.env.EMAIL_FROM} <${process.env.SMTP_SENDER}>`,
+                        to: user.email,
+                        subject: 'Your New Password',
+                        text: `Your new password is: ${newPassword}`
+                    });
+                } catch (err) {
+                    console.error('Email send error:', err);
+                    return { success: false, message: "Failed to send email." };
+                }
+
+                return { success: true, message: "A new password has been sent to your email." };
+            } catch (err) {
+                console.error('Forgot password error:', err);
+                return { success: false, message: "Internal server error." };
+            }
+        },
+
         // delete a user
         deleteUser: async (parent, args, context) => {
             if (context.user) {
