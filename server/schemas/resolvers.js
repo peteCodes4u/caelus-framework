@@ -9,8 +9,8 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
-const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const generateUUID = require('../utils/UUIDGenerator');
 
 
 // define the resolvers
@@ -113,18 +113,8 @@ const resolvers = {
                 const user = await User.findOne({ email });
                 if (!user) return { success: false, message: "User not found" };
 
-                // Generate a random alphanumeric string (UUID)
-                function generateRandomString(length = 16) {
-                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                    let result = '';
-                    for (let i = 0; i < length; i++) {
-                        result += chars.charAt(Math.floor(Math.random() * chars.length));
-                    }
-                    return result;
-                }
-
                 // Generate random password
-                const newPassword = generateRandomString(16);
+                const newPassword = generateUUID(16);
                 user.password = newPassword;
                 await user.save();
 

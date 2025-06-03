@@ -1,4 +1,4 @@
-export default function generateUUID() {
+function generateUUID(length = 16) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < length; i++) {
@@ -6,3 +6,5 @@ export default function generateUUID() {
     }
     return result;
 };
+
+module.exports = generateUUID;
