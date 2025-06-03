@@ -101,7 +101,7 @@ export default function UpdatePasswordForm({ activeStyle = 'app-style1' }) {
                         </Form.Group>
                         <Button 
                             variant="primary" 
-                            type="button" // <-- Use type="button" to avoid submitting the parent form
+                            type="button"
                             onClick={handleSubmit}
                             disabled={
                                 !formData.oldPassword ||

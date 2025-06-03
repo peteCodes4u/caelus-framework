@@ -7,7 +7,7 @@ body.app-style3 {
   --const-gradient: radial-gradient(circle, #080808 0%, #f714af 100%);
   --title-text-primary-color: #fff;
   --navbar-border: #343a40;
-  --hover-accent-color: #f714be;
+  --hover-accent-color: #14f741;
   --general-bg: #050505;
   --higlight-content-bg: #14f742;
   --dim-background: rgba(0, 0, 0, 0.7);

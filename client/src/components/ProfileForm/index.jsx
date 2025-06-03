@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Alert, Card } from 'react-bootstrap';
+import { Form, Button, Alert, Card, Modal } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
+import ForgotPasswordConfirm from '../ForgotPasswordConfirm';
 import Auth from '../../utils/auth';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
@@ -17,6 +18,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -104,6 +106,21 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                                 </Button>
                                 {showPasswordForm && < UpdatePasswordForm activeStyle={activeStyle} />}
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Button
+                                    type="button"
+                                    onClick={() => setShowForgotPasswordConfirm(true)}
+                                >
+                                    Forgot Password
+                                </Button>
+                                {showForgotPasswordConfirm && (
+                                    <ForgotPasswordConfirm
+                                        activeStyle={activeStyle}
+                                        // handleFormSubmit={yourHandleForgotPasswordFunction}
+                                        handleModalClose={() => setShowForgotPasswordConfirm(false)}
+                                    />
+                                )}
                             </Form.Group>
                             {data ? (
                                 <Alert variant="success">
