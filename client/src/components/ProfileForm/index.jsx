@@ -5,15 +5,17 @@ import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
 import ForgotPasswordConfirm from '../ForgotPasswordConfirm';
+import UpdateUserForm from '../UpdateUserForm';
 import Auth from '../../utils/auth';
+
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
-    const [userFormData, setUserFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-    });
+    // const [userFormData, setUserFormData] = useState({
+    //     name: '',
+    //     email: '',
+    //     password: '',
+    // });
     const [updateUser, { error, data }] = useMutation(UPDATE_USER);
     const [verifyPassword] = useMutation(VERIFY_PASSWORD);
     const [validated, setValidated] = useState(false);
@@ -22,10 +24,10 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setUserFormData({ ...userFormData, [name]: value });
-    };
+    // const handleInputChange = (event) => {
+    //     const { name, value } = event.target;
+    //     setUserFormData({ ...userFormData, [name]: value });
+    // };
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -54,15 +56,15 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     };
 
     // Populate form fields when userData is loaded
-    useEffect(() => {
-        if (userData && userData.me) {
-            setUserFormData((prev) => ({
-                ...prev,
-                name: userData.me.name || '',
-                email: userData.me.email || '',
-            }));
-        }
-    }, [userData]);
+    // useEffect(() => {
+    //     if (userData && userData.me) {
+    //         setUserFormData((prev) => ({
+    //             ...prev,
+    //             name: userData.me.name || '',
+    //             email: userData.me.email || '',
+    //         }));
+    //     }
+    // }, [userData]);
 
     return (
         <div className={`${activeStyle}-profile-form`}>
@@ -78,7 +80,10 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             >
                                 Something went wrong with your profile update!
                             </Alert>
-                            <Form.Group className="mb-3">
+                            <UpdateUserForm>
+
+                            </UpdateUserForm>
+                            {/* <Form.Group className="mb-3">
                                 <Form.Label htmlFor="username">Username</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -101,7 +106,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     onChange={handleInputChange}
                                     required
                                 />
-                            </Form.Group>
+                            </Form.Group> */}
                             {/* Step 1: Show password field */}
                             <Button
                                 type="button"
