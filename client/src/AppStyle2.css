@@ -260,4 +260,36 @@ body.app-style2 .app-style2-profile-page p {
   color: #ef0c0c;
   font-size: 1.2rem;
 }
+
+body.app-style2 .app-style2-profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  justify-content: center;  
+  min-height: 60vh;         
+}
+
+/* Left-align form labels */
+body.app-style2 .app-style2-profile-form .form-label {
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 0.25rem;
+  color: #f714be;
+}
+
+/* Optional: ensure form controls fill the width and have spacing */
+body.app-style2 .app-style2-profile-form .form-control {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+body.app-style2 .app-style2-profile-form .card {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;     
+  padding: 1.5rem;
+  background-color: #080808;
+  border-radius: 0.5rem;
+}
 /* Profile Page styles - END */

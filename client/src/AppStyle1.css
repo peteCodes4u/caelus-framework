@@ -234,14 +234,6 @@ body.app-style1 .app-style1-page1 h1 {
   color: #0d6efd;
 }
 
-/* body.app-style1-page1 .card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;      
-  padding: 1rem;
-} */
-
-
 body.app-style1 .card-text {
   width: 100%;
   text-align: left;      
@@ -267,5 +259,36 @@ body.app-style1 .app-style1-profile-page h1 {
 body.app-style1 .app-style1-profile-page p {
   color: #ef0c0c;
   font-size: 1.2rem;
+}
+
+body.app-style1 .app-style1-profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  justify-content: center;  
+  min-height: 60vh;         
+}
+
+/* Left-align form labels */
+body.app-style1 .app-style1-profile-form .form-label {
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+/* Optional: ensure form controls fill the width and have spacing */
+body.app-style1 .app-style1-profile-form .form-control {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+body.app-style1 .app-style1-profile-form .card {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;     
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
 }
 /* Profile Page styles - END */
