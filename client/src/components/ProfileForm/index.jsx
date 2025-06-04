@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert, Card, Modal } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_USER } from '../../utils/mutations';
+import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
 import ForgotPasswordConfirm from '../ForgotPasswordConfirm';
@@ -15,8 +15,10 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
         password: '',
     });
     const [updateUser, { error, data }] = useMutation(UPDATE_USER);
+    const [verifyPassword] = useMutation(VERIFY_PASSWORD);
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [showPasswordEnryField, setShowPasswordEnryField] = useState(false);
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
 
@@ -32,6 +34,13 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
             event.stopPropagation();
             setValidated(true);
             return;
+        }
+        if (showPasswordEnryField) {
+            const { data } = await verifyPassword({ variables: { password: userFormData.password } });
+            if (!data.verifyPassword) {
+                setShowAlert(true);
+                return;
+            }
         }
         try {
             const { data } = await updateUser({ variables: { ...userFormData } });
@@ -93,9 +102,41 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     required
                                 />
                             </Form.Group>
-                            <Button type="submit" id="name-email-update-button" variant="primary">
+                            {/* Step 1: Show password field */}
+                            <Button
+                                type="button"
+                                id="show-name-email-update-btn"
+                                variant="primary"
+                                onClick={() => setShowPasswordEnryField(true)}
+                                disabled={showPasswordEnryField}
+                            >
                                 📧 Update username or email 📧
                             </Button>
+
+                            {/* Step 2: Show password input and submit button */}
+                            {showPasswordEnryField && (
+                                <>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label htmlFor="password">Password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Your password"
+                                            name="password"
+                                            id="password"
+                                            value={userFormData.password}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Button
+                                        type="submit"
+                                        variant="success"
+                                        disabled={!userFormData.password}
+                                    >
+                                        Confirm & Update
+                                    </Button>
+                                </>
+                            )}
                             <br></br>
                             <br></br>
                             <Form.Group className="mb-3">
@@ -105,7 +146,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 >
                                     {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                                 </Button>
-                                {showPasswordForm && < UpdatePasswordForm activeStyle={activeStyle} />}
+                                {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Button
@@ -129,7 +170,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             ) : null}
                         </Form>
                     </Card>
-
                 </div>
             </div>
         </div>

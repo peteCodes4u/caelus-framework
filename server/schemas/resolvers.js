@@ -32,7 +32,7 @@ const resolvers = {
                 return User.findOne({ _id: context.user._id });
             }
             console.error('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
-            throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');                        
+            throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
         },
     },
     // define the mutations
@@ -87,7 +87,7 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        
+
         // update a password
         updatePassword: async (parent, { oldPassword, password }, context) => {
             if (!context.user) throw new AuthenticationError('Not logged in');
@@ -156,6 +156,16 @@ const resolvers = {
             console.error('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
             throw new AuthenticationError('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
         },
+
+        // verify password
+        verifyPassword: async (parent, { password }, context) => {
+            if (!context.user) throw new AuthenticationError('Not logged in');
+            const user = await User.findById(context.user._id);
+            if (!user) return false;
+            const valid = await bcrypt.compare(password, user.password);
+            return valid;
+        },
+
     },
 };
 

@@ -63,3 +63,9 @@ export const FORGOT_PASSWORD = gql`
     }
   }
 `;
+
+export const VERIFY_PASSWORD = gql`
+  mutation verifyPassword($password: String!) {
+    verifyPassword(password: $password)
+  }
+`;

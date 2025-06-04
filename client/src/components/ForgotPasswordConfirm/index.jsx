@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { FORGOT_PASSWORD } from '../../utils/mutations';
 import { useState } from 'react';
-import { Form, Button, Alert, Card } from 'react-bootstrap';
+import { Button, Alert, Card } from 'react-bootstrap';
 
 export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', handleFormSubmit, handleModalClose, email }) {
     const [forgotPassword, { data, loading, error }] = useMutation(FORGOT_PASSWORD);

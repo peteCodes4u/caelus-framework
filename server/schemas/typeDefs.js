@@ -38,6 +38,10 @@ const typeDefs = `
         success: Boolean!
         message: String
     }
+    
+    type Mutation {
+    verifyPassword(password: String!): Boolean
+    }
 `;
 // export the typeDefs
 module.exports = typeDefs;
