@@ -3,6 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
+import { Link } from 'react-router-dom';
 
 export default function SignUpForm({ activeStyle = 'app-style2', handleModalClose }) {
   const [userFormData, setUserFormData] = useState({ name: '', email: '', password: '' });
@@ -93,7 +94,9 @@ export default function SignUpForm({ activeStyle = 'app-style2', handleModalClos
             Submit
           </Button>
         </Form>
+        <Link to="/login">← Login</Link>
       </div>
     </div>
+    
   );
 };

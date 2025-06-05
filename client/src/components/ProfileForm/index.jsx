@@ -4,7 +4,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
-import ForgotPasswordConfirm from '../ForgotPasswordConfirm';
 import Auth from '../../utils/auth';
 import UpdateUserForm from '../UpdateUserForm';
 
@@ -23,12 +22,11 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
     const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
-    const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setUserFormData({ ...userFormData, [name]: value });
-    };
+    // const handleInputChange = (event) => {
+    //     const { name, value } = event.target;
+    //     setUserFormData({ ...userFormData, [name]: value });
+    // };
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -91,24 +89,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                                 </Button>
                                 {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
-                            </Form.Group>
-                            {/* forgot password toggle */}
-                            <Form.Group className="mb-3">
-                                <Button
-                                    type="button"
-                                    onClick={() => setShowForgotPasswordConfirm((prev) => !prev)}
-                                    className={`${activeStyle}-forgot-pw-button${showForgotPasswordConfirm ? ' active' : ''}`}
-                                >
-                                    {showForgotPasswordConfirm ? "Hide Forgot Password" : "Forgot Password"}
-                                </Button>
-                                {showForgotPasswordConfirm && (
-                                    <ForgotPasswordConfirm
-                                        activeStyle={activeStyle}
-                                        email={userFormData.email}
-                                        handleModalClose={() => setShowForgotPasswordConfirm(false)}
-                                    />
-
-                                )}
                             </Form.Group>
                             {/* Toggle Update User Form */}
                             <Form.Group>
