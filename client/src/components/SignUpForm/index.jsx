@@ -96,4 +96,4 @@ export default function SignUpForm({ activeStyle = 'app-style2', handleModalClos
       </div>
     </div>
   );
-}
+};
