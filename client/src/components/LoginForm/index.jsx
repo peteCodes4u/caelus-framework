@@ -95,6 +95,8 @@ export default function LoginForm({ activeStyle = 'app-style2', handleModalClose
         </Form>
         <div className="mt-3">
           <Link to="/signup">← Go to Signup</Link>
+          <br/>
+          <Link to="/forgot-password">← Forgot Password</Link>
         </div>
       </div>
     </div>

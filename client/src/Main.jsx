@@ -15,9 +15,11 @@ import App from './App.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import ErrorPage from './pages/ErrorPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 import React, { Suspense, lazy } from 'react';
 const Page1 = lazy(() => import('./pages/Page1'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+
 
 // create the router
 const router = createBrowserRouter([
@@ -41,6 +43,9 @@ const router = createBrowserRouter([
                 }, {
                     path: '/profile/:id',
                     element: <Suspense fallback={<div>Loading...</div>}><ProfilePage /></Suspense>
+                }, {
+                    path: '/forgot-password',
+                    element: <ForgotPasswordPage />,
                 },
                 {   
                     path: '/login',
