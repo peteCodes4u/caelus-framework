@@ -36,11 +36,20 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setShowAlert(false);
+
+        // Show alert if password is empty
+        if (!formData.password) {
+            setAlertMsg('Password Entry Required');
+            setAlertVariant('danger');
+            setShowAlert(true);
+            return;
+        }
+
         // Verify password
         const { data: verifyData } = await verifyPassword({ variables: { password: formData.password } });
         if (!verifyData?.verifyPassword) {
             setAlertMsg('Password is incorrect.');
-            setAlertVariant('danger'); // Set to red
+            setAlertVariant('danger');
             setShowAlert(true);
             return;
         }
@@ -48,18 +57,18 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
         try {
             await updateUser({ variables: { name: formData.name, email: formData.email } });
             setAlertMsg('Profile updated successfully!');
-            setAlertVariant('success'); // Set to green
+            setAlertVariant('success');
             setShowAlert(true);
         } catch {
             setAlertMsg('Something went wrong with your profile update!');
-            setAlertVariant('danger'); // Set to red
+            setAlertVariant('danger'); 
             setShowAlert(true);
         }
     };
 
     return (
         <Card className={`${activeStyle}-update-user-form`}>
-            <Form onSubmit={handleFormSubmit}>
+            <Card onClick={handleFormSubmit}>
                 {showAlert && <Alert variant={alertVariant}>{alertMsg}</Alert>}
                 <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
@@ -98,12 +107,12 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
                                 required
                             />
                         </Form.Group>
-                        <Button type="submit" variant="success" disabled={!formData.password}>
+                        <Button type="button" variant="success" disabled={!formData.password}>
                             Confirm & Update
                         </Button>
                     </>
                 )}
-            </Form>
+            </Card>
         </Card>
     );
 }

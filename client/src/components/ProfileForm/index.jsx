@@ -22,6 +22,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [showPasswordEnryField, setShowPasswordEnryField] = useState(false);
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
+    const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
     const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
 
     const handleInputChange = (event) => {
@@ -104,8 +105,29 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                         email={userFormData.email}
                                         handleModalClose={() => setShowForgotPasswordConfirm(false)}
                                     />
-                                    
+
                                 )}
+                            </Form.Group>
+                            {/* Toggle Update User Form */}
+                            <Form.Group>
+                                <Button
+                                    type="button"
+                                    onClick={() => setShowUpdateUserForm((prev) => !prev)}
+                                >
+                                    {showUpdateUserForm ? "Hide Update User Form" : "Update User Info"}
+                                </Button>
+                                {showUpdateUserForm && (
+                                    <UpdateUserForm
+                                        activeStyle={activeStyle}
+                                        initialName={userFormData.name}
+                                        initialEmail={userFormData.email}
+                                    />
+                                )}
+                                {/* <UpdateUserForm
+                                    activeStyle={activeStyle}
+                                    initialName={userFormData.name}
+                                    initialEmail={userFormData.email}
+                                /> */}
                             </Form.Group>
                             {data ? (
                                 <Alert variant="success">
@@ -113,11 +135,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 </Alert>
                             ) : null}
                         </Form>
-                        <UpdateUserForm
-                            activeStyle={activeStyle}
-                            initialName={userFormData.name}
-                            initialEmail={userFormData.email}
-                        />
                     </Card>
                 </div>
             </div>
