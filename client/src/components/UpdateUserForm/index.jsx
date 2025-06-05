@@ -61,58 +61,60 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
             setShowAlert(true);
         } catch {
             setAlertMsg('Something went wrong with your profile update!');
-            setAlertVariant('danger'); 
+            setAlertVariant('danger');
             setShowAlert(true);
         }
     };
 
     return (
-        <Card className={`${activeStyle}-update-user-form`}>
-            <Card onClick={handleFormSubmit}>
-                {showAlert && <Alert variant={alertVariant}>{alertMsg}</Alert>}
-                <Form.Group className="mb-3">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </Form.Group>
-                {!showPasswordField && (
-                    <Button type="button" onClick={handleShowPassword}>
-                        📧 Update username or email 📧
-                    </Button>
-                )}
-                {showPasswordField && (
-                    <>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </Form.Group>
-                        <Button type="button" variant="success" disabled={!formData.password}>
-                            Confirm & Update
+        <div className={`${activeStyle}-update-user-form-form`}>
+            <div className={`${activeStyle}-update-user-form-body`}>
+                <Card className={`${activeStyle}-update-user-form`} onClick={handleFormSubmit}>
+                    {showAlert && <Alert variant={alertVariant}>{alertMsg}</Alert>}
+                    <Form.Group className="mb-3">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </Form.Group>
+                    {!showPasswordField && (
+                        <Button type="button" onClick={handleShowPassword}>
+                            📧 Update username or email 📧
                         </Button>
-                    </>
-                )}
-            </Card>
-        </Card>
+                    )}
+                    {showPasswordField && (
+                        <>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </Form.Group>
+                            <Button type="button" variant="success" disabled={!formData.password}>
+                                Confirm & Update
+                            </Button>
+                        </>
+                    )}
+                </Card>
+            </div>
+        </div>
     );
-}
+};

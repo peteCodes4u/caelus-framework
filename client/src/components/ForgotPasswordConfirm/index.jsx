@@ -26,11 +26,11 @@ export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', hand
 
     return (
         <div className={`${activeStyle}-forgot-pw-confrim-window`}>
-            <div className={`${activeStyle}-forgot-pw-confrim-header d-flex align-items-center justify-content-between mb-3`}>
-                <p className="mb-0">Click the button below to send a new password</p>
-            </div>
             <div className={`${activeStyle}-forgot-pw-confrim-body`}>
                 <Card>
+                    <div className={`${activeStyle}-forgot-pw-confrim-header d-flex align-items-center justify-content-between mb-3`}>
+                        <p className="mb-0">Click the button below to send a new password</p>
+                    </div>
                     <Button
                         className="mb-0"
                         type="button"
