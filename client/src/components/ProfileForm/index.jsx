@@ -86,6 +86,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 <Button
                                     type="button"
                                     onClick={() => setShowPasswordForm((prev) => !prev)}
+                                    className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''}`}
                                 >
                                     {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                                 </Button>
@@ -96,6 +97,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 <Button
                                     type="button"
                                     onClick={() => setShowForgotPasswordConfirm((prev) => !prev)}
+                                    className={`${activeStyle}-forgot-pw-button${showForgotPasswordConfirm ? ' active' : ''}`}
                                 >
                                     {showForgotPasswordConfirm ? "Hide Forgot Password" : "Forgot Password"}
                                 </Button>
@@ -113,6 +115,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 <Button
                                     type="button"
                                     onClick={() => setShowUpdateUserForm((prev) => !prev)}
+                                    className={`${activeStyle}-update-user-button${showUpdateUserForm ? ' active' : ''}`}
                                 >
                                     {showUpdateUserForm ? "Hide Update User Form" : "Update User Info"}
                                 </Button>
@@ -123,11 +126,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                         initialEmail={userFormData.email}
                                     />
                                 )}
-                                {/* <UpdateUserForm
-                                    activeStyle={activeStyle}
-                                    initialName={userFormData.name}
-                                    initialEmail={userFormData.email}
-                                /> */}
                             </Form.Group>
                             {data ? (
                                 <Alert variant="success">

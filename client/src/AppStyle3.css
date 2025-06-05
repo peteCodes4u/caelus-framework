@@ -15,6 +15,7 @@ body.app-style3 {
   --radius: 0.5rem;
   --alignment: center;
 }
+
 /* MAIN APP STYLE - END */
 /* Header Style - Start */
 body.app-style3 .navbar {
@@ -25,6 +26,7 @@ body.app-style3 .app-style3-header {
   text-align: var(--alignment);
   font-size: 1rem;
 }
+
 /* Header Style - END */
 /* NavigationBar Style - START */
 body.app-style3 .app-style3-navbar {
@@ -80,6 +82,7 @@ body.app-style3 .app-style3-toggle-theme-btn {
   border: 1px solid var(--higlight-content-bg);
   transition: background 0.2s, color 0.2s;
 }
+
 /* NavigationBar Styling - END */
 /* Footer style - START */
 body.app-style3 .footer-navbar {
@@ -150,11 +153,15 @@ body.app-style3 .footer-center {
   font-size: 1rem;
   color: var(--hover-accent-color);
 }
+
 /* Footer style - END */
 /* Login / Signup form settings START */
 body.app-style3 .app-style3-popup-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: var(--dim-background);
   z-index: 1050;
   display: var(--display);
@@ -204,11 +211,12 @@ body.app-style3 .app-style3-popup-body {
 body.app-style3 .app-style3-popup-body .btn:last-child {
   margin-bottom: 0;
 }
+
 /* Login / Signup Form settings END */
 /* Page1 styles - START */
 .app-style3-page1 .card img {
   width: 100%;
-  height: 200px;         
+  height: 200px;
   object-fit: contain;
   border-radius: var(--radius);
   display: block;
@@ -225,12 +233,13 @@ body.app-style3 .app-style3-page1 h1 {
 
 body.app-style3 .card-text {
   width: 100%;
-  text-align: left;      
+  text-align: left;
   object-fit: contain;
   border-radius: var(--radius);
   display: block;
   padding-left: 5%;
 }
+
 /* Page1 styles - END */
 /* Profile Page styles - START */
 body.app-style3 .app-style3-profile-page {
@@ -253,9 +262,9 @@ body.app-style3 .app-style3-profile-page p {
 body.app-style3 .app-style3-profile-form {
   display: var(--display);
   flex-direction: column;
-  align-items: var(--alignment);      
-  justify-content: var(--alignment);  
-  min-height: 60vh;         
+  align-items: var(--alignment);
+  justify-content: var(--alignment);
+  min-height: 60vh;
 }
 
 /* Left-align form labels */
@@ -275,9 +284,29 @@ body.app-style3 .app-style3-profile-form .form-control {
 body.app-style3 .app-style3-profile-form .card {
   width: 100%;
   max-width: 500px;
-  margin: auto;     
+  margin: auto;
   padding: 1.5rem;
   background-color: var(--title-text-primary-color);
   border-radius: var(--radius);
 }
+
+body.app-style3 .app-style3-update-pw-button,
+body.app-style3 .app-style3-forgot-pw-button,
+body.app-style3 .app-style3-update-user-button {
+  min-width: 220px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  background-color: #14f742; /* green */
+  color: #fff;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+body.app-style3 .app-style3-update-pw-button.active,
+body.app-style3 .app-style3-forgot-pw-button.active,
+body.app-style3 .app-style3-update-user-button.active {
+  background-color: #f7143a; /* red */
+  color: #fff;
+}
+
 /* Profile Page styles - END */
