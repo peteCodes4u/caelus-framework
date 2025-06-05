@@ -27,15 +27,7 @@ export default function ForgotPasswordConfirm({ activeStyle = 'app-style1', hand
     return (
         <div className={`${activeStyle}-forgot-pw-confrim-window`}>
             <div className={`${activeStyle}-forgot-pw-confrim-header d-flex align-items-center justify-content-between mb-3`}>
-                <h4 className="mb-0">Click the button below to send a new password</h4>
-                {typeof handleModalClose === "function" && (
-                    <button
-                        type="button"
-                        className="btn-close"
-                        aria-label="Close"
-                        onClick={handleModalClose}
-                    ></button>
-                )}
+                <p className="mb-0">Click the button below to send a new password</p>
             </div>
             <div className={`${activeStyle}-forgot-pw-confrim-body`}>
                 <Card>

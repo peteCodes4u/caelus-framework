@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Alert, Card, Modal } from 'react-bootstrap';
+import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
@@ -22,6 +22,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [showPasswordEnryField, setShowPasswordEnryField] = useState(false);
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
+    const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -79,6 +80,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             >
                                 Something went wrong with your profile update!
                             </Alert>
+                            {/* Update password toggle */}
                             <Form.Group className="mb-3">
                                 <Button
                                     type="button"
@@ -88,12 +90,13 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 </Button>
                                 {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
                             </Form.Group>
+                            {/* forgot password toggle */}
                             <Form.Group className="mb-3">
                                 <Button
                                     type="button"
-                                    onClick={() => setShowForgotPasswordConfirm(true)}
+                                    onClick={() => setShowForgotPasswordConfirm((prev) => !prev)}
                                 >
-                                    Forgot Password
+                                    {showForgotPasswordConfirm ? "Hide Forgot Password" : "Forgot Password"}
                                 </Button>
                                 {showForgotPasswordConfirm && (
                                     <ForgotPasswordConfirm
@@ -101,6 +104,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                         email={userFormData.email}
                                         handleModalClose={() => setShowForgotPasswordConfirm(false)}
                                     />
+                                    
                                 )}
                             </Form.Group>
                             {data ? (
