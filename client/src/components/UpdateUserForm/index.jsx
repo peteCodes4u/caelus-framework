@@ -13,6 +13,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
     const [showPasswordField, setShowPasswordField] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState('');
+    const [alertVariant, setAlertVariant] = useState('danger');
     const [updateUser] = useMutation(UPDATE_USER);
     const [verifyPassword] = useMutation(VERIFY_PASSWORD);
     const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
@@ -39,6 +40,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
         const { data: verifyData } = await verifyPassword({ variables: { password: formData.password } });
         if (!verifyData?.verifyPassword) {
             setAlertMsg('Password is incorrect.');
+            setAlertVariant('danger'); // Set to red
             setShowAlert(true);
             return;
         }
@@ -46,9 +48,11 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
         try {
             await updateUser({ variables: { name: formData.name, email: formData.email } });
             setAlertMsg('Profile updated successfully!');
+            setAlertVariant('success'); // Set to green
             setShowAlert(true);
         } catch {
             setAlertMsg('Something went wrong with your profile update!');
+            setAlertVariant('danger'); // Set to red
             setShowAlert(true);
         }
     };
@@ -56,7 +60,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
     return (
         <Card className={`${activeStyle}-update-user-form`}>
             <Form onSubmit={handleFormSubmit}>
-                {showAlert && <Alert variant="danger">{alertMsg}</Alert>}
+                {showAlert && <Alert variant={alertVariant}>{alertMsg}</Alert>}
                 <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
