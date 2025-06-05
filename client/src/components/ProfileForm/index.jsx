@@ -6,6 +6,7 @@ import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
 import ForgotPasswordConfirm from '../ForgotPasswordConfirm';
 import Auth from '../../utils/auth';
+import UpdateUserForm from '../UpdateUserForm';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
@@ -79,67 +80,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 Something went wrong with your profile update!
                             </Alert>
                             <Form.Group className="mb-3">
-                                <Form.Label htmlFor="username">Username</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Your username"
-                                    name="name"
-                                    id="name"
-                                    value={userFormData.name}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label htmlFor="email">Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Your email"
-                                    name="email"
-                                    id="email"
-                                    value={userFormData.email}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            {/* Step 1: Show password field */}
-                            <Button
-                                type="button"
-                                id="show-name-email-update-btn"
-                                variant="primary"
-                                onClick={() => setShowPasswordEnryField(true)}
-                                disabled={showPasswordEnryField}
-                            >
-                                📧 Update username or email 📧
-                            </Button>
-
-                            {/* Step 2: Show password input and submit button */}
-                            {showPasswordEnryField && (
-                                <>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label htmlFor="password">Password</Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="Your password"
-                                            name="password"
-                                            id="password"
-                                            value={userFormData.password}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </Form.Group>
-                                    <Button
-                                        type="submit"
-                                        variant="success"
-                                        disabled={!userFormData.password}
-                                    >
-                                        Confirm & Update
-                                    </Button>
-                                </>
-                            )}
-                            <br></br>
-                            <br></br>
-                            <Form.Group className="mb-3">
                                 <Button
                                     type="button"
                                     onClick={() => setShowPasswordForm((prev) => !prev)}
@@ -169,6 +109,11 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 </Alert>
                             ) : null}
                         </Form>
+                        <UpdateUserForm
+                            activeStyle={activeStyle}
+                            initialName={userFormData.name}
+                            initialEmail={userFormData.email}
+                        />
                     </Card>
                 </div>
             </div>
