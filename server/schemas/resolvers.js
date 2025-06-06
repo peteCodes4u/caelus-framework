@@ -9,8 +9,8 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
 const generateUUID = require('../utils/UUIDGenerator');
+const transporter = require('../utils/transporter');
 
 
 // define the resolvers
@@ -118,18 +118,6 @@ const resolvers = {
             const newPassword = generateUUID(16);
             user.password = newPassword;
             await user.save();
-
-            // Send email using Sendinblue (Brevo) SMTP
-            const transporter = nodemailer.createTransport({
-                host: process.env.SMTP_HOST,
-                port: parseInt(process.env.SMTP_PORT, 10),
-                secure: false, // true for port 465, false for 587
-                auth: {
-                    user: process.env.SMTP_USER,
-                    pass: process.env.SMTP_PASS,
-                },
-            });
-
             try {
                 await transporter.sendMail({
                     from: `${process.env.EMAIL_FROM} <${process.env.SMTP_SENDER}>`,
