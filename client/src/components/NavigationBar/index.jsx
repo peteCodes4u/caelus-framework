@@ -11,14 +11,27 @@ import Auth from '../../utils/auth';
 import StyleToggler from '../StyleToggler';
 
 export default function NavigationBar({ activeStyle, setActiveStyle }) {
-
     const location = useLocation();
     const currentPage = location.pathname;
     const userId = Auth.loggedIn() ? Auth.getProfile().data._id : null;
     const isProfilePage = currentPage === `/profile/${userId}`;
 
-    return (
+    // Build availableLinks based on auth state
+    const availableLinks = [
+        { label: 'Home', path: '/' },
+        ...(!Auth.loggedIn()
+            ? [
+                { label: 'Login 👍', path: '/login' },
+                { label: 'Signup 😎', path: '/signup' },
+            ]
+            : [
+                { label: 'Profile', path: `/profile/${userId}` },
+                { label: 'Logout', action: Auth.logout },
+            ]
+        ),
+    ];
 
+    return (
         <Navbar id="navbar" className={`${activeStyle}-navbar`} expand="lg">
             <Container fluid>
                 <Navbar.Brand as={Link} to="/" className={`${activeStyle}-navbar-brand`}>
@@ -28,17 +41,25 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                 <Navbar.Collapse id="navbar" className={`${activeStyle}-navbar-collapse`}>
                     <Nav className={`${activeStyle}-nav ml-auto d-flex`}>
                         <NavDropdown title="Explore" id="explore-dropdown" className={`${activeStyle}-dropdown`}>
-                            <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-                            {!Auth.loggedIn() ? (
-                                <>
-                                    <NavDropdown.Item as={Link} to="/login">Login 👍</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to="/signup">Signup 😎</NavDropdown.Item>
-                                </>
-                            ) : (
-                                <>
-                                    <NavDropdown.Item as={Link} to={`/profile/${userId}`}>Profile</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} onClick={Auth.logout}>Logout</NavDropdown.Item>
-                                </>
+                            {availableLinks.map((link, idx) =>
+                                link.action ? (
+                                    <NavDropdown.Item
+                                        key={idx}
+                                        as={Link}
+                                        to="/"
+                                        onClick={link.action}
+                                    >
+                                        {link.label}
+                                    </NavDropdown.Item>
+                                ) : (
+                                    <NavDropdown.Item
+                                        key={idx}
+                                        as={Link}
+                                        to={link.path}
+                                    >
+                                        {link.label}
+                                    </NavDropdown.Item>
+                                )
                             )}
                         </NavDropdown>
                         {isProfilePage && (
