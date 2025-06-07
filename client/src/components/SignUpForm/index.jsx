@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Alert } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
@@ -13,15 +13,8 @@ const signUpFields = [
 ];
 
 export default function SignUpForm({ activeStyle = 'app-style2', handleModalClose }) {
-  const [userFormData, setUserFormData] = useState({ name: '', email: '', password: '' });
-  const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [addUser, { error, data }] = useMutation(ADD_USER);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
 
   const handleSignUp = async (formData) => {
     try {
