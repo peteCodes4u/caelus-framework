@@ -37,7 +37,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
         <div className={`${activeStyle}-profile-form`}>
             <div className={`${activeStyle}-prfile-form-header d-flex align-items-center justify-content-between mb-3`}>
                 <div className={`${activeStyle}-profile-form-body`}>
-                    <Card className={`${activeStyle}-profile-form-card`}>                            <Alert
+                    <div className={`${activeStyle}-profile-form-card`}>                            <Alert
                         dismissible
                         onClose={() => setShowAlert(false)}
                         show={showAlert || !!error}
@@ -78,7 +78,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 Profile updated successfully!
                             </Alert>
                         ) : null}
-                    </Card>
+                    </div>
                 </div>
             </div>
         </div>
