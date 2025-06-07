@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Form, Button, Alert, Card } from 'react-bootstrap';
+import { Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
+import GeneralForm from '../GeneralForm';
+
+const updateUserFields = [
+    { label: "Username", name: "name", type: "text", required: true, placeholder: "Enter username" },
+    { label: "Email", name: "email", type: "email", required: true, placeholder: "Enter email" },
+    { label: "Password", name: "password", type: "password", required: true, placeholder: "Enter your password" },
+];
 
 export default function UpdateUserForm({ activeStyle = 'app-style1', initialName = '', initialEmail = '' }) {
     const [formData, setFormData] = useState({
@@ -10,14 +17,12 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
         email: initialEmail,
         password: '',
     });
-    const [showPasswordField, setShowPasswordField] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState('');
     const [alertVariant, setAlertVariant] = useState('danger');
     const [updateUser] = useMutation(UPDATE_USER);
     const [verifyPassword] = useMutation(VERIFY_PASSWORD);
-    const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
-
+    
     useEffect(() => {
         setFormData((prev) => ({
             ...prev,
@@ -26,15 +31,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
         }));
     }, [initialName, initialEmail]);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleShowPassword = () => setShowPasswordField(true);
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
+    const handleUpdateUser = async (formData) => {
         setShowAlert(false);
 
         // Show alert if password is empty
@@ -69,50 +66,18 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
     return (
         <div className={`${activeStyle}-update-user-form-form`}>
             <div className={`${activeStyle}-update-user-form-body`}>
-                <Card className={`${activeStyle}-update-user-form`} onClick={handleFormSubmit}>
+                <Card className={`${activeStyle}-update-user-form`}>
+                    <GeneralForm
+                        fields={updateUserFields}
+                        onSubmit={handleUpdateUser}
+                        submitLabel="Update Profile"
+                        initialValues={{
+                            name: initialName,
+                            email: initialEmail,
+                            password: ''
+                        }}
+                    />
                     {showAlert && <Alert variant={alertVariant}>{alertMsg}</Alert>}
-                    <Form.Group className="mb-3">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </Form.Group>
-                    {!showPasswordField && (
-                        <Button type="button" onClick={handleShowPassword}>
-                            📧 Update username or email 📧
-                        </Button>
-                    )}
-                    {showPasswordField && (
-                        <>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            <Button type="button" variant="success" disabled={!formData.password}>
-                                Confirm & Update
-                            </Button>
-                        </>
-                    )}
                 </Card>
             </div>
         </div>
