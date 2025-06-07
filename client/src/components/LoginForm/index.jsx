@@ -1,36 +1,27 @@
 import { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import GeneralForm from '../GeneralForm';
+
+const loginFields = [
+  { label: "Email", name: "email", type: "text", required: true, placeholder: "Your email" },
+  { label: "Password", name: "password", type: "password", required: true, placeholder: "Your password" },
+];
 
 export default function LoginForm({ activeStyle = 'app-style2', handleModalClose }) {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-      setValidated(true);
-      return;
-    }
+  const handleLogin = async (formData) => {
     try {
-      const { data } = await login({ variables: { ...userFormData } });
+      const { data } = await login({ variables: { ...formData } });
       Auth.login(data.login.token);
     } catch (e) {
       setShowAlert(true);
     }
-    setValidated(true);
   };
 
   return (
@@ -47,7 +38,13 @@ export default function LoginForm({ activeStyle = 'app-style2', handleModalClose
         )}
       </div>
       <div className={`${activeStyle}-popup-body`}>
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <GeneralForm
+          fields={loginFields}
+          onSubmit={handleLogin}
+          submitLabel="Login"
+          initialValues={{ email: '', password: '' }}
+        />
+        {showAlert || error ? (
           <Alert
             dismissible
             onClose={() => setShowAlert(false)}
@@ -56,43 +53,7 @@ export default function LoginForm({ activeStyle = 'app-style2', handleModalClose
           >
             Something went wrong with your login credentials!
           </Alert>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="email">Email</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Your email"
-              name="email"
-              onChange={handleInputChange}
-              value={userFormData.email}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Email is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="password">Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Your password"
-              name="password"
-              onChange={handleInputChange}
-              value={userFormData.password}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Password is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button
-            className="mb-0"
-            disabled={!(userFormData.email && userFormData.password)}
-            type="submit"
-            variant="success"
-          >
-            Submit
-          </Button>
-        </Form>
+        ) : null}
         <div className="mt-3">
           <Link to="/signup">← Go to Signup</Link>
           <br/>
@@ -101,4 +62,4 @@ export default function LoginForm({ activeStyle = 'app-style2', handleModalClose
       </div>
     </div>
   );
-};
+}
