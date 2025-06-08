@@ -13,16 +13,6 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
     e.preventDefault();
     onSubmit(formData);
   };
-
-  const handleSignUp = async (formData) => {
-    try {
-      const { data } = await addUser({ variables: { ...formData } });
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      setShowAlert(true);
-    }
-  };
-
   return (
     <Form onSubmit={handleSubmit}>
       {fields.map((field) => (
