@@ -1,5 +1,6 @@
 // this file is used to define the resolver functions for the GraphQL queries and mutations.
 // resolvers are functions that are responsible for returning the data for a specific field in a query or mutation.
+require('dotenv').config();
 
 // import the models
 const { User } = require('../models');
@@ -7,6 +8,10 @@ const { User } = require('../models');
 // pull in the signToken function from auth
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const bcrypt = require('bcrypt');
+const generateUUID = require('../utils/UUIDGenerator');
+const transporter = require('../utils/transporter');
+
 
 // define the resolvers
 const resolvers = {
@@ -27,7 +32,7 @@ const resolvers = {
                 return User.findOne({ _id: context.user._id });
             }
             console.error('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
-            throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');                        
+            throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
         },
     },
     // define the mutations
@@ -65,7 +70,7 @@ const resolvers = {
         },
 
         // update a user
-        updateUser: async (parent, { name, email, password }, context) => {
+        updateUser: async (parent, { name, email }, context) => {
             if (!context.user) throw new AuthenticationError('Not logged in');
 
             // Find the user by ID
@@ -75,7 +80,6 @@ const resolvers = {
             // Update fields if provided
             if (name) user.name = name;
             if (email) user.email = email;
-            if (password) user.password = password; // Will be hashed by pre('save')
 
             // Save the user (triggers pre-save middleware)
             await user.save();
@@ -83,6 +87,52 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+
+        // update a password
+        updatePassword: async (parent, { oldPassword, password }, context) => {
+            if (!context.user) throw new AuthenticationError('Not logged in');
+            const user = await User.findById(context.user._id);
+            if (!user) throw new AuthenticationError('User not found');
+
+            // Check old password
+            const valid = await bcrypt.compare(oldPassword, user.password);
+            if (!valid) {
+                return { success: false, message: 'Old password is incorrect.' };
+            }
+
+            // Update to new password (will be hashed by pre-save middleware)
+            user.password = password;
+            await user.save();
+
+            return { success: true, message: 'Password updated successfully.' };
+        },
+
+        // forgot password
+        forgotPassword: async (parent, { email }) => {
+            const user = await User.findOne({ email });
+            if (!user) {
+                return { success: false, message: "Email is not in our records." };
+            }
+
+            // Generate random password
+            const newPassword = generateUUID(16);
+            user.password = newPassword;
+            await user.save();
+            try {
+                await transporter.sendMail({
+                    from: `${process.env.EMAIL_FROM} <${process.env.SMTP_SENDER}>`,
+                    to: user.email,
+                    subject: 'Your New Password',
+                    text: `Your new password is: ${newPassword}`
+                });
+            } catch (err) {
+                console.error('Email send error:', err);
+                return { success: false, message: "Failed to send email." };
+            }
+
+            return { success: true, message: "A new password has been sent to your email." };
+        },
+
         // delete a user
         deleteUser: async (parent, args, context) => {
             if (context.user) {
@@ -91,6 +141,16 @@ const resolvers = {
             console.error('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
             throw new AuthenticationError('🛸 AUTHENTICATION ERROR ENCOUNTERED WHEN DELETING A user 🛸!');
         },
+
+        // verify password
+        verifyPassword: async (parent, { password }, context) => {
+            if (!context.user) throw new AuthenticationError('Not logged in');
+            const user = await User.findById(context.user._id);
+            if (!user) return false;
+            const valid = await bcrypt.compare(password, user.password);
+            return valid;
+        },
+
     },
 };
 

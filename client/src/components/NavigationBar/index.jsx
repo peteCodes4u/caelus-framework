@@ -4,21 +4,34 @@ import {
     Navbar,
     Nav,
     Container,
-    NavDropdown,
 } from 'react-bootstrap';
 
 import Auth from '../../utils/auth';
+import GeneralDropDown from '../GeneralDropDown';
 import StyleToggler from '../StyleToggler';
 
 export default function NavigationBar({ activeStyle, setActiveStyle }) {
-
     const location = useLocation();
     const currentPage = location.pathname;
     const userId = Auth.loggedIn() ? Auth.getProfile().data._id : null;
     const isProfilePage = currentPage === `/profile/${userId}`;
 
-    return (
+    // Dropdown Configuration array
+    const availableLinks = [
+        { label: 'Home', path: '/' },
+        ...(!Auth.loggedIn()
+            ? [
+                { label: 'Login 👍', path: '/login' },
+                { label: 'Signup 😎', path: '/signup' },
+            ]
+            : [
+                { label: 'Profile', path: `/profile/${userId}` },
+                { label: 'Logout', action: Auth.logout },
+            ]
+        ),
+    ];
 
+    return (
         <Navbar id="navbar" className={`${activeStyle}-navbar`} expand="lg">
             <Container fluid>
                 <Navbar.Brand as={Link} to="/" className={`${activeStyle}-navbar-brand`}>
@@ -27,20 +40,11 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                 <Navbar.Toggle aria-controls="navbar" className={`${activeStyle}-toggle-btn`} />
                 <Navbar.Collapse id="navbar" className={`${activeStyle}-navbar-collapse`}>
                     <Nav className={`${activeStyle}-nav ml-auto d-flex`}>
-                        <NavDropdown title="Explore" id="explore-dropdown" className={`${activeStyle}-dropdown`}>
-                            <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-                            {!Auth.loggedIn() ? (
-                                <>
-                                    <NavDropdown.Item as={Link} to="/login">Login 👍</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to="/signup">Signup 😎</NavDropdown.Item>
-                                </>
-                            ) : (
-                                <>
-                                    <NavDropdown.Item as={Link} to={`/profile/${userId}`}>Profile</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} onClick={Auth.logout}>Logout</NavDropdown.Item>
-                                </>
-                            )}
-                        </NavDropdown>
+                        <GeneralDropDown
+                            title="Explore"
+                            items={availableLinks}
+                            dropdownClass={`${activeStyle}-dropdown`}
+                        />
                         {isProfilePage && (
                             <StyleToggler
                                 activeStyle={activeStyle}

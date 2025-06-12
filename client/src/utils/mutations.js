@@ -34,8 +34,8 @@ export const LOGIN_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($name: String!, $email: String!, $password: String!) {
-    updateUser(name: $name, email: $email, password: $password) {
+  mutation updateUser($name: String!, $email: String!) {
+    updateUser(name: $name, email: $email) {
       token
       user {
         _id
@@ -43,5 +43,29 @@ export const UPDATE_USER = gql`
         email
       }
     }
+  }
+`;
+
+export const UPDATE_PASSWORD = gql`
+  mutation updatePassword($oldPassword: String!, $password: String!) {
+    updatePassword(oldPassword: $oldPassword, password: $password) {
+      success
+      message
+    }
+  }
+`;
+
+export const FORGOT_PASSWORD = gql`
+  mutation forgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      success
+      message
+    }
+  }
+`;
+
+export const VERIFY_PASSWORD = gql`
+  mutation verifyPassword($password: String!) {
+    verifyPassword(password: $password)
   }
 `;

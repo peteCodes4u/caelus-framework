@@ -1,5 +1,4 @@
 // Footer Component used in the App.js file to display the footer of the website. this is where changes can be made to the footer of the website.
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
     Container,
@@ -13,8 +12,6 @@ import {
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 
 export default function Footer({ activeStyle }) {
-    const location = useLocation();
-    const navigate = useNavigate();
 
     return (
         <Navbar className={`${activeStyle}-footer`}>
@@ -27,6 +24,8 @@ export default function Footer({ activeStyle }) {
                                 placeholder="Search"
                                 className="mr-2"
                                 aria-label="Search"
+                                name="search"
+                                id="footer-search"
                             />
                             <Button variant="outline-success" type="submit">
                                 Search

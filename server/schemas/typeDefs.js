@@ -23,10 +23,25 @@ const typeDefs = `
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(name: String!, email: String!, password: String!): Auth
-        updateUser(name: String, email: String, password: String): Auth
+        updateUser(name: String, email: String ): Auth
+        updatePassword(oldPassword: String!, password: String!): UpdatePasswordResponse
         deleteUser: User
+        forgotPassword(email: String!): ForgotPasswordResponse
     }
 
+    type UpdatePasswordResponse {
+        success: Boolean!
+        message: String
+    }
+
+    type ForgotPasswordResponse {
+        success: Boolean!
+        message: String
+    }
+    
+    type Mutation {
+    verifyPassword(password: String!): Boolean
+    }
 `;
 // export the typeDefs
 module.exports = typeDefs;

@@ -12,11 +12,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import app and pages for the application
 import App from './App.jsx';
-import Page1 from './pages/Page1.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import ErrorPage from './pages/ErrorPage';
-import ProfilePage from './pages/ProfilePage.jsx';
+import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
+import React, { Suspense, lazy } from 'react';
+const Page1 = lazy(() => import('./pages/Page1'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+
 
 // create the router
 const router = createBrowserRouter([
@@ -36,10 +39,13 @@ const router = createBrowserRouter([
                     element: <Page1 />
                 }, {   
                     path: '/page1',
-                    element: <Page1 />
+                    element: <Suspense fallback={<div>Loading...</div>}><Page1 /></Suspense>
                 }, {
                     path: '/profile/:id',
-                    element: <ProfilePage />
+                    element: <Suspense fallback={<div>Loading...</div>}><ProfilePage /></Suspense>
+                }, {
+                    path: '/forgot-password',
+                    element: <ForgotPasswordPage />,
                 },
                 {   
                     path: '/login',

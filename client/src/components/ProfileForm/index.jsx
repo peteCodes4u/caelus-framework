@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_USER } from '../../utils/mutations';
+import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
-import Auth from '../../utils/auth';
+import UpdatePasswordForm from '../UpdatePasswordForm';
+import UpdateUserForm from '../UpdateUserForm';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
@@ -13,32 +14,13 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
         password: '',
     });
     const [updateUser, { error, data }] = useMutation(UPDATE_USER);
+    const [verifyPassword] = useMutation(VERIFY_PASSWORD);
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setUserFormData({ ...userFormData, [name]: value });
-    };
-
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.stopPropagation();
-            setValidated(true);
-            return;
-        }
-        try {
-            const { data } = await updateUser({ variables: { ...userFormData } });
-            if (data && data.updateUser && data.updateUser.token) {
-                Auth.login(data.updateUser.token);
-            }
-        } catch (e) {
-            setShowAlert(true);
-        }
-        setValidated(true);
-    };
+    const [showPasswordEnryField, setShowPasswordEnryField] = useState(false);
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
+    const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
 
     // Populate form fields when userData is loaded
     useEffect(() => {
@@ -55,63 +37,48 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
         <div className={`${activeStyle}-profile-form`}>
             <div className={`${activeStyle}-prfile-form-header d-flex align-items-center justify-content-between mb-3`}>
                 <div className={`${activeStyle}-profile-form-body`}>
-                    <Card className ={`${activeStyle}-profile-form-card`}>
-                        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-                            <Alert
-                                dismissible
-                                onClose={() => setShowAlert(false)}
-                                show={showAlert || !!error}
-                                variant="danger"
+                    <div className={`${activeStyle}-profile-form-card`}>                            <Alert
+                        dismissible
+                        onClose={() => setShowAlert(false)}
+                        show={showAlert || !!error}
+                        variant="danger"
+                    >
+                        Something went wrong with your profile update!
+                    </Alert>
+                        {/* Update password toggle */}
+                        <Form.Group className="mb-3">
+                            <Button
+                                type="button"
+                                onClick={() => setShowPasswordForm((prev) => !prev)}
+                                className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''}`}
                             >
-                                Something went wrong with your profile update!
-                            </Alert>
-                            <Form.Group className="mb-3">
-                                <Form.Label htmlFor="username">Username</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Your username"
-                                    name="name"
-                                    id="name"
-                                    value={userFormData.name}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label htmlFor="email">Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Your email"
-                                    name="email"
-                                    id="email"
-                                    value={userFormData.email}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label htmlFor="password">Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Your password"
-                                    name="password"
-                                    id="password"
-                                    value={userFormData.password}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                            {data ? (
-                                <Alert variant="success">
-                                    Profile updated successfully!
-                                </Alert>
-                            ) : null}
-                            <Button type="submit" variant="primary">
-                                Update Profile
+                                {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                             </Button>
-                        </Form>
-                    </Card>
-
+                            {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
+                        </Form.Group>
+                        {/* Toggle Update User Form */}
+                        <Form.Group>
+                            <Button
+                                type="button"
+                                onClick={() => setShowUpdateUserForm((prev) => !prev)}
+                                className={`${activeStyle}-update-user-button${showUpdateUserForm ? ' active' : ''}`}
+                            >
+                                {showUpdateUserForm ? "Hide Update User Form" : "Update User Info"}
+                            </Button>
+                            {showUpdateUserForm && (
+                                <UpdateUserForm
+                                    activeStyle={activeStyle}
+                                    initialName={userFormData.name}
+                                    initialEmail={userFormData.email}
+                                />
+                            )}
+                        </Form.Group>
+                        {data ? (
+                            <Alert variant="success">
+                                Profile updated successfully!
+                            </Alert>
+                        ) : null}
+                    </div>
                 </div>
             </div>
         </div>
