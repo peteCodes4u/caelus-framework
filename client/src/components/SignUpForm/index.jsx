@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import GeneralForm from '../GeneralForm';
 
 const signUpFields = [
-  { label: "Username", name: "name", type: "text", required: true, placeholder: "Enter username" },
+  { label: "Username", name: "name", type: "text", required: true, placeholder: "Enter username"},
   { label: "Email", name: "email", type: "email", required: true, placeholder: "Enter email" },
   { label: "Password", name: "password", type: "password", required: true, placeholder: "Enter password" },
 ];
@@ -43,6 +43,7 @@ export default function SignUpForm({ activeStyle = 'app-style2', handleModalClos
           fields={signUpFields}
           onSubmit={handleSignUp}
           submitLabel="Sign Up"
+          formClass="SignUpForm"
         />
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert || !!error} variant='danger'>
           Something went wrong with your signup!

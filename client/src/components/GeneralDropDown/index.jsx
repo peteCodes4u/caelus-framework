@@ -34,5 +34,4 @@ export default function GeneralDropDown({ title, items, dropdownClass = `${activ
             )}
         </NavDropdown>
     );
-
 };

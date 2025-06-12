@@ -24,6 +24,8 @@ export default function Footer({ activeStyle }) {
                                 placeholder="Search"
                                 className="mr-2"
                                 aria-label="Search"
+                                name="search"
+                                id="footer-search"
                             />
                             <Button variant="outline-success" type="submit">
                                 Search

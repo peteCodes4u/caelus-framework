@@ -43,6 +43,7 @@ export default function LoginForm({ activeStyle = 'app-style2', handleModalClose
           onSubmit={handleLogin}
           submitLabel="Login"
           initialValues={{ email: '', password: '' }}
+          formClass="LoginForm"
         />
         {showAlert || error ? (
           <Alert

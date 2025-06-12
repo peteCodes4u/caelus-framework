@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit" }) {
+export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit", formClass = "" }) {
   const [formData, setFormData] = useState(initialValues);
 
   const handleChange = (e) => {
@@ -16,15 +16,19 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
   return (
     <Form onSubmit={handleSubmit}>
       {fields.map((field) => (
-        <Form.Group className="mb-3" key={field.name}>
-          <Form.Label>{field.label}</Form.Label>
+        <Form.Group className={formClass} key={field.name}>
+          <Form.Label htmlFor={field.name}>
+            {field.label}
+          </Form.Label>
           <Form.Control
+            id={field.name}
             type={field.type}
             name={field.name}
             value={formData[field.name] || ''}
             onChange={handleChange}
             placeholder={field.placeholder}
             required={field.required}
+            autoComplete={field.autoComplete || "on"}
           />
         </Form.Group>
       ))}
