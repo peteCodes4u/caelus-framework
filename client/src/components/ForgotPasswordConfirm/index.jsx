@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { FORGOT_PASSWORD } from '../../utils/mutations';
 import { useState } from 'react';
-import { Form, Button, Alert, Card } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import GeneralForm from '../GeneralForm';
 
 const forgotPasswordFields = [

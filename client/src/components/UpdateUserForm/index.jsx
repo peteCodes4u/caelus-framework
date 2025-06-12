@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Alert, Card } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
 import GeneralForm from '../GeneralForm';
 
 const updateUserFields = [
