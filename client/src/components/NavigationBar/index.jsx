@@ -16,7 +16,7 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
     const userId = Auth.loggedIn() ? Auth.getProfile().data._id : null;
     const isProfilePage = currentPage === `/profile/${userId}`;
 
-    // Build availableLinks based on auth state
+    // Dropdown Configuration array
     const availableLinks = [
         { label: 'Home', path: '/' },
         ...(!Auth.loggedIn()

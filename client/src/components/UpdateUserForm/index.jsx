@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import GeneralForm from '../GeneralForm';
 
+// Update User form configuration array
 const updateUserFields = [
     { label: "Username", name: "name", type: "text", required: true, placeholder: "Enter username" },
     { label: "Email", name: "email", type: "email", required: true, placeholder: "Enter email" },

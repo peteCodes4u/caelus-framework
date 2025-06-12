@@ -6,6 +6,7 @@ import { ADD_USER } from '../../utils/mutations';
 import { Link } from 'react-router-dom';
 import GeneralForm from '../GeneralForm';
 
+// Sign Up form configuration array
 const signUpFields = [
   { label: "Username", name: "name", type: "text", required: true, placeholder: "Enter username"},
   { label: "Email", name: "email", type: "email", required: true, placeholder: "Enter email" },

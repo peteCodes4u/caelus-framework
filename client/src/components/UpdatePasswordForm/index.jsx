@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_PASSWORD } from '../../utils/mutations';
 import GeneralForm from '../GeneralForm';
 
+// Update Password form configuration array
 const updatePasswordFields = [
   { label: "Old Password", name: "oldPassword", type: "password", required: true, placeholder: "Enter old password" },
   { label: "New Password", name: "password", type: "password", required: true, placeholder: "Enter new password" },

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import GeneralForm from '../GeneralForm';
 
+// forgot password form configuration array
 const forgotPasswordFields = [
     { label: "Email", name: "email", type: "email", required: true, placeholder: "Enter your email address" },
 ];

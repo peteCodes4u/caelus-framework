@@ -6,6 +6,7 @@ import { LOGIN_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import GeneralForm from '../GeneralForm';
 
+// Login form configuration array
 const loginFields = [
   { label: "Email", name: "email", type: "text", required: true, placeholder: "Your email" },
   { label: "Password", name: "password", type: "password", required: true, placeholder: "Your password" },
