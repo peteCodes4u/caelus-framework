@@ -4,10 +4,10 @@ import {
     Navbar,
     Nav,
     Container,
-    NavDropdown,
 } from 'react-bootstrap';
 
 import Auth from '../../utils/auth';
+import GeneralDropDown from '../GeneralDropDown';
 import StyleToggler from '../StyleToggler';
 
 export default function NavigationBar({ activeStyle, setActiveStyle }) {
@@ -40,28 +40,11 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                 <Navbar.Toggle aria-controls="navbar" className={`${activeStyle}-toggle-btn`} />
                 <Navbar.Collapse id="navbar" className={`${activeStyle}-navbar-collapse`}>
                     <Nav className={`${activeStyle}-nav ml-auto d-flex`}>
-                        <NavDropdown title="Explore" id="explore-dropdown" className={`${activeStyle}-dropdown`}>
-                            {availableLinks.map((link, idx) =>
-                                link.action ? (
-                                    <NavDropdown.Item
-                                        key={idx}
-                                        as={Link}
-                                        to="/"
-                                        onClick={link.action}
-                                    >
-                                        {link.label}
-                                    </NavDropdown.Item>
-                                ) : (
-                                    <NavDropdown.Item
-                                        key={idx}
-                                        as={Link}
-                                        to={link.path}
-                                    >
-                                        {link.label}
-                                    </NavDropdown.Item>
-                                )
-                            )}
-                        </NavDropdown>
+                        <GeneralDropDown
+                            title="Explore"
+                            items={availableLinks}
+                            dropdownClass={`${activeStyle}-dropdown`}
+                        />
                         {isProfilePage && (
                             <StyleToggler
                                 activeStyle={activeStyle}
