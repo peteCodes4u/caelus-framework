@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Alert, Card } from 'react-bootstrap';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import GeneralForm from '../GeneralForm';
 
