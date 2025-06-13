@@ -24,7 +24,6 @@ export default function ProfilePage({ toggleStylesheet }) {
       <h1>🛸 Hello! {userName} 🛸</h1>
       <p> Welcome to your Profile Page! </p>
       <ProfileForm activeStyle={activeStyle} handleModalClose={toggleStylesheet} />
-      <BioForm activeStyle={activeStyle} />
     </div>
   );
 };

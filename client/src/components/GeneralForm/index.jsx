@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
-export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit", formClass = "" }) {
+export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit", formClass = "", children }) {
   const [formData, setFormData] = useState(initialValues);
 
   useEffect(() => {
@@ -20,14 +20,13 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
   };
   return (
     <Form onSubmit={handleSubmit}>
-      {fields.map((field) => (
-        <Form.Group className={formClass} key={field.name}>
-          <Form.Label htmlFor={field.name}>
-            {field.label}
-          </Form.Label>
+      {fields.map((field, idx) => (
+        <Form.Group className={formClass} key={field.name || idx}>
+          <Form.Label htmlFor={field.name}>{field.label}</Form.Label>
           <Form.Control
+            as={field.type === 'textarea' ? 'textarea' : 'input'}
+            type={field.type === 'textarea' ? undefined : field.type}
             id={field.name}
-            type={field.type}
             name={field.name}
             value={formData[field.name] || ''}
             onChange={handleChange}
@@ -37,6 +36,9 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
           />
         </Form.Group>
       ))}
+      {/* Render children (LinksForm and toggle button) above the submit button */}
+      {children}
+      <br />
       <Button type="submit">{submitLabel}</Button>
     </Form>
   );

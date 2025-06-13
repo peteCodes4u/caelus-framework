@@ -291,15 +291,20 @@ body.app-style3 .app-style3-profile-form .card {
 }
 
 body.app-style3 .app-style3-update-pw-button,
-body.app-style3 .app-style3-forgot-pw-button,
-body.app-style3 .app-style3-update-user-button {
+body.app-style3 .app-style3-update-user-button,
+body.app-style3 .app-style3-bio-form-button {
+  margin-top: 0.75rem;
   min-width: 220px;
   width: 100%;
   margin-bottom: 0.5rem;
-  background-color: #14f742; /* green */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: #14f742;
   color: #fff;
   border: none;
   transition: background 0.2s, color 0.2s;
+  padding-bottom: 0.5rem;
 }
 
 body.app-style3 .app-style3-update-pw-button.active,

@@ -1,28 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-// import { useMutation, useQuery } from '@apollo/client';
-// import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
-// import { useQuery } from '@apollo/client';
-// import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
 import UpdateUserForm from '../UpdateUserForm';
+import BioForm from '../BioForm';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
-    
-    // GraphQL query to fetch user data to render
-    // const { data, loading, error } = useQuery(QUERY_ME);
 
-    // if(loading) return <p>Loading...</p>;
-    // if(error) return <p>Error loading user data.</p>;
-    
-    // const user = data?.me || {};
-
-    // State management
+    // State management for alert visibility
     const [showAlert, setShowAlert] = useState(false);
 
     // Form visibility states
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
+    const [showBioForm, setShowBioForm] = useState(false);
+
 
     return (
         <div className={`${activeStyle}-profile-form`}>
@@ -60,6 +51,19 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 <UpdateUserForm
                                     activeStyle={activeStyle}
                                 />
+                            )}
+                        </Form.Group>
+                        {/* toggle Bio Form */}
+                        <Form.Group>
+                            <Button
+                                type="button"
+                                onClick={() => setShowBioForm((prev) => !prev)}
+                                className={`${activeStyle}-bio-form-button${showBioForm ? ' active' : ''}`}
+                            >
+                                {showBioForm ? "Hide Bio Form" : "Update your Bio"}
+                            </Button>
+                            {showBioForm && (
+                               <BioForm  activeStyle={activeStyle}/>
                             )}
                         </Form.Group>
                     </div>
