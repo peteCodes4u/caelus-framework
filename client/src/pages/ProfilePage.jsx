@@ -2,6 +2,7 @@
 import { useParams } from "react-router-dom";
 import { useStyle } from "../StyleContext";
 import ProfileForm from "../components/ProfileForm";
+import BioForm from "../components/BioForm";
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries'; // Define this query
 
@@ -23,6 +24,7 @@ export default function ProfilePage({ toggleStylesheet }) {
       <h1>🛸 Hello! {userName} 🛸</h1>
       <p> Welcome to your Profile Page! </p>
       <ProfileForm activeStyle={activeStyle} handleModalClose={toggleStylesheet} />
+      <BioForm activeStyle={activeStyle} />
     </div>
   );
 };
