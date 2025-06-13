@@ -1,8 +1,13 @@
 import { Form, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit", formClass = "" }) {
   const [formData, setFormData] = useState(initialValues);
+
+  useEffect(() => {
+    setFormData(initialValues);
+  }, [initialValues]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

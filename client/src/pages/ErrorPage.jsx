@@ -20,7 +20,11 @@ export default function ErrorPage() {
             </div>
             <br />
             <p> 🖖 If this issue persists please see the detailed technical error below. Use this error as a reference when communicating with support thank you 👽 </p>
-            <p>{error.message}</p>
+        <p>
+        {(!error || !error.message)
+            ? 'No error message available'
+            : error.message}
+        </p>
         </div></center>
         <Footer activeStyle={activeStyle} />
         </>

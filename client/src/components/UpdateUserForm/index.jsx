@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Card } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import GeneralForm from '../GeneralForm';
 
@@ -11,25 +12,34 @@ const updateUserFields = [
     { label: "Password", name: "password", type: "password", required: true, placeholder: "Enter your password" },
 ];
 
-export default function UpdateUserForm({ activeStyle = 'app-style1', initialName = '', initialEmail = '' }) {
+export default function UpdateUserForm({ activeStyle = 'app-style1' }) {
+
+    const { data, loading, error } = useQuery(QUERY_ME);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error loading user data.</p>;
+
     const [formData, setFormData] = useState({
-        name: initialName,
-        email: initialEmail,
+        name: '',
+        email: '',
         password: '',
     });
+
     const [showAlert, setShowAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState('');
     const [alertVariant, setAlertVariant] = useState('danger');
     const [updateUser] = useMutation(UPDATE_USER);
     const [verifyPassword] = useMutation(VERIFY_PASSWORD);
-    
+
     useEffect(() => {
-        setFormData((prev) => ({
-            ...prev,
-            name: initialName,
-            email: initialEmail,
-        }));
-    }, [initialName, initialEmail]);
+        if (data?.me) {
+            setFormData((prev) => ({
+                ...prev,
+                name: data.me.name,
+                email: data.me.email,
+            }));
+        }
+
+    }, [data]);
 
     const handleUpdateUser = async (formData) => {
         setShowAlert(false);
@@ -72,8 +82,8 @@ export default function UpdateUserForm({ activeStyle = 'app-style1', initialName
                         onSubmit={handleUpdateUser}
                         submitLabel="Update Profile"
                         initialValues={{
-                            name: initialName,
-                            email: initialEmail,
+                            name: formData.name,
+                            email: formData.email,
                             password: ''
                         }}
                     />

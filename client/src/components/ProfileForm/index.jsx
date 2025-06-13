@@ -1,37 +1,28 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Alert, Card } from 'react-bootstrap';
-import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
+import { Form, Button, Alert } from 'react-bootstrap';
+// import { useMutation, useQuery } from '@apollo/client';
+// import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
+// import { useQuery } from '@apollo/client';
+// import { QUERY_ME } from '../../utils/queries';
 import UpdatePasswordForm from '../UpdatePasswordForm';
 import UpdateUserForm from '../UpdateUserForm';
 
 export default function ProfileForm({ activeStyle = 'app-style1' }) {
-    const { loading, error: queryError, data: userData } = useQuery(QUERY_ME);
-    const [userFormData, setUserFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-    });
-    const [updateUser, { error, data }] = useMutation(UPDATE_USER);
-    const [verifyPassword] = useMutation(VERIFY_PASSWORD);
-    const [validated, setValidated] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
-    const [showPasswordEnryField, setShowPasswordEnryField] = useState(false);
-    const [showPasswordForm, setShowPasswordForm] = useState(false);
-    const [showForgotPasswordConfirm, setShowForgotPasswordConfirm] = useState(false);
-    const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
+    
+    // GraphQL query to fetch user data to render
+    // const { data, loading, error } = useQuery(QUERY_ME);
 
-    // Populate form fields when userData is loaded
-    useEffect(() => {
-        if (userData && userData.me) {
-            setUserFormData((prev) => ({
-                ...prev,
-                name: userData.me.name || '',
-                email: userData.me.email || '',
-            }));
-        }
-    }, [userData]);
+    // if(loading) return <p>Loading...</p>;
+    // if(error) return <p>Error loading user data.</p>;
+    
+    // const user = data?.me || {};
+
+    // State management
+    const [showAlert, setShowAlert] = useState(false);
+
+    // Form visibility states
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
 
     return (
         <div className={`${activeStyle}-profile-form`}>
@@ -40,7 +31,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                     <div className={`${activeStyle}-profile-form-card`}>                            <Alert
                         dismissible
                         onClose={() => setShowAlert(false)}
-                        show={showAlert || !!error}
+                        show={showAlert}
                         variant="danger"
                     >
                         Something went wrong with your profile update!
@@ -68,16 +59,9 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             {showUpdateUserForm && (
                                 <UpdateUserForm
                                     activeStyle={activeStyle}
-                                    initialName={userFormData.name}
-                                    initialEmail={userFormData.email}
                                 />
                             )}
                         </Form.Group>
-                        {data ? (
-                            <Alert variant="success">
-                                Profile updated successfully!
-                            </Alert>
-                        ) : null}
                     </div>
                 </div>
             </div>
