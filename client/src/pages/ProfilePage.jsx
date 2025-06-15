@@ -1,6 +1,6 @@
 // Import necessary packages
 import { useParams } from "react-router-dom";
-import { useStyle } from "../StyleContext";
+import { useStyle } from "../styleContext";
 import ProfileForm from "../components/ProfileForm";
 import BioForm from "../components/BioForm";
 import { useQuery } from '@apollo/client';

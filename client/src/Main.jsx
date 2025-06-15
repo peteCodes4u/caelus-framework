@@ -14,11 +14,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './pages/ErrorPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 import React, { Suspense, lazy } from 'react';
-const Page1 = lazy(() => import('./pages/Page1'));
-const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const Page1 = lazy(() => import('./pages/Page1.jsx'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
 
 
 // create the router

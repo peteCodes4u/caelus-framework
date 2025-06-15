@@ -5,7 +5,7 @@ import './AppStyle1.css';
 import './AppStyle2.css';
 import './AppStyle3.css';
 // import the context for managing the styles
-import { StyleContext } from './StyleContext';
+import { StyleContext } from './styleContext';
 
 // Import useEffect and useState for state management
 import { act, useEffect, useState } from 'react';

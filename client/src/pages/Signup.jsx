@@ -1,5 +1,5 @@
 import SignupForm from "../components/SignupForm";
-import { useStyle } from "../StyleContext";
+import { useStyle } from "../styleContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {

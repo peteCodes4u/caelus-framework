@@ -1,6 +1,6 @@
 // this is Page1 of the application
 import { Outlet } from "react-router-dom";
-import { useStyle } from "../StyleContext";
+import { useStyle } from "../styleContext";
 
 // Bootstrap Components
 import { Container, Row, Col, Card } from "react-bootstrap";

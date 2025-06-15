@@ -1,5 +1,5 @@
 import LoginForm from "../components/LoginForm";
-import { useStyle } from "../StyleContext";
+import { useStyle } from "../styleContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {

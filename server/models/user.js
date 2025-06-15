@@ -5,9 +5,10 @@ const { Schema, model } = require('mongoose');
 
 // leverage the bcrypt library to hash the password
 const bcrypt = require('bcrypt');
+const Profile = require('./profile');
 
 // define the user schema
-const userSchema = new Schema({ 
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -24,10 +25,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 5
-    }
+    },
+    profile: { type: Schema.Types.ObjectId, ref: 'Profile', default: null }
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     // if the password has not been modified, skip the hashing process
     if (this.isNew || this.isModified('password')) {
         // salt the password using bcrypt
@@ -35,10 +37,10 @@ userSchema.pre('save', async function(next) {
         this.password = await bcrypt.hash(this.password, saltRounds);
     }
     next();
-    
+
 });
 
-userSchema.methods.isCorrectPassword = async function(password) {
+userSchema.methods.isCorrectPassword = async function (password) {
     // compare the password with the hashed password
     return bcrypt.compare(password, this.password);
 };
