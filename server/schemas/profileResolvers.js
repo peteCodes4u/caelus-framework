@@ -1,11 +1,15 @@
 const Profile = require('../models/profile');
 const User = require('../models/user');
 const { AuthenticationError } = require('apollo-server-express');
-const { get } = require('../utils/transporter');
 
 const profileResolvers = {
     Query: {
-        getAllProfiles: async () => {
+        getAllProfiles: async (parent, args, context) => {
+
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to view profiles');
+            }
             return await Profile.find();
         },
 
