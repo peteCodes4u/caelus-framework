@@ -40,12 +40,14 @@ const profileResolvers = {
     },
     Mutation: {
         // Create the profile of the currently authenticated user
-        addProfile: async (parent, { bio, location, userId }, context) => {
+        addProfile: async (parent, { bio, location }, context) => {
 
             // Check if the user is authenticated
             if (!context.user) {
                 throw new AuthenticationError('You need to be logged in to create a profile');
             }
+            // Get the authenticated user's ID
+            const userId = context.user._id;
 
             // Check if the user already has a profile
             const existingProfile = await Profile.findOne({ user: userId });
