@@ -32,6 +32,12 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+
+  context: ({ req }) => {
+    // Use the authMiddleware to get the user from the request
+    const user = authMiddleware(req);
+    return { user };
+  }
 });
 
 // Start the Apollo Server and connect it to the Express app

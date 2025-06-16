@@ -49,4 +49,4 @@ userSchema.methods.isCorrectPassword = async function (password) {
 const User = model('User', userSchema);
 
 // export the Profile model for use in the express server
-module.exports = User;
+module.exports =  User;

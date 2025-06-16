@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User } = require('../models');
+const User = require('../models/user');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
@@ -97,7 +97,8 @@ const userResolvers = {
                 user.password = password;
                 await user.save();
     
-                return { success: true, message: 'Password updated successfully.' };
+                const token = signToken(user);
+                return { token, success: true, message: 'Password updated successfully.' };
             },
     
             // forgot password

@@ -1,0 +1,108 @@
+const Profile = require('../models/profile');
+const User = require('../models/user');
+const { AuthenticationError } = require('apollo-server-express');
+
+const profileResolvers = {
+    Query: {
+        getAllProfiles: async () => {
+            return await Profile.find();
+        },
+
+        myProfile: async (parent, args, context) => {
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to view your profile');
+            }
+
+            // Find the profile associated with the authenticated user
+            const profile = await Profile.findOne({ user: context.user._id });
+
+            // If no profile is found, throw an error
+            if (!profile) {
+                throw new Error('Profile not found');
+            }
+
+            return profile;
+        },
+
+        // Get a profile by user ID
+        getProfileByUserId: async (parent, { userId }) => {
+            // Find the profile associated with the given user ID
+            const profile = await Profile.findOne({ user: userId });
+
+            // If no profile is found, throw an error
+            if (!profile) {
+                throw new Error('This user does not yet have a profile configured');
+            }
+
+            return profile;
+        }
+    },
+    Mutation: {
+        // Create the profile of the currently authenticated user
+        addProfile: async (parent, { bio, location, userId }, context) => {
+
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to create a profile');
+            }
+
+            // Check if the user already has a profile
+            const existingProfile = await Profile.findOne({ user: userId });
+            if (existingProfile) {
+                throw new Error('This user already has a profile configured');
+            }
+
+            // Create a new profile
+            const profile = await Profile.create({ bio, location, user: userId });
+
+            // Update the user's profile field to reference the new profile
+            await User.findByIdAndUpdate(userId, { profile: profile._id });
+
+            return profile;
+        },
+        // Update the profile of the currently authenticated user
+        updateProfile: async (parent, { bio, location, userId }, context) => {
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to update your profile');
+            }
+            // Find the profile by user field and update it
+            const profile = await Profile.findOneAndUpdate(
+                { user: userId },           
+                { bio, location },          
+                { new: true }               
+            );
+            return profile;
+        },
+        // Delete the profile of the currently authenticated user
+        deleteProfile: async (parent, args, context) => {
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to delete your profile');
+            }
+
+            // Find the profile associated with the authenticated user
+            const profile = await Profile.findOneAndDelete({ user: context.user._id });
+
+            // If no profile is found, throw an error
+            if (!profile) {
+                throw new Error('This user has not yet configured their profile');
+            }
+
+            // remove the reference from the User model
+            await User.findByIdAndUpdate(context.user._id, { profile: null });
+
+            return profile;
+        }
+    },
+
+    // Resolve the user field in the Profile type
+    Profile: {
+        user: async (profile) => {
+            return await User.findById(profile.user);
+        }
+    }
+
+};
+module.exports = profileResolvers
