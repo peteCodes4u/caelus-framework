@@ -12,6 +12,7 @@ module.exports = gql`
     myProfile: Profile
     getProfileByUserId(userId: ID!): Profile
     getAllProfiles: [Profile]
+    getProfileByEmail(email: String!): Profile
   }
 
   extend type Mutation {

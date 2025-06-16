@@ -1,6 +1,7 @@
 const Profile = require('../models/profile');
 const User = require('../models/user');
 const { AuthenticationError } = require('apollo-server-express');
+const { get } = require('../utils/transporter');
 
 const profileResolvers = {
     Query: {
@@ -35,6 +36,23 @@ const profileResolvers = {
                 throw new Error('This user does not yet have a profile configured');
             }
 
+            return profile;
+        },
+
+        // Get a profile by user email
+        getProfileByEmail: async (parent, { email }, context) => {
+            // Check if the user is authenticated
+            if (!context.user) {
+                throw new AuthenticationError('You need to be logged in to view a profile');
+            }
+            const user = await User.findOne({ email });
+            if (!user) {
+                throw new Error('User not found');
+            }
+            const profile = await Profile.findOne({ user: user._id });
+            if (!profile) {
+                throw new Error('This user does not yet have a profile configured');
+            }
             return profile;
         }
     },
@@ -71,9 +89,9 @@ const profileResolvers = {
             }
             // Find the profile by user field and update it
             const profile = await Profile.findOneAndUpdate(
-                { user: userId },           
-                { bio, location },          
-                { new: true }               
+                { user: userId },
+                { bio, location },
+                { new: true }
             );
             return profile;
         },
