@@ -5,17 +5,20 @@ const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
 const generateUUID = require('../utils/UUIDGenerator');
 const transporter = require('../utils/transporter');
+const utilities = require('../utils/utilitites');
 
 
 const userResolvers = {
         Query: {
-            // get a user by username
+            // get a user by userId
             user: async (parent, { userId }) => {
                 return User.findOne({ _id: userId });
             },
     
             // get all users
-            users: async () => {
+            users: async (parent, args, context) => {
+                // check if the user is authenticated
+                utilities.authChecker(context);
                 return User.find();
             },
     
@@ -24,11 +27,9 @@ const userResolvers = {
                 if (context.user) {
                     return User.findOne({ _id: context.user._id });
                 }
-                console.error('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
-                throw AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
+                throw new AuthenticationError('🤭 Sorry, seems you are not yet logged in, please login and try again, thank you 🤭!');
             },
         },
-        // define the mutations
         Mutation: {
             // add a user
             addUser: async (parent, { name, email, password }) => {
@@ -40,20 +41,17 @@ const userResolvers = {
                 return { token, user };
             },
             // login a user
-            //  define the login mutation
             // the login mutation is used to log in a user. The login mutation takes an email and password as arguments and returns a token and the user's user. The login mutation first checks if a user with the provided email exists. If a user is found, the login mutation checks if the provided password is correct. If the password is correct, the login mutation returns a token and the user's user. If the password is incorrect, the login
             login: async (parent, { email, password }) => {
                 const user = await User.findOne({ email });
                 // logic for checking if the user exists and if the password is correct
                 if (!user) {
-                    console.error('😲 Sorry, we could not find any records that match that user please check your input and try again, thank you 🤭!');
                     throw new AuthenticationError('😲 Sorry, we could not find any records that match that user please check your input and try again, thank you 🤭!');
                 }
     
                 const correctPw = await user.isCorrectPassword(password);
                 // logic for if the password is incorrect
                 if (!correctPw) {
-                    console.error('😟 Sorry, the password you entered is not correct, please try again or reset your password, thank you 🤭!');
                     throw new AuthenticationError('😟 Sorry, the password you entered is not correct, please try again or reset your password, thank you 🤭!');
                 }
     

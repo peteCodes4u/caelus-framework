@@ -1,32 +1,26 @@
 const Profile = require('../models/profile');
 const User = require('../models/user');
-const { AuthenticationError } = require('apollo-server-express');
+const utilities = require('../utils/utilitites');
+const errorHandler = require('../utils/errorHandler');
 
 const profileResolvers = {
     Query: {
         getAllProfiles: async (parent, args, context) => {
-
-            // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to view profiles');
-            }
+            utilities.authChecker(context);
             return await Profile.find();
         },
 
         myProfile: async (parent, args, context) => {
             // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to view your profile');
-            }
+            utilities.authChecker(context);
 
             // Find the profile associated with the authenticated user
             const profile = await Profile.findOne({ user: context.user._id });
 
-            // If no profile is found, throw an error
-            if (!profile) {
-                throw new Error('Profile not found');
-            }
+            // run error handler to return error if there is an issue with the request
+            errorHandler.hasProfile(profile);
 
+            // if no errors return the profile
             return profile;
         },
 
@@ -36,9 +30,7 @@ const profileResolvers = {
             const profile = await Profile.findOne({ user: userId });
 
             // If no profile is found, throw an error
-            if (!profile) {
-                throw new Error('This user does not yet have a profile configured');
-            }
+            errorHandler.hasProfile(profile);
 
             return profile;
         },
@@ -46,17 +38,13 @@ const profileResolvers = {
         // Get a profile by user email
         getProfileByEmail: async (parent, { email }, context) => {
             // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to view a profile');
-            }
+            utilities.authChecker(context);
             const user = await User.findOne({ email });
             if (!user) {
                 throw new Error('User not found');
             }
             const profile = await Profile.findOne({ user: user._id });
-            if (!profile) {
-                throw new Error('This user does not yet have a profile configured');
-            }
+            errorHandler.hasProfile(profile);
             return profile;
         }
     },
@@ -65,9 +53,7 @@ const profileResolvers = {
         addProfile: async (parent, { bio, location }, context) => {
 
             // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to create a profile');
-            }
+            utilities.authChecker(context);
             // Get the authenticated user's ID
             const userId = context.user._id;
 
@@ -88,14 +74,12 @@ const profileResolvers = {
         // Update the profile of the currently authenticated user
         updateProfile: async (parent, { bio, location }, context) => {
             // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to update your profile');
-            }
+            
             // get the authenticated user's ID
-            const user = context.user._id;
+            const user = utilities.authChecker(context);;
             // Find the profile by user field and update it
             const profile = await Profile.findOneAndUpdate(
-                { user },
+                user._id,
                 { bio, location },
                 { new: true }
             );
@@ -105,18 +89,13 @@ const profileResolvers = {
         deleteProfile: async (parent, args, context) => {
            
             // Check if the user is authenticated
-            if (!context.user) {
-                throw new AuthenticationError('You need to be logged in to delete your profile');
-            }
+            utilities.authChecker(context);
              const userId = context.user._id
             // Find the profile associated with the authenticated user
             const profile = await Profile.findOneAndDelete( {user: userId} );
 
             // If no profile is found, throw an error
-            if (!profile) {
-                throw new Error('you have not yet configured your profile');
-            }
-
+            errorHandler.hasProfile(profile);
             // remove the reference from the User model
             await User.findByIdAndUpdate(userId, { profile: null });
 
