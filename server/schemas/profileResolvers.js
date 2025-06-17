@@ -86,14 +86,16 @@ const profileResolvers = {
             return profile;
         },
         // Update the profile of the currently authenticated user
-        updateProfile: async (parent, { bio, location, userId }, context) => {
+        updateProfile: async (parent, { bio, location }, context) => {
             // Check if the user is authenticated
             if (!context.user) {
                 throw new AuthenticationError('You need to be logged in to update your profile');
             }
+            // get the authenticated user's ID
+            const user = context.user._id;
             // Find the profile by user field and update it
             const profile = await Profile.findOneAndUpdate(
-                { user: userId },
+                { user },
                 { bio, location },
                 { new: true }
             );
@@ -101,21 +103,22 @@ const profileResolvers = {
         },
         // Delete the profile of the currently authenticated user
         deleteProfile: async (parent, args, context) => {
+           
             // Check if the user is authenticated
             if (!context.user) {
                 throw new AuthenticationError('You need to be logged in to delete your profile');
             }
-
+             const userId = context.user._id
             // Find the profile associated with the authenticated user
-            const profile = await Profile.findOneAndDelete({ user: context.user._id });
+            const profile = await Profile.findOneAndDelete( {user: userId} );
 
             // If no profile is found, throw an error
             if (!profile) {
-                throw new Error('This user has not yet configured their profile');
+                throw new Error('you have not yet configured your profile');
             }
 
             // remove the reference from the User model
-            await User.findByIdAndUpdate(context.user._id, { profile: null });
+            await User.findByIdAndUpdate(userId, { profile: null });
 
             return profile;
         }

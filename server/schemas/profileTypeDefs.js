@@ -17,7 +17,7 @@ module.exports = gql`
 
   extend type Mutation {
     addProfile(bio: String, location: String): Profile
-    updateProfile(bio: String, location: String, userId: ID!): Profile
-    deleteProfile(userId: ID!): Profile
+    updateProfile(bio: String, location: String): Profile
+    deleteProfile: Profile
   }
 `;
