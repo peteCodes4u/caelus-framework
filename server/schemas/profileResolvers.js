@@ -103,6 +103,9 @@ const profileResolvers = {
                 updateQuery,
                 { new: true }
             );
+            if(!profile) {
+                throw new Error('Please add a profile first');
+            }
             return profile;
         },
         // Delete the profile of the currently authenticated user
