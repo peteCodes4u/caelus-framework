@@ -50,7 +50,7 @@ const profileResolvers = {
     },
     Mutation: {
         // Create the profile of the currently authenticated user
-        addProfile: async (parent, { bio, location }, context) => {
+        addProfile: async (parent, { name, bio, location, newLink }, context) => {
 
             // Check if the user is authenticated
             utilities.authChecker(context);
@@ -64,7 +64,14 @@ const profileResolvers = {
             }
 
             // Create a new profile
-            const profile = await Profile.create({ bio, location, user: userId });
+            const links = Array.isArray(newLink) ? newLink : newLink ? [newLink] : [];
+            const profile = await Profile.create({
+                 name, 
+                 bio, 
+                 location, 
+                 socialLinks: links, 
+                 user: userId 
+                });
 
             // Update the user's profile field to reference the new profile
             await User.findByIdAndUpdate(userId, { profile: profile._id });
@@ -72,15 +79,28 @@ const profileResolvers = {
             return profile;
         },
         // Update the profile of the currently authenticated user
-        updateProfile: async (parent, { bio, location }, context) => {
+        updateProfile: async (parent, { name, bio, location, newLink }, context) => {
             // Check if the user is authenticated
             
             // get the authenticated user's ID
             const user = utilities.authChecker(context);
-            // Find the profile by user field and update it
+
+            const updateFields = {};
+            if( name !== undefined) updateFields.name = name;
+            if( bio !== undefined) updateFields.bio = bio;
+            if( location !== undefined) updateFields.location = location;
+
+            // when a new link is prorvided, push it to the socialLinks array
+            let updateQuery = updateFields;
+            if(newLink) {
+                updateQuery = {
+                    ...updateFields,
+                    $push: { socialLinks: newLink }
+                };
+            }
             const profile = await Profile.findOneAndUpdate(
                 { user: user._id },
-                { bio, location },
+                updateQuery,
                 { new: true }
             );
             return profile;
