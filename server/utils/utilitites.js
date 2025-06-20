@@ -5,6 +5,8 @@ function authChecker(context) {
     if (!context.user) {
         throw new AuthenticationError('please login to continue');
     }
+    
+    return context.user;
 }
 
 module.exports = {

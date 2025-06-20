@@ -76,10 +76,10 @@ const profileResolvers = {
             // Check if the user is authenticated
             
             // get the authenticated user's ID
-            const user = utilities.authChecker(context);;
+            const user = utilities.authChecker(context);
             // Find the profile by user field and update it
             const profile = await Profile.findOneAndUpdate(
-                user._id,
+                { user: user._id },
                 { bio, location },
                 { new: true }
             );
