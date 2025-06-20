@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const utilities = require('../utils/utilitites');
 
 const profileSchema = new Schema({
     user: {
@@ -11,9 +12,8 @@ const profileSchema = new Schema({
         trim: true,
         required: true,
         validate: { 
-            validator: function(v) {
-                return v.length <= 100;
-            },
+            validator: 
+            utilities.maxlength100, 
             message: props => `Name is too long! Maximum length is 100 characters.`
         },
         maxlength: 100
@@ -23,9 +23,8 @@ const profileSchema = new Schema({
         trim: true,
         required: true,
         validate: { 
-            validator: function(v) {
-                return v.length <= 750;
-            },
+            validator: 
+            utilities.maxlength750,
             message: props => `Bio is too long! Maximum length is 750 characters.`
         },
         maxlength: 750
@@ -35,9 +34,8 @@ const profileSchema = new Schema({
         trim: true,
         required: true,
         validate: { 
-            validator: function(v) {
-                return v.length <= 100;
-            },
+            validator: 
+            utilities.maxlength100,
             message: props => `Location is too long! Maximum length is 100 characters.`
         },
         maxlength: 100
@@ -46,12 +44,11 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
         validate: {
-            validator: function(v) {
-                return /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/.test(v);
-            },
+            validator: 
+            utilities.urlValidator,
             message: props => `${props.value} is not a valid URL!`
         },
-        default: {}
+        default: []
     }]
 });
 

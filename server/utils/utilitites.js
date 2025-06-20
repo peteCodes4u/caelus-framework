@@ -9,6 +9,21 @@ function authChecker(context) {
     return context.user;
 }
 
+function maxlength100(value) {
+ return value.length <= 100;
+}
+
+function maxlength750(value) {
+    return value.length <= 750;
+}
+
+function urlValidator(value) {
+    return /^(https?:\/\/)[\w.-]+(\.[\w\.-]+)+(\/[\w\-\._~:/?#[\]@!$&'()*+,;=]*)?$/.test(value);
+}
+
 module.exports = {
     authChecker,
+    maxlength100,
+    maxlength750,
+    urlValidator
 };

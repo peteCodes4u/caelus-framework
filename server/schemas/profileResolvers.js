@@ -101,7 +101,9 @@ const profileResolvers = {
             const profile = await Profile.findOneAndUpdate(
                 { user: user._id },
                 updateQuery,
-                { new: true }
+                { new: true,
+                  runValidators: true,  
+                }
             );
             if(!profile) {
                 throw new Error('Please add a profile first');
