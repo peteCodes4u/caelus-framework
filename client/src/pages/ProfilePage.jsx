@@ -1,9 +1,8 @@
 // Import necessary packages
 import { useParams } from "react-router-dom";
 import { useStyle } from "../styleContext";
-import ProfileForm from "../components/ProfileForm";
-import BioForm from "../components/BioForm";
 import UserSettings from "../components/UserSettings";
+import UserProfile from "../components/UserProfile";
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries'; // Define this query
 
@@ -24,8 +23,10 @@ export default function ProfilePage({ toggleStylesheet }) {
     <div className={`${activeStyle}-profile-page`}>
       <h1>🛸 Hello! {userName} 🛸</h1>
       <p> Welcome to your Profile Page! </p>
-      {/* <ProfileForm activeStyle={activeStyle} handleModalClose={toggleStylesheet} /> */}
-      <UserSettings activeStyle={activeStyle} />
+      <div className={`${activeStyle}-profile-main`}>
+        <UserProfile activeStyle={activeStyle} user={data.me} className={`${activeStyle}-user-profile`}/>
+        <UserSettings activeStyle={activeStyle} className={`${activeStyle}-user-settings`}/>
+      </div>
     </div>
   );
 };

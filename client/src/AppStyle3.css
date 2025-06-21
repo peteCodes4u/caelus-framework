@@ -315,3 +315,21 @@ body.app-style3 .app-style3-update-user-button.active {
 }
 
 /* Profile Page styles - END */
+/* Flex container for profile main section */
+body.app-style3 .app-style3-profile-main {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem; /* space between profile and settings */
+  align-items: flex-start;
+}
+
+/* Optional: set widths for each section */
+body.app-style3 .app-style3-profile-main > .app-style3-user-profile {
+  flex: 2 1 0;
+  min-width: 0;
+}
+
+body.app-style3 .app-style3-profile-main > .app-style3-user-settings {
+  flex: 1 1 250px;
+  min-width: 250px;
+}
