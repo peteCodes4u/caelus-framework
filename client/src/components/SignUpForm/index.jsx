@@ -13,7 +13,7 @@ const signUpFields = [
   { label: "Password", name: "password", type: "password", required: true, placeholder: "Enter password" },
 ];
 
-export default function SignUpForm({ activeStyle = 'app-style2', handleModalClose }) {
+export default function SignUpForm({ activeStyle = 'app-style1', handleModalClose }) {
   const [showAlert, setShowAlert] = useState(false);
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
