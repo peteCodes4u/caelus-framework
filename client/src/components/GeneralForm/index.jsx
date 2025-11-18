@@ -2,10 +2,20 @@ import { Form, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 export default function GeneralForm({ fields, onSubmit, initialValues = {}, submitLabel = "Submit", formClass = "", children }) {
-  const [formData, setFormData] = useState(initialValues);
+  
+  // lazy init to set state once on mount
+  const [formData, setFormData] = useState(() => ({...initialValues}));
 
+  // update form data only when initialValues change
   useEffect(() => {
-    setFormData(initialValues);
+    setFormData( prev => {
+      const keys = Object.keys(initialValues);
+      let changed = false;
+      for (const k of keys) {
+        if (initialValues[k] !== prev[k]) {changed = true; break;}
+      }
+        return changed ? { ... prev, ...initialValues } : prev;
+      });
   }, [initialValues]);
 
 
@@ -18,6 +28,7 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
     e.preventDefault();
     onSubmit(formData);
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       {fields.map((field, idx) => (
@@ -36,7 +47,6 @@ export default function GeneralForm({ fields, onSubmit, initialValues = {}, subm
           />
         </Form.Group>
       ))}
-      {/* Render children (LinksForm and toggle button) above the submit button */}
       {children}
       <br />
       <Button type="submit">{submitLabel}</Button>
