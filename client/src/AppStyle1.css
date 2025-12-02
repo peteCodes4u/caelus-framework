@@ -242,28 +242,20 @@ body.app-style1 .app-style1-profile-page {
 
 body.app-style1 .app-style1-profile-page h1 {
   color: var(--alt-primary-color2);
-  margin-bottom: 1rem;
 }
 
 body.app-style1 .app-style1-profile-page p {
-  color: var(--hover-accent-color);
   font-size: 1.2rem;
 }
 
-body.app-style1 .app-style1-profile-form {
-  display: var(--display);
+.app-style1-update-profile-form-controlls {
+  display: flex;
   flex-direction: column;
-  align-items: var(--alignment);      
-  justify-content: var(--alignment);  
-  min-height: 60vh;         
+
 }
 
-/* Left-align form labels */
-body.app-style1 .app-style1-profile-form .form-label {
-  text-align: left;
-  display: block;
-  width: 100%;
-  margin-bottom: 0.25rem;
+.app-style1-update-pw-btn, .app-style1-update-user-info-btn, .appStyle1-update-bio-btn {
+  padding: 2%;
 }
 
 body.app-style1 .app-style1-profile-form .form-control {
@@ -272,12 +264,31 @@ body.app-style1 .app-style1-profile-form .form-control {
   border-radius: var(--radius);
 }
 
-body.app-style1 .app-style1-profile-form .card {
-  width: 100%;
-  max-width: 500px;
-  margin: auto;     
-  padding: 1.5rem;
-  background-color: var(--title-text-primary-color);
+.app-style1-profile-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.app-style1-user-profile {
+  background-color: #fff;
   border-radius: var(--radius);
 }
+.app-style1-user-name-section, 
+.app-style1-user-region-section, 
+.app-style1-user-bio-section, 
+.app-style1-user-social-links {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-style1-profile-card-header, 
+.app-style1-user-name-section-header, 
+.app-style1-user-region-header, 
+.app-style1-user-bio-blerb-header, 
+.app-style1-user-social-links-header {
+  padding-right: 2%;
+  color: var(--hover-accent-color);
+}
+
 /* Profile Page styles - END */

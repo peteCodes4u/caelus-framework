@@ -17,9 +17,9 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
 
     return (
         <div className={`${activeStyle}-profile-form`}>
-            <div className={`${activeStyle}-prfile-form-header d-flex align-items-center justify-content-between mb-3`}>
-                <div className={`${activeStyle}-profile-form-body`}>
-                    <div className={`${activeStyle}-profile-form-card`}>                            <Alert
+            <div className={`${activeStyle}-profile-form-header`}>
+                <div className={`${activeStyle}-profile-form-body`}>                          
+                    <Alert
                         dismissible
                         onClose={() => setShowAlert(false)}
                         show={showAlert}
@@ -27,8 +27,9 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                     >
                         Something went wrong with your profile update!
                     </Alert>
+                    <div className={`${activeStyle}-update-profile-form-controlls`}>
+                        <div className={`${activeStyle}-update-pw-btn`}>
                         {/* Update password toggle */}
-                        <Form.Group className="mb-3">
                             <Button
                                 type="button"
                                 onClick={() => setShowPasswordForm((prev) => !prev)}
@@ -37,9 +38,9 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                 {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                             </Button>
                             {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
-                        </Form.Group>
+                        </div>
                         {/* Toggle Update User Form */}
-                        <Form.Group>
+                        <div className={`${activeStyle}-update-user-info-btn`}>
                             <Button
                                 type="button"
                                 onClick={() => setShowUpdateUserForm((prev) => !prev)}
@@ -52,9 +53,9 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                                     activeStyle={activeStyle}
                                 />
                             )}
-                        </Form.Group>
+                        </div>
+                        <div className={`${activeStyle}-update-bio-btn`}>
                         {/* toggle Bio Form */}
-                        <Form.Group>
                             <Button
                                 type="button"
                                 onClick={() => setShowBioForm((prev) => !prev)}
@@ -65,7 +66,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             {showBioForm && (
                                <BioForm  activeStyle={activeStyle}/>
                             )}
-                        </Form.Group>
+                        </div>
                     </div>
                 </div>
             </div>

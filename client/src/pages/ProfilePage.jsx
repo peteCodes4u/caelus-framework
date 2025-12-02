@@ -4,7 +4,7 @@ import { useStyle } from "../styleContext";
 import UserSettings from "../components/UserSettings";
 import UserProfile from "../components/UserProfile";
 import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries'; // Define this query
+import { QUERY_ME } from '../utils/queries';
 
 export default function ProfilePage({ toggleStylesheet }) {
   const { id } = useParams();
@@ -22,10 +22,9 @@ export default function ProfilePage({ toggleStylesheet }) {
   return (
     <div className={`${activeStyle}-profile-page`}>
       <h1>🛸 Hello! {userName} 🛸</h1>
-      <p> Welcome to your Profile Page! </p>
       <div className={`${activeStyle}-profile-main`}>
-        <UserProfile activeStyle={activeStyle} user={data.me} className={`${activeStyle}-user-profile`}/>
         <UserSettings activeStyle={activeStyle} className={`${activeStyle}-user-settings`}/>
+        <UserProfile activeStyle={activeStyle} user={data.me} className={`${activeStyle}-user-profile`}/>
       </div>
     </div>
   );
