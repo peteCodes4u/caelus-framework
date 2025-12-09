@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert, Card, Button } from 'react-bootstrap';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import { UPDATE_USER, VERIFY_PASSWORD } from '../../utils/mutations';
 import GeneralForm from '../GeneralForm';
+import UpdatePasswordForm from '../UpdatePasswordForm'
 
 // Update User form configuration array
 const updateUserFields = [
@@ -29,6 +30,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1' }) {
     const [alertVariant, setAlertVariant] = useState('danger');
     const [updateUser] = useMutation(UPDATE_USER);
     const [verifyPassword] = useMutation(VERIFY_PASSWORD);
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
 
     useEffect(() => {
         if (data?.me) {
@@ -76,6 +78,16 @@ export default function UpdateUserForm({ activeStyle = 'app-style1' }) {
     return (
         <div className={`${activeStyle}-update-user-form-form`}>
             <div className={`${activeStyle}-update-user-form-body`}>
+                <div className={`${activeStyle}-update-pw-btn`}>
+                    <Button
+                        type="button"
+                        onClick={() => setShowPasswordForm((prev) => !prev)}
+                        className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''}`}
+                    >
+                        {showPasswordForm ? "Hide Password Form" : "Update your Password"}
+                    </Button>
+                    {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
+                </div>
                 <Card className={`${activeStyle}-update-user-form`}>
                     <GeneralForm
                         fields={updateUserFields}
