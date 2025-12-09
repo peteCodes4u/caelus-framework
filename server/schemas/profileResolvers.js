@@ -1,5 +1,9 @@
+require('dotenv').config();
 const Profile = require('../models/profile');
 const User = require('../models/user');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
+const bcrypt = require('bcrypt');
 const utilities = require('../utils/utilitites');
 const errorHandler = require('../utils/errorHandler');
 
@@ -51,13 +55,23 @@ const profileResolvers = {
 
     Mutation: {
         // Create the profile of the currently authenticated user
-        addProfile: async (parent, { bio, location, newLink }, context) => {
+        addProfile: async (parent, { bio, location, newLink, password }, context) => {
 
             // Check if the user is authenticated
             utilities.authChecker(context);
             // Get the authenticated user's ID
-            const userId = context.user._id;
+            const user = await User.findById(context.user._id);
+            if (!user) throw new AuthenticationError('User not found');
 
+            const validPw = await bcrypt.compare(password, user.password);
+            if (!validPw) {
+                throw new AuthenticationError('Password is incorrect.');
+            }
+
+            // Build update fields
+            const updateFields = {};
+            if (bio !== undefined) updateFields.bio = bio;
+            if (location !== undefined) updateFields.location = location;
             // Check if the user already has a profile
             const existingProfile = await Profile.findOne({ user: userId });
             if (existingProfile) {
@@ -67,11 +81,11 @@ const profileResolvers = {
             // Create a new profile
             const links = Array.isArray(newLink) ? newLink : newLink ? [newLink] : [];
             const profile = await Profile.create({
-                 bio, 
-                 location, 
-                 socialLinks: links, 
-                 user: userId 
-                });
+                bio,
+                location,
+                socialLinks: links,
+                user: userId
+            });
 
             // Update the user's profile field to reference the new profile
             await User.findByIdAndUpdate(userId, { profile: profile._id });
@@ -81,17 +95,18 @@ const profileResolvers = {
         // Update the profile of the currently authenticated user
         updateProfile: async (parent, { bio, location, newLink }, context) => {
             // Check if the user is authenticated
-            
+            if (!context.user) throw new AuthenticationError('Not logged in');
             // get the authenticated user's ID
             const user = utilities.authChecker(context);
 
+            // Build update fields
             const updateFields = {};
-            if( bio !== undefined) updateFields.bio = bio;
-            if( location !== undefined) updateFields.location = location;
+            if (bio !== undefined) updateFields.bio = bio;
+            if (location !== undefined) updateFields.location = location;
 
             // when a new link is prorvided, push it to the socialLinks array
             let updateQuery = updateFields;
-            if(newLink) {
+            if (newLink) {
                 updateQuery = {
                     ...updateFields,
                     $push: { socialLinks: newLink }
@@ -100,23 +115,21 @@ const profileResolvers = {
             const profile = await Profile.findOneAndUpdate(
                 { user: user._id },
                 updateQuery,
-                { new: true,
-                  runValidators: true,  
+                {
+                    new: true,
+                    runValidators: true,
                 }
             );
-            if(!profile) {
-                throw new Error('Please add a profile first');
-            }
             return profile;
         },
         // Delete the profile of the currently authenticated user
         deleteProfile: async (parent, args, context) => {
-           
+
             // Check if the user is authenticated
             utilities.authChecker(context);
-             const userId = context.user._id
+            const userId = context.user._id
             // Find the profile associated with the authenticated user
-            const profile = await Profile.findOneAndDelete( {user: userId} );
+            const profile = await Profile.findOneAndDelete({ user: userId });
 
             // If no profile is found, throw an error
             errorHandler.hasProfile(profile);

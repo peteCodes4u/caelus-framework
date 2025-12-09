@@ -69,3 +69,17 @@ export const VERIFY_PASSWORD = gql`
     verifyPassword(password: $password)
   }
 `;
+
+export const UPDATE_PROFILE = gql`
+mutation UpdateProfile($bio: String!, $location: String!, $newLink: [String]) {
+  updateProfile(bio: $bio, location: $location, newLink: $newLink) {
+    _id
+    bio
+    location
+    socialLinks
+    user {
+      _id
+    }
+  }
+}
+`
