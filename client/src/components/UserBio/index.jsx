@@ -15,6 +15,7 @@ export default function UserBio({ activeStyle = "app-style1" }) {
     if (error) return <p>Error loading user.</p>;
     
     const userName = data?.me?.name;
+    const userEmail = data?.me?.email;
     const userHomeLocation = data?.me?.location;
     const userBio = data?.me?.bio; 
 
@@ -24,6 +25,10 @@ export default function UserBio({ activeStyle = "app-style1" }) {
                 <div className={`${activeStyle}-user-name-section`}>
                         <p className={`${activeStyle}-user-name-section-header`}>My Name is:</p>
                         <p>{userName}</p>
+                </div>
+                <div className={`${activeStyle}-user-email-section`}>
+                    <p className={`${activeStyle}-user-email-header`}>my email:</p>
+                    <p>{userEmail}</p>
                 </div>
                 <div className={`${activeStyle}-user-region-section`}>
                     <p className={`${activeStyle}-user-region-header`}>I am From:</p>
@@ -43,6 +48,7 @@ export default function UserBio({ activeStyle = "app-style1" }) {
                        not yet configured
                     </p>
                 </div>
+
             </div>
         </section>
     );

@@ -277,7 +277,10 @@ body.app-style1 .app-style1-profile-form .form-control {
 .app-style1-user-name-section, 
 .app-style1-user-region-section, 
 .app-style1-user-bio-section, 
-.app-style1-user-social-links {
+.app-style1-user-social-links,
+.app-style1-user-email-section 
+
+{
   display: flex;
   flex-direction: row;
 }
@@ -286,7 +289,9 @@ body.app-style1 .app-style1-profile-form .form-control {
 .app-style1-user-name-section-header, 
 .app-style1-user-region-header, 
 .app-style1-user-bio-blerb-header, 
-.app-style1-user-social-links-header {
+.app-style1-user-social-links-header, 
+.app-style1-user-email-header
+{
   padding-right: 2%;
   color: var(--hover-accent-color);
 }
