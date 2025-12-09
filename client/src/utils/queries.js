@@ -35,3 +35,18 @@ export const QUERY_USERS = gql`
         }
     }
 `;
+
+export const QUERY_MY_PROFILE = gql`
+  query MyProfile {
+    myProfile {
+      _id
+      bio
+      location
+      socialLinks
+      user {
+        name
+        email
+      }
+    }
+  }
+`;

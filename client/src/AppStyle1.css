@@ -279,10 +279,26 @@ body.app-style1 .app-style1-profile-form .form-control {
 .app-style1-user-bio-section, 
 .app-style1-user-social-links,
 .app-style1-user-email-section 
-
 {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+}
+
+.app-style1-user-social-links p {
+  margin: 0;
+}
+
+/* Make social links list vertical */
+body.app-style1 .app-style1-user-social-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;     /* small spacing between links */
+}
+
+body.app-style1 .app-style1-user-social-links-list p {
+  margin: 0;
+  text-align: left;
 }
 
 .app-style1-profile-card-header, 

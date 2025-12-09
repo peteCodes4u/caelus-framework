@@ -1,4 +1,3 @@
-import { Card } from 'react-bootstrap';
 import UserBio from '../UserBio';
 
 export default function UserProfile({ user }, { activeStyle = "app-style1" }) {

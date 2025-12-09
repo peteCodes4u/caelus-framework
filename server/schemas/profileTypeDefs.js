@@ -3,7 +3,6 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
   type Profile {
     _id: ID!
-    name: String!
     bio: String!
     location: String!
     socialLinks: [String]
@@ -18,8 +17,8 @@ module.exports = gql`
   }
 
   extend type Mutation {
-    addProfile(name: String!, bio: String!, location: String!, newLink: [String]): Profile
-    updateProfile(name: String!, bio: String!, location: String!, newLink: [String]): Profile
+    addProfile(bio: String!, location: String!, newLink: [String]): Profile
+    updateProfile(bio: String!, location: String!, newLink: [String]): Profile
     deleteProfile: Profile
   }
 `;

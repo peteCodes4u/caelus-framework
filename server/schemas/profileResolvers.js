@@ -48,9 +48,10 @@ const profileResolvers = {
             return profile;
         }
     },
+
     Mutation: {
         // Create the profile of the currently authenticated user
-        addProfile: async (parent, { name, bio, location, newLink }, context) => {
+        addProfile: async (parent, { bio, location, newLink }, context) => {
 
             // Check if the user is authenticated
             utilities.authChecker(context);
@@ -66,7 +67,6 @@ const profileResolvers = {
             // Create a new profile
             const links = Array.isArray(newLink) ? newLink : newLink ? [newLink] : [];
             const profile = await Profile.create({
-                 name, 
                  bio, 
                  location, 
                  socialLinks: links, 
@@ -79,14 +79,13 @@ const profileResolvers = {
             return profile;
         },
         // Update the profile of the currently authenticated user
-        updateProfile: async (parent, { name, bio, location, newLink }, context) => {
+        updateProfile: async (parent, { bio, location, newLink }, context) => {
             // Check if the user is authenticated
             
             // get the authenticated user's ID
             const user = utilities.authChecker(context);
 
             const updateFields = {};
-            if( name !== undefined) updateFields.name = name;
             if( bio !== undefined) updateFields.bio = bio;
             if( location !== undefined) updateFields.location = location;
 
