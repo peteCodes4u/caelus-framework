@@ -21,9 +21,6 @@ const profileResolvers = {
             // Find the profile associated with the authenticated user
             const profile = await Profile.findOne({ user: context.user._id });
 
-            // run error handler to return error if there is an issue with the request
-            errorHandler.hasProfile(profile);
-
             // if no errors return the profile
             return profile;
         },
