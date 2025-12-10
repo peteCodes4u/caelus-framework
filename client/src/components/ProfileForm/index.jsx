@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-// import UpdatePasswordForm from '../UpdatePasswordForm';
 import UpdateUserForm from '../UpdateUserForm';
 import BioForm from '../BioForm';
 
@@ -10,7 +9,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
     const [showAlert, setShowAlert] = useState(false);
 
     // Form visibility states
-    // const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showUpdateUserForm, setShowUpdateUserForm] = useState(false);
     const [showBioForm, setShowBioForm] = useState(false);
 
@@ -28,17 +26,6 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                         Something went wrong with your profile update!
                     </Alert>
                     <div className={`${activeStyle}-update-profile-form-controlls`}>
-                        {/* <div className={`${activeStyle}-update-pw-btn`}>
-                            <Button
-                                type="button"
-                                onClick={() => setShowPasswordForm((prev) => !prev)}
-                                className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''}`}
-                            >
-                                {showPasswordForm ? "Hide Password Form" : "Update your Password"}
-                            </Button>
-                            {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
-                        </div> */}
-                        {/* Toggle Update User Form */}
                         <div className={`${activeStyle}-update-user-info-btn`}>
                             <Button
                                 type="button"

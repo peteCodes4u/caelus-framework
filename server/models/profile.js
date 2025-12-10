@@ -7,21 +7,9 @@ const profileSchema = new Schema({
         ref: 'User',
         required: true
     },
-    // name:{
-    //     type: String,
-    //     trim: true,
-    //     required: true,
-    //     validate: { 
-    //         validator: 
-    //         utilities.maxlength100, 
-    //         message: props => `Name is too long! Maximum length is 100 characters.`
-    //     },
-    //     maxlength: 100
-    // },
     bio: {
         type: String,
         trim: true,
-        required: true,
         validate: { 
             validator: 
             utilities.maxlength750,
@@ -32,7 +20,6 @@ const profileSchema = new Schema({
     location: {
         type: String,
         trim: true,
-        required: true,
         validate: { 
             validator: 
             utilities.maxlength100,

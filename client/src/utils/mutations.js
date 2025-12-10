@@ -71,8 +71,8 @@ export const VERIFY_PASSWORD = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-mutation UpdateProfile($bio: String!, $location: String!, $newLink: [String]) {
-  updateProfile(bio: $bio, location: $location, newLink: $newLink) {
+mutation UpdateProfile($bio: String, $location: String, $newLink: [String], $password: String!) {
+  updateProfile(bio: $bio, location: $location, newLink: $newLink, password: $password) {
     _id
     bio
     location

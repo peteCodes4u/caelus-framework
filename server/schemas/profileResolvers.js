@@ -92,36 +92,63 @@ const profileResolvers = {
 
             return profile;
         },
-        // Update the profile of the currently authenticated user
-        updateProfile: async (parent, { bio, location, newLink }, context) => {
-            // Check if the user is authenticated
-            if (!context.user) throw new AuthenticationError('Not logged in');
-            // get the authenticated user's ID
-            const user = utilities.authChecker(context);
+        // Update OR create the profile of the currently authenticated user
+        updateProfile: async (parent, { bio, location, newLink, password }, context) => {
+            // Require authentication
+            utilities.authChecker(context);
+
+            const user = await User.findById(context.user._id);
+            if (!user) throw new AuthenticationError('User not found');
+
+            // Require password check
+            const validPw = await bcrypt.compare(password, user.password);
+            if (!validPw) {
+                throw new AuthenticationError('Password is incorrect.');
+            }
 
             // Build update fields
             const updateFields = {};
             if (bio !== undefined) updateFields.bio = bio;
             if (location !== undefined) updateFields.location = location;
 
-            // when a new link is prorvided, push it to the socialLinks array
-            let updateQuery = updateFields;
-            if (newLink) {
-                updateQuery = {
-                    ...updateFields,
-                    $push: { socialLinks: newLink }
-                };
+            // Check if they already have a profile
+            let existingProfile = await Profile.findOne({ user: user._id });
+
+            if (existingProfile) {
+                // Update existing profile
+                const updateQuery = newLink
+                    ? { ...updateFields, $push: { socialLinks: newLink } }
+                    : updateFields;
+
+                const updated = await Profile.findOneAndUpdate(
+                    { user: user._id },
+                    updateQuery,
+                    { new: true, runValidators: true }
+                );
+
+                return updated;
             }
-            const profile = await Profile.findOneAndUpdate(
-                { user: user._id },
-                updateQuery,
-                {
-                    new: true,
-                    runValidators: true,
-                }
-            );
-            return profile;
+
+            // NO PROFILE EXISTS → create a new one
+            const links = Array.isArray(newLink)
+                ? newLink
+                : newLink
+                    ? [newLink]
+                    : [];
+
+            const newProfile = await Profile.create({
+                bio: bio || "",
+                location: location || "",
+                socialLinks: links,
+                user: user._id
+            });
+
+            // Update User model reference
+            await User.findByIdAndUpdate(user._id, { profile: newProfile._id });
+
+            return newProfile;
         },
+
         // Delete the profile of the currently authenticated user
         deleteProfile: async (parent, args, context) => {
 
