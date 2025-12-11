@@ -20,5 +20,6 @@ module.exports = gql`
     addProfile(bio: String!, location: String!, newLink: [String]): Profile
     updateProfile(bio: String, location: String, newLink: [String], password: String!): Profile
     deleteProfile: Profile
+    deleteProfileWPassword(password: String!): Profile
   }
 `;

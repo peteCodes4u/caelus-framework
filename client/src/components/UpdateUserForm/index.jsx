@@ -82,7 +82,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1' }) {
                     <Button
                         type="button"
                         onClick={() => setShowPasswordForm((prev) => !prev)}
-                        className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''}`}
+                        className={`${activeStyle}-update-pw-button${showPasswordForm ? ' active' : ''} btn-warning`}
                     >
                         {showPasswordForm ? "Hide Password Form" : "Update your Password"}
                     </Button>

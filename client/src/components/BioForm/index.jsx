@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import GeneralForm from '../GeneralForm';
 import { useMutation, useQuery } from '@apollo/client';
-import { Card, Alert } from 'react-bootstrap';
-import { UPDATE_PROFILE } from '../../utils/mutations';
-import { QUERY_MY_PROFILE } from '../../utils/queries';
+import { Card, Alert, Button } from 'react-bootstrap';
+import { UPDATE_PROFILE, DELETE_PROFILE_PW } from '../../utils/mutations';
+import { QUERY_MY_PROFILE, QUERY_ME } from '../../utils/queries';
 
 const biofields = [
     { label: "Location", name: "location", type: "text", placeholder: "your location", required: false, autoComplete: "on" },
@@ -15,7 +15,7 @@ const biofields = [
 export default function BioForm({ activeStyle = 'app-style2', formClass = "BioForm" }) {
 
     const { data, loading, error } = useQuery(QUERY_MY_PROFILE);
-
+    const { userData, userLoading, userError } = useQuery(QUERY_ME);
     const [formData, setFormData] = useState({
         location: '',
         bio: '',
@@ -23,7 +23,10 @@ export default function BioForm({ activeStyle = 'app-style2', formClass = "BioFo
         newLink: ''
     });
 
+    const userId = userData?.me?._id;
+
     const [updateProfile] = useMutation(UPDATE_PROFILE);
+    const [deleteProfile] = useMutation(DELETE_PROFILE_PW)
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -72,23 +75,62 @@ export default function BioForm({ activeStyle = 'app-style2', formClass = "BioFo
         }
     };
 
+    const handleDeleteProfileWPassword = async () => {
+        setSuccessMsg('');
+        setErrorMsg('');
+
+        if (!formData.password) {
+            setErrorMsg('Password is required to delete your profile.');
+            return;
+        }
+
+        try {
+            const { data } = await deleteProfile({
+                variables: {
+                    password: formData.password
+                },
+                refetchQueries: [{ query: QUERY_MY_PROFILE }]
+            });
+
+            if (data?.deleteProfileWPassword) {
+                setSuccessMsg("Your profile has been deleted.");
+                setFormData({
+                    location: "",
+                    bio: "",
+                    newLink: "",
+                    password: ""
+                });
+            }
+        } catch (err) {
+            setErrorMsg(err.message || 'Failed to delete profile.');
+        }
+    };
+
+
     return (
         <Card className={`${activeStyle}-bio-form`}>
             <GeneralForm
                 fields={biofields}
+                formData={formData}
+                setFormData={setFormData}
                 onSubmit={handleUpdateProfile}
                 submitLabel="Publish Profile"
                 formClass={formClass}
                 initialValues={{
                     location: "",
                     bio: "",
-                    newLink: "",
-                    password: ""
+                    newLink: ""
                 }}
-            />
-
+            >
+            <Button
+                className='btn-danger'
+                onClick={handleDeleteProfileWPassword}
+            >delete profile
+            </Button>
+            </GeneralForm>
             {successMsg && <Alert variant="success">{successMsg}</Alert>}
             {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+            <br />
         </Card>
     );
 }

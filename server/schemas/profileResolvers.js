@@ -161,7 +161,33 @@ const profileResolvers = {
             await User.findByIdAndUpdate(userId, { profile: null });
 
             return profile;
+        },
+        deleteProfileWPassword: async (parent, { password }, context) => {
+
+        // Check if the user is authenticated
+        utilities.authChecker(context);
+        const userId = context.user._id
+
+        const user = await User.findById(context.user._id);
+        if (!user) throw new AuthenticationError('User not found');
+
+        // Require password check
+        const validPw = await bcrypt.compare(password, user.password);
+        if (!validPw) {
+            throw new AuthenticationError('Password is incorrect.');
         }
+
+        // Find the profile associated with the authenticated user
+        const profile = await Profile.findOneAndDelete({ user: userId });
+
+        // If no profile is found, throw an error
+        errorHandler.hasProfile(profile);
+        // remove the reference from the User model
+        await User.findByIdAndUpdate(userId, { profile: null });
+
+        return profile;
+    },
+    
     },
 
     // Resolve the user field in the Profile type

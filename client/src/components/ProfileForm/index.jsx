@@ -30,7 +30,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             <Button
                                 type="button"
                                 onClick={() => setShowUpdateUserForm((prev) => !prev)}
-                                className={`${activeStyle}-update-user-button${showUpdateUserForm ? ' active' : ''}`}
+                                className={`${activeStyle}-update-user-button${showUpdateUserForm ? ' active' : ''} btn-warning`}
                             >
                                 {showUpdateUserForm ? "Hide Update User Form" : "Update User Info"}
                             </Button>
@@ -45,7 +45,7 @@ export default function ProfileForm({ activeStyle = 'app-style1' }) {
                             <Button
                                 type="button"
                                 onClick={() => setShowBioForm((prev) => !prev)}
-                                className={`${activeStyle}-bio-form-button${showBioForm ? ' active' : ''}`}
+                                className={`${activeStyle}-bio-form-button${showBioForm ? ' active' : ''} btn-warning`}
                             >
                                 {showBioForm ? "Hide Bio Form" : "Update your Bio"}
                             </Button>

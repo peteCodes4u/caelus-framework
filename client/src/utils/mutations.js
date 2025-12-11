@@ -83,3 +83,23 @@ mutation UpdateProfile($bio: String, $location: String, $newLink: [String], $pas
   }
 }
 `
+export const DELETE_PROFILE = gql`
+mutation DeleteProfile {
+  deleteProfile {
+    _id
+    bio
+    location
+    socialLinks
+  }
+}
+`
+export const DELETE_PROFILE_PW = gql`
+mutation DeleteProfileWPassword($password: String!) {
+  deleteProfileWPassword(password: $password) {
+    _id
+    bio
+    location
+    socialLinks
+  }
+}
+`;
