@@ -31,7 +31,7 @@ module.exports = gql`
     }
     extend type Query {
         me: User
-        users: [User]!
+        users: [User]
         user(userId: ID!): User
     }
 `;

@@ -13,8 +13,9 @@ import StyleToggler from '../StyleToggler';
 export default function NavigationBar({ activeStyle, setActiveStyle }) {
     const location = useLocation();
     const currentPage = location.pathname;
-    const userId = Auth.loggedIn() ? Auth.getProfile().data._id : null;
-    const isProfilePage = currentPage === `/profile/${userId}`;
+    const userId = Auth.loggedIn() ? Auth.getUser().data._id : null;
+    const userName = Auth.loggedIn() ? Auth.getUser().data.name : null;
+    const isProfilePage = currentPage === `/profileSettings/${userId}`;
 
     // Dropdown Configuration array
     const availableLinks = [
@@ -25,7 +26,8 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                 { label: 'Signup 😎', path: '/signup' },
             ]
             : [
-                { label: 'Profile', path: `/profile/${userId}` },
+                { label: 'Profile Settings', path: `/profileSettings/${userId}` },
+                { label: 'Lobby', path: `/profile/${userName}`},
                 { label: 'Logout', action: Auth.logout },
             ]
         ),

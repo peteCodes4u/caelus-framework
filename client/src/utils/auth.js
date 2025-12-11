@@ -4,7 +4,7 @@ import decode from 'jwt-decode';
 class AuthService {
 
     // this is the constructor of the AuthService class that will be used to initialize the state of the AuthService class
-    getProfile() {
+    getUser() {
         return decode(this.getToken());
     }
 

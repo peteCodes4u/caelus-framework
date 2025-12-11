@@ -50,3 +50,19 @@ export const QUERY_MY_PROFILE = gql`
     }
   }
 `;
+
+export const QUERY_ALL_PROFILES = gql`
+query GetAllProfiles {
+  getAllProfiles {
+    _id
+    bio
+    location
+    socialLinks
+    user {
+      _id
+      name
+      email
+    }
+  }
+}
+`;

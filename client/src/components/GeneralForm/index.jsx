@@ -62,6 +62,7 @@ export default function GeneralForm({
       {children}
       <br />
       <Button type="submit" className='btn-info'>{submitLabel}</Button>
+      <br />
     </Form>
   );
 }

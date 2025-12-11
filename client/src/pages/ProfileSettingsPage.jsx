@@ -1,13 +1,9 @@
-// Import necessary packages
 import { useState, useEffect } from 'react';
 import { useStyle } from "../styleContext";
 import UserSettings from "../components/UserSettings";
 import UserProfile from "../components/UserProfile";
-import ProfileLobby from '../components/ProfileLobby';
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries';
 
-export default function ProfilePage({ toggleStylesheet }) {
+export default function ProfileSettingsPage({ toggleStylesheet }) {
           const [activeStyle, setActiveStyle] = useState(() => localStorage.getItem('selectedStyle') || 'app-style1');
   
           //apply the styling classes to the body element via useEffect. 
@@ -19,8 +15,8 @@ export default function ProfilePage({ toggleStylesheet }) {
   return (
     <div className={`${activeStyle}-profile-page`}>
       <div className={`${activeStyle}-profile-main`}>
+        <UserSettings activeStyle={activeStyle} className={`${activeStyle}-user-settings`}/>
         <UserProfile activeStyle={activeStyle} className={`${activeStyle}-user-profile`}/>
-        <ProfileLobby />
       </div>
     </div>
   );
