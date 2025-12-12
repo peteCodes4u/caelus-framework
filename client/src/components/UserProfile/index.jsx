@@ -1,6 +1,9 @@
+import { useStyle } from '../../styleContext';
 import UserBio from '../UserBio';
 
-export default function UserProfile({ user }, { activeStyle = "app-style1" }) {
+export default function UserProfile({ user }) {
+    const { activeStyle } = useStyle();
+
     return (
         <section className={`${activeStyle}-user-profile`}>
             <div className={`${activeStyle}-profile-card`}>
