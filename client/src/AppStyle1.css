@@ -233,18 +233,24 @@ body.app-style1 .card-text {
 }
 /* Page1 styles - END */
 /* Profile Page styles - START */
-body.app-style1 .app-style1-profile-page {
+body.app-style1 .app-style1-profile-page,
+body.app-style1 .app-style1-profile-settings-page 
+{
   background: var(--general-bg);
   text-align: var(--alignment);
   min-height: 25vh;
   padding: 2rem 0;
 }
 
-body.app-style1 .app-style1-profile-page h1 {
+body.app-style1 .app-style1-profile-page h1,
+body.app-style1 .app-style-1-profile-settings-page h1
+{
   color: var(--alt-primary-color2);
 }
 
-body.app-style1 .app-style1-profile-page p {
+body.app-style1 .app-style1-profile-page p, 
+body.app-style1 .app-style1-profile-settings-page p
+{
   font-size: 1.2rem;
 }
 
@@ -254,7 +260,9 @@ body.app-style1 .app-style1-profile-page p {
 
 }
 
-.app-style1-update-pw-btn, .app-style1-update-user-info-btn, .appStyle1-update-bio-btn {
+.app-style1-update-pw-btn, 
+.app-style1-update-user-info-btn, 
+.appStyle1-update-bio-btn {
   padding: 2%;
 }
 

@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useStyle } from '../../styleContext';
 import { Form, Button, Alert } from 'react-bootstrap';
 import UpdateUserForm from '../UpdateUserForm';
 import BioForm from '../BioForm';
 
-export default function ProfileForm({ activeStyle = 'app-style1' }) {
+export default function ProfileForm() {
+
+    const {activeStyle} = useStyle();
 
     // State management for alert visibility
     const [showAlert, setShowAlert] = useState(false);

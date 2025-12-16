@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useStyle } from "../../styleContext";
 import ProfileForm from '../ProfileForm';
 
 export default function UserSettings() {
