@@ -11,11 +11,8 @@ import GeneralDropDown from '../GeneralDropDown';
 import StyleToggler from '../StyleToggler';
 
 export default function NavigationBar({ activeStyle, setActiveStyle }) {
-    const location = useLocation();
-    const currentPage = location.pathname;
     const userId = Auth.loggedIn() ? Auth.getUser().data._id : null;
     const userName = Auth.loggedIn() ? Auth.getUser().data.name : null;
-    const isProfilePage = currentPage === `/profileSettings/${userId}`;
 
     // Dropdown Configuration array
     const availableLinks = [
@@ -47,12 +44,10 @@ export default function NavigationBar({ activeStyle, setActiveStyle }) {
                             items={availableLinks}
                             dropdownClass={`${activeStyle}-dropdown`}
                         />
-                        {isProfilePage && (
-                            <StyleToggler
-                                activeStyle={activeStyle}
-                                setActiveStyle={setActiveStyle}
-                            />
-                        )}
+                        <StyleToggler
+                            activeStyle={activeStyle}
+                            setActiveStyle={setActiveStyle}
+                        />
                     </Nav>
                 </Navbar.Collapse>
             </Container>
