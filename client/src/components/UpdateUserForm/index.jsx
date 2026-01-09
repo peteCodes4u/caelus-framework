@@ -88,7 +88,7 @@ export default function UpdateUserForm({ activeStyle = 'app-style1' }) {
                     </Button>
                     {showPasswordForm && <UpdatePasswordForm activeStyle={activeStyle} />}
                 </div>
-                <Card className={`${activeStyle}-update-user-form`}>
+                <Card className={`${activeStyle}-update-user-form-card`}>
                     <GeneralForm
                         fields={updateUserFields}
                         onSubmit={handleUpdateUser}

@@ -233,71 +233,83 @@ body.app-style1 .card-text {
 }
 /* Page1 styles - END */
 /* Profile Page styles - START */
-.app-style1-profile-settings-main{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: var(--alt-primary-color2);
+body.app-style1 .app-style1-profile-page {
+  background: var(--general-bg);
+  text-align: var(--alignment);
+  min-height: 25vh;
+  padding: 2rem 0;
 }
 
-.app-style1-user-profile-settings-panel {
-  background-color: var(--navbar-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5%;
-  border-radius: 5%;
-  margin: 2%;
+body.app-style1 .app-style1-profile-page h1 {
+  color: var(--alt-primary-color2);
+}
 
+body.app-style1 .app-style1-profile-page p {
+  font-size: 1.2rem;
 }
 
 .app-style1-update-profile-form-controlls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+
 }
 
-.app-style1-update-user-info-btn {
-  padding-bottom: 20%;
+.app-style1-update-pw-btn, .app-style1-update-user-info-btn, .appStyle1-update-bio-btn {
+  padding: 2%;
+}
+
+body.app-style1 .app-style1-profile-form .form-control {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: var(--radius);
+}
+
+.app-style1-profile-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .app-style1-user-profile {
-  background-color: var(--navbar-border);
-  color: var(--higlight-content-bg);
+  background-color: #fff;
+  border-radius: var(--radius);
+}
+.app-style1-user-name-section, 
+.app-style1-user-region-section, 
+.app-style1-user-bio-section, 
+.app-style1-user-social-links,
+.app-style1-user-email-section 
+{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2%;
-  border-radius: 5%;
-  margin: 2%;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
-.app-style1-user-bio {
-  display: flex;
-  flex-direction: column;
-  align-items: first baseline;
+.app-style1-user-social-links p {
+  margin: 0;
 }
 
 /* Make social links list vertical */
-.app-style1-user-social-links-list {
+body.app-style1 .app-style1-user-social-links-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.25rem;     /* small spacing between links */
 }
 
-.app-style1-profile-card-header,
-.app-style1-user-name-section-header,
-.app-style1-user-email-header,
-.app-style1-user-region-header,
-.app-style1-user-region-header,
-.app-style1-user-bio-blerb-header,
-.app-style1-user-social-links-header
+body.app-style1 .app-style1-user-social-links-list p {
+  margin: 0;
+  text-align: left;
+}
+
+.app-style1-profile-card-header, 
+.app-style1-user-name-section-header, 
+.app-style1-user-region-header, 
+.app-style1-user-bio-blerb-header, 
+.app-style1-user-social-links-header, 
+.app-style1-user-email-header
 {
-  color: var(--hover-accent-color)
+  padding-right: 2%;
+  color: var(--hover-accent-color);
 }
-
-
-
-
 
 /* Profile Page styles - END */

@@ -25,7 +25,6 @@ export default function UserBio({ activeStyle = "app-style1" }) {
 
     return (
         <section className={`${activeStyle}-user-bio`}>
-            <div>
                 <div className={`${activeStyle}-user-name-section`}>
                     <p className={`${activeStyle}-user-name-section-header`}>My Name is:</p>
                     <p>{userName}</p>
@@ -40,7 +39,7 @@ export default function UserBio({ activeStyle = "app-style1" }) {
                         {userHomeLocation}
                     </p>
                 </div>
-                <div className={`${activeStyle}-user-bio-section`}>
+                <div className={`${activeStyle}-user-bio-blerb`}>
                     <p className={`${activeStyle}-user-bio-blerb-header`}>My Bio:</p>
                     <p>
                         {userBio}
@@ -61,7 +60,6 @@ export default function UserBio({ activeStyle = "app-style1" }) {
                         ))}
                     </div>
                 </div>
-            </div>
         </section>
     );
 };
